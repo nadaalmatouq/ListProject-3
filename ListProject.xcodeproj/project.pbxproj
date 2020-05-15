@@ -56,6 +56,8 @@
 		01312EC2246DEAD500A69737 /* ListProject */ = {
 			isa = PBXGroup;
 			children = (
+				01312ED8246EB26C00A69737 /* Views */,
+				01312ED7246EB26000A69737 /* Models */,
 				01312EC3246DEAD500A69737 /* AppDelegate.swift */,
 				01312EC5246DEAD500A69737 /* SceneDelegate.swift */,
 				01312EC7246DEAD500A69737 /* ContentView.swift */,
@@ -73,6 +75,20 @@
 				01312ECC246DEAD700A69737 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		01312ED7246EB26000A69737 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		01312ED8246EB26C00A69737 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
