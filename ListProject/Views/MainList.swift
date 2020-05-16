@@ -5,10 +5,8 @@
 //
 /* problems we've faced:
  
- *the image we want it to be a uiimage and not a string in our struct
- *custom navigation title   // do it again
- *background color should appear with the list
- * when click on the list (sunday's grocery) it will navigate to the next screen
+ *the image we want it to be a uiimage and not a string in our struct // hasan
+
  */
 //
 //
@@ -16,81 +14,72 @@
 import SwiftUI
 
 struct MainList: View {
-    @State var OverallList : OverallList
+    @State var OverallList : [OverallList] = TotalList
+    var backgroungColor = "Background"
+    @State var isWorkWillAdd = false
+    @State var isWorkWillEdit = false
+    @State var nameList = ""
     var body: some View {
-        VStack{
-            
-            NavigationView{
-                
-
-                List{
-                    NavigationLink(destination: Temp()){
-                        Text("Add to your list")
+        NavigationView{
+            ZStack {
+                Color(backgroungColor)
+                    .edgesIgnoringSafeArea(.all)
+                VStack{
+                    HStack{
+                        NavigationLink(destination: Temp(), isActive: $isWorkWillAdd){
+                            Text("")
+                        }
+                        NavigationLink(destination: Temp2(name: nameList), isActive: $isWorkWillEdit){
+                            Text("")
+                        }
+                        
                     }
-                                        MainListDetail(OverallList: TotalList[0])
-                    MainListDetail(OverallList: TotalList[1])
-                    MainListDetail(OverallList: TotalList[2])
-                }.navigationBarTitle("To Do List")
-
-                
+                    List(TotalList){ OneListLoop in
+                        VStack{
+                            Text(OneListLoop.MainName)
+                                .foregroundColor(Color.black)
+                                .bold()
+                                .font(.system(size:24))
+                            
+                            ScrollView(.horizontal, showsIndicators: false){
+                                HStack(spacing:60){
+                                    ForEach(OneListLoop.DetailName, id: \.self){ (name:String) in
+                                        VStack{
+                                            Image(name)
+                                                .resizable()
+                                                .edgesIgnoringSafeArea(.all)                    .frame(width: 100, height: 100, alignment: .leading)
+                                            Text(name)
+                                                .foregroundColor(Color.black)
+                                            
+                                        }
+                                        .onTapGesture {
+                                            self.isWorkWillEdit = true
+                                            self.nameList = name
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .navigationBarTitle(Text("To Do List"))
+                    .navigationBarItems(trailing:
+                        Button(action: {
+                            self.isWorkWillAdd = true
+                        }) {
+                            Image(systemName: "plus.circle").imageScale(.large)
+                                .foregroundColor(Color("red"))
+                                .font(.system(size: 25))
+                        }
+                    )
+                }.colorMultiply(Color(backgroungColor))
             }
         }
     }
-    
 }
-//
-//                .edgesIgnoringSafeArea(.all)
-
-
-//VStack{
-//NavigationView{
-//                    List(TotalList){ list in
-//                        VStack(spacing: 50){
-//                            HStack{
-//                                Text(list.MainName)
-//                                Button(action: {
-//
-//                                    }) {
-//                                        Image(systemName: "plus.circle")
-//
-//                                }
-//                            }
-//
-//                            ScrollView(.horizontal){
-//
-//                                Image("travel")
-//                                    .resizable()
-//                                    .edgesIgnoringSafeArea(.all)
-//                                    .frame(width: 90, height: 90, alignment: .leading)
-//                                Text(list.DetailName.joined())
-//
-//                            }
-//                        }
-//                  //  }
-//                  //  .navigationBarTitle("To Do List")
-//
-//
-//
-//
-//
-//                //}
-//            }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 struct MainList_Previews: PreviewProvider {
     static var previews: some View {
-        MainList(OverallList: Grocery)
+        MainList()
     }
 }
