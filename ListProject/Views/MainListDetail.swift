@@ -31,6 +31,7 @@ struct MainListDetail: View {
                             .foregroundColor(Color.black)
                     }
                     }
+                
                 }
             }
         }

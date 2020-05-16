@@ -12,9 +12,8 @@ struct addButton: View {
     @State private var isActive : Bool = false
     var body: some View {
         VStack{
-            Button("hello"){
-                 self.isActive = true
-            }
+            Image(systemName: "plus.circle")
+           
 //                  Image(systemName: "plus.circle")
 //                                    .foregroundColor(Color("red"))
 //                                    .offset(x:-170,y:-380)
