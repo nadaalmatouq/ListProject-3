@@ -27,6 +27,7 @@
 		1478803D246F160A008931EB /* Arrows&So.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1478803C246F160A008931EB /* Arrows&So.xcassets */; };
 		366F3EEA24701696003E528F /* Temp2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F3EE924701696003E528F /* Temp2.swift */; };
 		3694F45E2471CDF2001F3C6A /* celebrationDetailsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3694F45D2471CDF2001F3C6A /* celebrationDetailsList.swift */; };
+		DFFFE1402471D96F00A4C756 /* ShoppingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFFE13F2471D96E00A4C756 /* ShoppingList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		1478803C246F160A008931EB /* Arrows&So.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Arrows&So.xcassets"; sourceTree = "<group>"; };
 		366F3EE924701696003E528F /* Temp2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Temp2.swift; sourceTree = "<group>"; };
 		3694F45D2471CDF2001F3C6A /* celebrationDetailsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = celebrationDetailsList.swift; sourceTree = "<group>"; };
+		DFFFE13F2471D96E00A4C756 /* ShoppingList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoppingList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				14788034246F048E008931EB /* CreateNewList.swift */,
 				141EAD32246F5397009604DE /* TravelListDetails.swift */,
 				3694F45D2471CDF2001F3C6A /* celebrationDetailsList.swift */,
+				DFFFE13F2471D96E00A4C756 /* ShoppingList.swift */,
 				141EAD34246F5D6D009604DE /* PagingScrollView.swift */,
 				01312ED9246EB3EC00A69737 /* MainList.swift */,
 				01312EDD246EC1B200A69737 /* Temp.swift */,
@@ -207,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				141EAD37246F9805009604DE /* Travel.swift in Sources */,
+				DFFFE1402471D96F00A4C756 /* ShoppingList.swift in Sources */,
 				14788039246F07F1008931EB /* Env.swift in Sources */,
 				141EAD35246F5D6D009604DE /* PagingScrollView.swift in Sources */,
 				14788035246F048E008931EB /* CreateNewList.swift in Sources */,
