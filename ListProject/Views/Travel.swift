@@ -24,17 +24,6 @@ struct TravelStruct {
 }
 
 
-//struct BeforeTraveling: Hashable, Identifiable{
-//    var name: String
-//    var id = UUID()
-//}
-//
-//struct AfterTraveling: Hashable, Identifiable{
-//    var name: String
-//    var id = UUID()
-//}
-
-
 var arrayOfCel : [TravelStruct] = []
 
 enum whenClick {
