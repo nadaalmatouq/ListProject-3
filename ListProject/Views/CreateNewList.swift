@@ -47,7 +47,7 @@ struct Lists: View {
               
                // if index == 0 {
                 
-                NavigationLink(destination: TravelListDetails(expence: expences[0])){
+                NavigationLink(destination: TravelListDetails()){
               
                     
                     Text("Create").font(.system(size: 25)).foregroundColor(.black).frame(width: 180, height: 60).background(Color("Background")).clipShape(Capsule()).offset(x:-10)

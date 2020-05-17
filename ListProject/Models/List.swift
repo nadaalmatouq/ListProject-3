@@ -22,7 +22,7 @@ struct OverallList: Hashable, Identifiable {
 }
 
 var Grocery = OverallList(MainName: "Grocery List", DetailName: ["Sunday's Grocery", "Mom's Grocery"])
-var Celebration = OverallList(MainName: "Celebrations List", DetailName: ["Fatma's graduation"])
+var Celebration = OverallList(MainName: "Celebrations List", DetailName: ["Fatma's Graduation"])
 var Travel = OverallList(MainName: "Travel List", DetailName: ["Canada", "Rome"])
 
 var TotalList = [Grocery, Celebration, Travel]
