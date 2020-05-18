@@ -87,7 +87,7 @@ struct CreateNewList: View {
      let pagePadding: CGFloat = 20
      let numberOfPages: Int = 3
     var body: some View {
-        NavigationView{
+
       
             VStack {
         
@@ -101,7 +101,7 @@ struct CreateNewList: View {
                             }
                     }
                 }
-            }
+            
         }
         
         }

@@ -107,371 +107,371 @@ struct celebrationDetailsList: View {
     @State private var shouldPresentCamera = false
     
     var body: some View {
-        NavigationView{
-                    ZStack{
-                        Color("Background")
-                            .edgesIgnoringSafeArea(.all)
-                        NavigationLink(destination: Temp(), isActive: $moveToMain){
-                            Text("")
+   
+            ZStack{
+                Color("Background")
+                    .edgesIgnoringSafeArea(.all)
+                NavigationLink(destination: MainList(), isActive: $moveToMain){
+                    Text("")
+                }
+                ScrollView{
+                    VStack{
+                        // the bellow z,v,hstack for list picture
+                        //                ZStack{
+                        HStack{
+                            Spacer()
+                            image1!
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 70, height: 70)
+                                .clipShape(Circle())
+                                .overlay(Circle().stroke(Color("blue"), lineWidth: 5))
+                                .shadow(radius: 10)
+                                .padding(.horizontal)
+                                .onTapGesture { self.shouldPresentActionScheet = true }
+                                .sheet(isPresented: $shouldPresentImagePicker) {
+                                    SUImagePickerView(sourceType: self.shouldPresentCamera ? .camera : .photoLibrary, image: self.$image1, isPresented: self.$shouldPresentImagePicker)
+                            }.actionSheet(isPresented: $shouldPresentActionScheet) { () -> ActionSheet in
+                                ActionSheet(title: Text("Take a photo or select from photo library"), message: Text(""), buttons: [ActionSheet.Button.default(Text("Camera"), action: {
+                                    self.shouldPresentImagePicker = true
+                                    self.shouldPresentCamera = true
+                                }), ActionSheet.Button.default(Text("Photo Library"), action: {
+                                    self.shouldPresentImagePicker = true
+                                    self.shouldPresentCamera = false
+                                }), ActionSheet.Button.cancel()])
+                            }
                         }
-                        ScrollView{
+                        VStack{
+                            
                             VStack{
-                                // the bellow z,v,hstack for list picture
-                                //                ZStack{
+                                Spacer()
+                                Text("Celebration List")
+                                    .font(.largeTitle)
+                                    .modifier(blueColorForAddTitles())
+                                    .padding(.bottom, 30)
                                 HStack{
+                                    Text("List Name")
+                                        .modifier(blueColorForAddTitles())
+                                    TextField("Enter your List Name", text: $listName)
+                                        .frame(width: 240, height: 30, alignment: .leading)
+                                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                                }
+                                HStack{
+                                    VStack(alignment: .leading, spacing:7){
+                                        
+                                        Text("Budget")
+                                            .modifier(blueColorForAddTitles())
+                                            .frame(width: 100, height: 30, alignment: .leading)
+                                        
+                                        Text("Remaining")
+                                            .modifier(blueColorForAddTitles())
+                                            .frame(width: 100, height: 30, alignment: .leading)
+                                    }
                                     Spacer()
-                                    image1!
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: 70, height: 70)
-                                        .clipShape(Circle())
-                                        .overlay(Circle().stroke(Color("blue"), lineWidth: 5))
-                                        .shadow(radius: 10)
-                                        .padding(.horizontal)
-                                        .onTapGesture { self.shouldPresentActionScheet = true }
-                                        .sheet(isPresented: $shouldPresentImagePicker) {
-                                            SUImagePickerView(sourceType: self.shouldPresentCamera ? .camera : .photoLibrary, image: self.$image1, isPresented: self.$shouldPresentImagePicker)
-                                    }.actionSheet(isPresented: $shouldPresentActionScheet) { () -> ActionSheet in
-                                        ActionSheet(title: Text("Take a photo or select from photo library"), message: Text(""), buttons: [ActionSheet.Button.default(Text("Camera"), action: {
-                                            self.shouldPresentImagePicker = true
-                                            self.shouldPresentCamera = true
-                                        }), ActionSheet.Button.default(Text("Photo Library"), action: {
-                                            self.shouldPresentImagePicker = true
-                                            self.shouldPresentCamera = false
-                                        }), ActionSheet.Button.cancel()])
+                                    VStack(alignment: .leading, spacing:7){
+                                        TextField("Enter Budget", text: $budgetMon)
+                                            .keyboardType(.decimalPad)
+                                            .frame(width: 140, height: 30, alignment: .leading)
+                                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                                        Text(self.budgetRem)
+                                            .frame(width: 140, height: 30, alignment: .leading)
+                                        // .background(Color.white)
+                                    }
+                                }.padding(.horizontal)
+                                    .padding(.vertical)
+                                HStack{
+                                    Button(action: {
+                                        self.whenClickGift.toggleClick()
+                                        self.isClickGift.toggle()
+                                    }){
+                                        VStack{
+                                            HStack{
+                                                Image(systemName:whenClickGift.textNameClick())
+                                                    .resizable()
+                                                    .frame(width: 20, height: 20, alignment: .center)
+                                                    .foregroundColor(Color("blue"))
+                                                Text("Gifts").modifier(blueColorForAddTitles())
+                                                Spacer()
+                                            }
+                                        }
+                                    }
+                                }.padding(.horizontal)
+                                if self.isClickGift {
+                                    VStack{
+                                        Group{
+                                            if arrayOfGifts.count >= 0 {
+                                                ForEach(arrayOfGifts, id: \.self){ i in
+                                                    HStack{
+                                                        Text(i.giftName)
+                                                            .modifier(blueColorForAddTitles())
+                                                            .frame(width: 190, height: 30, alignment: .center)
+                                                        
+                                                        Spacer()
+                                                        Text(i.giftPrice)
+                                                            .modifier(blueColorForAddTitles())
+                                                            .frame(width: 100, height: 30, alignment: .center)
+                                                            .background(Color("blue button"))
+                                                    }.padding(.vertical,2)
+                                                }
+                                                if refreshNow{
+                                                    Text(newNameGift)
+                                                        .modifier(blueColorForAddTitles())
+                                                }
+                                            }
+                                        }.padding(.horizontal, 15)
+                                        HStack{
+                                            TextField("Enter gift", text: self.$newNameGift)
+                                                .frame(width: 140, height: 30, alignment: .leading)
+                                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                            TextField("Enter price", text: self.$newPriceGifts)
+                                                .frame(width: 140, height: 30, alignment: .leading)
+                                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                            Image(systemName: "plus")
+                                                .onTapGesture {
+                                                    if (self.newNameGift == "" && self.newPriceGifts == "")
+                                                    { }  // if both field empty
+                                                    else if (self.newNameGift == ""){
+                                                    }  // only name empty
+                                                    else{
+                                                        if (self.newPriceGifts == ""){
+                                                            self.newPriceGifts = "0.0"
+                                                        } // only price empty will continue
+                                                        self.refreshNow = true
+                                                        arrayOfGifts.append(giftsStruct(giftName: self.newNameGift, giftPrice: self.newPriceGifts))
+                                                        self.calculateTheRemainig(prc: self.newPriceGifts)
+                                                        print(arrayOfGifts)
+                                                        self.newNameGift = ""
+                                                        self.newPriceGifts = ""
+                                                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                                        self.refreshNow = false
+                                                    }
+                                            }
+                                        }
                                     }
                                 }
-                                VStack{
-                                    
-                                    VStack{
-                                        Spacer()
-                                        Text("Celebration List")
-                                            .font(.largeTitle)
-                                            .modifier(blueColorForAddTitles())
-                                            .padding(.bottom, 30)
-                                        HStack{
-                                            Text("List Name")
-                                                .modifier(blueColorForAddTitles())
-                                            TextField("Enter your List Name", text: $listName)
-                                                .frame(width: 240, height: 30, alignment: .leading)
-                                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                        }
-                                        HStack{
-                                            VStack(alignment: .leading, spacing:7){
-                                                
-                                                Text("Budget")
-                                                    .modifier(blueColorForAddTitles())
-                                                    .frame(width: 100, height: 30, alignment: .leading)
-                                                
-                                                Text("Remaining")
-                                                    .modifier(blueColorForAddTitles())
-                                                    .frame(width: 100, height: 30, alignment: .leading)
+                                Group{
+                                    HStack{
+                                        Button(action: {
+                                            self.whenClickDecoration.toggleClick()
+                                            self.isClickDecoration.toggle()
+                                            if self.isClickDecoration {
+                                                print("test open decoration")
                                             }
+                                        }){
+                                            Image(systemName:whenClickDecoration.textNameClick())
+                                                .resizable()
+                                                .frame(width: 20, height: 20, alignment: .center)
+                                                .foregroundColor(Color("blue"))
+                                            Text("Home Decorations").modifier(blueColorForAddTitles())
                                             Spacer()
-                                            VStack(alignment: .leading, spacing:7){
-                                                TextField("Enter Budget", text: $budgetMon)
-                                                    .keyboardType(.decimalPad)
+                                        }
+                                    }.padding(.horizontal)
+                                    if self.isClickDecoration {
+                                        VStack{
+                                            Group{
+                                                if arrayOfDecoration.count >= 0 {
+                                                    ForEach(arrayOfDecoration, id: \.self){ i in
+                                                        HStack{
+                                                            Text(i.decorationName)
+                                                                .modifier(blueColorForAddTitles())
+                                                                .frame(width: 190, height: 30, alignment: .center)
+                                                            
+                                                            Spacer()
+                                                            Text(i.decorationPrice)
+                                                                .modifier(blueColorForAddTitles())
+                                                                .frame(width: 100, height: 30, alignment: .center)
+                                                                .background(Color("blue button"))
+                                                        }.padding(.vertical,2)
+                                                    }
+                                                    if refreshNow{
+                                                        Text(newNameDec)
+                                                            .modifier(blueColorForAddTitles())
+                                                    }
+                                                }
+                                            }.padding(.horizontal, 15)
+                                            HStack{
+                                                TextField("Enter decoration", text: self.$newNameDec)
                                                     .frame(width: 140, height: 30, alignment: .leading)
                                                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                                                Text(self.budgetRem)
+                                                TextField("Enter price", text: self.$newPriceDec)
                                                     .frame(width: 140, height: 30, alignment: .leading)
-                                                // .background(Color.white)
-                                            }
-                                        }.padding(.horizontal)
-                                            .padding(.vertical)
-                                        HStack{
-                                            Button(action: {
-                                                self.whenClickGift.toggleClick()
-                                                self.isClickGift.toggle()
-                                            }){
-                                                VStack{
-                                                    HStack{
-                                                        Image(systemName:whenClickGift.textNameClick())
-                                                            .resizable()
-                                                            .frame(width: 20, height: 20, alignment: .center)
-                                                            .foregroundColor(Color("blue"))
-                                                        Text("Gifts").modifier(blueColorForAddTitles())
-                                                        Spacer()
-                                                    }
-                                                }
-                                            }
-                                        }.padding(.horizontal)
-                                        if self.isClickGift {
-                                            VStack{
-                                                Group{
-                                                    if arrayOfGifts.count >= 0 {
-                                                        ForEach(arrayOfGifts, id: \.self){ i in
-                                                            HStack{
-                                                                Text(i.giftName)
-                                                                    .modifier(blueColorForAddTitles())
-                                                                    .frame(width: 190, height: 30, alignment: .center)
-                                                                
-                                                                Spacer()
-                                                                Text(i.giftPrice)
-                                                                    .modifier(blueColorForAddTitles())
-                                                                    .frame(width: 100, height: 30, alignment: .center)
-                                                                    .background(Color("blue button"))
-                                                            }.padding(.vertical,2)
+                                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                Image(systemName: "plus")
+                                                    .onTapGesture {
+                                                        if (self.newNameDec == "" && self.newPriceDec == "")
+                                                        { }  // if both field empty
+                                                        else if (self.newNameDec == ""){
+                                                        }  // only name empty
+                                                        else{
+                                                            if (self.newPriceDec == ""){
+                                                                self.newPriceDec = "0.0"
+                                                            } // only price empty will continue
+                                                            self.refreshNow = true
+                                                            arrayOfDecoration.append(decorationStruct(decorationName: self.newNameDec, decorationPrice: self.newPriceDec))
+                                                            self.calculateTheRemainig(prc: self.newPriceDec)
+                                                            print(arrayOfDecoration)
+                                                            self.newNameDec = ""
+                                                            self.newPriceDec = ""
+                                                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                                            self.refreshNow = false
                                                         }
-                                                        if refreshNow{
-                                                            Text(newNameGift)
-                                                                .modifier(blueColorForAddTitles())
-                                                        }
-                                                    }
-                                                }.padding(.horizontal, 15)
-                                                HStack{
-                                                    TextField("Enter gift", text: self.$newNameGift)
-                                                        .frame(width: 140, height: 30, alignment: .leading)
-                                                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                                                    TextField("Enter price", text: self.$newPriceGifts)
-                                                        .frame(width: 140, height: 30, alignment: .leading)
-                                                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                                                    Image(systemName: "plus")
-                                                        .onTapGesture {
-                                                            if (self.newNameGift == "" && self.newPriceGifts == "")
-                                                            { }  // if both field empty
-                                                            else if (self.newNameGift == ""){
-                                                            }  // only name empty
-                                                            else{
-                                                                if (self.newPriceGifts == ""){
-                                                                    self.newPriceGifts = "0.0"
-                                                                } // only price empty will continue
-                                                                self.refreshNow = true
-                                                                arrayOfGifts.append(giftsStruct(giftName: self.newNameGift, giftPrice: self.newPriceGifts))
-                                                                self.calculateTheRemainig(prc: self.newPriceGifts)
-                                                                print(arrayOfGifts)
-                                                                self.newNameGift = ""
-                                                                self.newPriceGifts = ""
-                                                                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                                                                self.refreshNow = false
-                                                            }
-                                                    }
                                                 }
                                             }
                                         }
-                                        Group{
-                                            HStack{
-                                                Button(action: {
-                                                    self.whenClickDecoration.toggleClick()
-                                                    self.isClickDecoration.toggle()
-                                                    if self.isClickDecoration {
-                                                        print("test open decoration")
-                                                    }
-                                                }){
-                                                    Image(systemName:whenClickDecoration.textNameClick())
-                                                        .resizable()
-                                                        .frame(width: 20, height: 20, alignment: .center)
-                                                        .foregroundColor(Color("blue"))
-                                                    Text("Home Decorations").modifier(blueColorForAddTitles())
-                                                    Spacer()
-                                                }
-                                            }.padding(.horizontal)
-                                            if self.isClickDecoration {
-                                                VStack{
-                                                    Group{
-                                                        if arrayOfDecoration.count >= 0 {
-                                                            ForEach(arrayOfDecoration, id: \.self){ i in
-                                                                HStack{
-                                                                    Text(i.decorationName)
-                                                                        .modifier(blueColorForAddTitles())
-                                                                        .frame(width: 190, height: 30, alignment: .center)
-                                                                    
-                                                                    Spacer()
-                                                                    Text(i.decorationPrice)
-                                                                        .modifier(blueColorForAddTitles())
-                                                                        .frame(width: 100, height: 30, alignment: .center)
-                                                                        .background(Color("blue button"))
-                                                                }.padding(.vertical,2)
-                                                            }
-                                                            if refreshNow{
-                                                                Text(newNameDec)
-                                                                    .modifier(blueColorForAddTitles())
-                                                            }
-                                                        }
-                                                    }.padding(.horizontal, 15)
-                                                    HStack{
-                                                        TextField("Enter decoration", text: self.$newNameDec)
-                                                            .frame(width: 140, height: 30, alignment: .leading)
-                                                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                                                        TextField("Enter price", text: self.$newPriceDec)
-                                                            .frame(width: 140, height: 30, alignment: .leading)
-                                                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                                                        Image(systemName: "plus")
-                                                            .onTapGesture {
-                                                                if (self.newNameDec == "" && self.newPriceDec == "")
-                                                                { }  // if both field empty
-                                                                else if (self.newNameDec == ""){
-                                                                }  // only name empty
-                                                                else{
-                                                                    if (self.newPriceDec == ""){
-                                                                        self.newPriceDec = "0.0"
-                                                                    } // only price empty will continue
-                                                                    self.refreshNow = true
-                                                                    arrayOfDecoration.append(decorationStruct(decorationName: self.newNameDec, decorationPrice: self.newPriceDec))
-                                                                    self.calculateTheRemainig(prc: self.newPriceDec)
-                                                                    print(arrayOfDecoration)
-                                                                    self.newNameDec = ""
-                                                                    self.newPriceDec = ""
-                                                                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                                                                    self.refreshNow = false
-                                                                }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        Group{
-                                            HStack{
-                                                Button(action: {
-                                                    self.whenClickClothes.toggleClick()
-                                                    self.isClickClothes.toggle()
-                                                    if self.isClickClothes {
-                                                        print("test open clothes")
-                                                    }
-                                                }){
-                                                    Image(systemName:whenClickClothes.textNameClick())
-                                                        .resizable()
-                                                        .frame(width: 20, height: 20, alignment: .center)
-                                                        .foregroundColor(Color("blue"))
-                                                    Text("Clothes & Accessories").modifier(blueColorForAddTitles())
-                                                    Spacer()
-                                                }
-                                            }.padding(.horizontal)
+                                    }
+                                }
+                                Group{
+                                    HStack{
+                                        Button(action: {
+                                            self.whenClickClothes.toggleClick()
+                                            self.isClickClothes.toggle()
                                             if self.isClickClothes {
-                                                                               VStack{
-                                                                                   Group{
-                                                                                       if arrayOfClothes.count >= 0 {
-                                                                                           ForEach(arrayOfClothes, id: \.self){ i in
-                                                                                               HStack{
-                                                                                                   Text(i.clothName)
-                                                                                                       .modifier(blueColorForAddTitles())
-                                                                                                       .frame(width: 190, height: 30, alignment: .center)
-                                                                                                   
-                                                                                                   Spacer()
-                                                                                                   Text(i.clothPrice)
-                                                                                                       .modifier(blueColorForAddTitles())
-                                                                                                       .frame(width: 100, height: 30, alignment: .center)
-                                                                                                       .background(Color("blue button"))
-                                                                                               }.padding(.vertical,2)
-                                                                                           }
-                                                                                           if refreshNow{
-                                                                                               Text(newNameCloth)
-                                                                                                   .modifier(blueColorForAddTitles())
-                                                                                           }
-                                                                                       }
-                                                                                   }.padding(.horizontal, 15)
-                                                                                   HStack{
-                                                                                       TextField("Clothes & Accessories", text: self.$newNameCloth)
-                                                                                           .frame(width: 140, height: 30, alignment: .leading)
-                                                                                           .textFieldStyle(RoundedBorderTextFieldStyle())
-                                                                                       TextField("Enter price", text: self.$newPriceCloth)
-                                                                                           .frame(width: 140, height: 30, alignment: .leading)
-                                                                                           .textFieldStyle(RoundedBorderTextFieldStyle())
-                                                                                       Image(systemName: "plus")
-                                                                                           .onTapGesture {
-                                                                                               if (self.newNameCloth == "" && self.newPriceCloth == "")
-                                                                                               { }  // if both field empty
-                                                                                               else if (self.newNameCloth == ""){
-                                                                                               }  // only name empty
-                                                                                               else{
-                                                                                                   if (self.newPriceCloth == ""){
-                                                                                                       self.newPriceCloth = "0.0"
-                                                                                                   } // only price empty will continue
-                                                                                                   self.refreshNow = true
-                                                                                                   arrayOfClothes.append(clothesStruct(clothName: self.newNameCloth, clothPrice: self.newPriceCloth))
-                                                                                                self.calculateTheRemainig(prc: self.newPriceCloth)
-                                                                                                   print(arrayOfClothes)
-                                                                                                   self.newNameCloth = ""
-                                                                                                   self.newPriceCloth = ""
-                                                                                                   UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                                                                                                   self.refreshNow = false
-                                                                                               }
-                                                                                       }
-                                                                                   }
-                                                                               }
-                                                                           }
+                                                print("test open clothes")
+                                            }
+                                        }){
+                                            Image(systemName:whenClickClothes.textNameClick())
+                                                .resizable()
+                                                .frame(width: 20, height: 20, alignment: .center)
+                                                .foregroundColor(Color("blue"))
+                                            Text("Clothes & Accessories").modifier(blueColorForAddTitles())
+                                            Spacer()
                                         }
-                                        Group{
-                                            HStack{
-                                                Button(action: {
-                                                    self.whenClickOther.toggleClick()
-                                                    self.isClickOther.toggle()
-                                                    if self.isClickOther {
-                                                        print("test open other")
+                                    }.padding(.horizontal)
+                                    if self.isClickClothes {
+                                        VStack{
+                                            Group{
+                                                if arrayOfClothes.count >= 0 {
+                                                    ForEach(arrayOfClothes, id: \.self){ i in
+                                                        HStack{
+                                                            Text(i.clothName)
+                                                                .modifier(blueColorForAddTitles())
+                                                                .frame(width: 190, height: 30, alignment: .center)
+                                                            
+                                                            Spacer()
+                                                            Text(i.clothPrice)
+                                                                .modifier(blueColorForAddTitles())
+                                                                .frame(width: 100, height: 30, alignment: .center)
+                                                                .background(Color("blue button"))
+                                                        }.padding(.vertical,2)
                                                     }
-                                                }){
-                                                    Image(systemName:whenClickOther.textNameClick())
-                                                        .resizable()
-                                                        .frame(width: 20, height: 20, alignment: .center)
-                                                        .foregroundColor(Color("blue"))
-                                                    
-                                                    Text("Other").modifier(blueColorForAddTitles())
-                                                    Spacer()
+                                                    if refreshNow{
+                                                        Text(newNameCloth)
+                                                            .modifier(blueColorForAddTitles())
+                                                    }
                                                 }
-                                            }.padding(.horizontal)
+                                            }.padding(.horizontal, 15)
+                                            HStack{
+                                                TextField("Clothes & Accessories", text: self.$newNameCloth)
+                                                    .frame(width: 140, height: 30, alignment: .leading)
+                                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                TextField("Enter price", text: self.$newPriceCloth)
+                                                    .frame(width: 140, height: 30, alignment: .leading)
+                                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                Image(systemName: "plus")
+                                                    .onTapGesture {
+                                                        if (self.newNameCloth == "" && self.newPriceCloth == "")
+                                                        { }  // if both field empty
+                                                        else if (self.newNameCloth == ""){
+                                                        }  // only name empty
+                                                        else{
+                                                            if (self.newPriceCloth == ""){
+                                                                self.newPriceCloth = "0.0"
+                                                            } // only price empty will continue
+                                                            self.refreshNow = true
+                                                            arrayOfClothes.append(clothesStruct(clothName: self.newNameCloth, clothPrice: self.newPriceCloth))
+                                                            self.calculateTheRemainig(prc: self.newPriceCloth)
+                                                            print(arrayOfClothes)
+                                                            self.newNameCloth = ""
+                                                            self.newPriceCloth = ""
+                                                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                                            self.refreshNow = false
+                                                        }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                Group{
+                                    HStack{
+                                        Button(action: {
+                                            self.whenClickOther.toggleClick()
+                                            self.isClickOther.toggle()
                                             if self.isClickOther {
-                                                                               VStack{
-                                                                                   Group{
-                                                                                       if arrayOfOther.count >= 0 {
-                                                                                           ForEach(arrayOfOther, id: \.self){ i in
-                                                                                               HStack{
-                                                                                                   Text(i.otherName)
-                                                                                                       .modifier(blueColorForAddTitles())
-                                                                                                       .frame(width: 190, height: 30, alignment: .center)
-                                                                                                   
-                                                                                                   Spacer()
-                                                                                                   Text(i.otherPrice)
-                                                                                                       .modifier(blueColorForAddTitles())
-                                                                                                       .frame(width: 100, height: 30, alignment: .center)
-                                                                                                       .background(Color("blue button"))
-                                                                                               }.padding(.vertical,2)
-                                                                                           }
-                                                                                           if refreshNow{
-                                                                                               Text(newNameOth)
-                                                                                                   .modifier(blueColorForAddTitles())
-                                                                                           }
-                                                                                       }
-                                                                                   }.padding(.horizontal, 15)
-                                                                                   HStack{
-                                                                                       TextField("Enter other", text: self.$newNameOth)
-                                                                                           .frame(width: 140, height: 30, alignment: .leading)
-                                                                                           .textFieldStyle(RoundedBorderTextFieldStyle())
-                                                                                       TextField("Enter price", text: self.$newPriceOth)
-                                                                                           .frame(width: 140, height: 30, alignment: .leading)
-                                                                                           .textFieldStyle(RoundedBorderTextFieldStyle())
-                                                                                       Image(systemName: "plus")
-                                                                                           .onTapGesture {
-                                                                                               if (self.newNameOth == "" && self.newPriceOth == "")
-                                                                                               { }  // if both field empty
-                                                                                               else if (self.newNameOth == ""){
-                                                                                               }  // only name empty
-                                                                                               else{
-                                                                                                   if (self.newPriceOth == ""){
-                                                                                                       self.newPriceOth = "0.0"
-                                                                                                   } // only price empty will continue
-                                                                                                   self.refreshNow = true
-                                                                                                   arrayOfOther.append(otherStruct(otherName: self.newNameOth, otherPrice: self.newPriceOth))
-                                                                                                self.calculateTheRemainig(prc: self.newPriceOth)
-                                                                                                   print(arrayOfOther)
-                                                                                                   self.newNameOth = ""
-                                                                                                   self.newPriceOth = ""
-                                                                                                   UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                                                                                                   self.refreshNow = false
-                                                                                               }
-                                                                                       }
-                                                                                   }
-                                                                               }
-                                                                           }
-                                        
-                                        Spacer()
-                                        Group{
+                                                print("test open other")
+                                            }
+                                        }){
+                                            Image(systemName:whenClickOther.textNameClick())
+                                                .resizable()
+                                                .frame(width: 20, height: 20, alignment: .center)
+                                                .foregroundColor(Color("blue"))
+                                            
+                                            Text("Other").modifier(blueColorForAddTitles())
+                                            Spacer()
+                                        }
+                                    }.padding(.horizontal)
+                                    if self.isClickOther {
+                                        VStack{
+                                            Group{
+                                                if arrayOfOther.count >= 0 {
+                                                    ForEach(arrayOfOther, id: \.self){ i in
+                                                        HStack{
+                                                            Text(i.otherName)
+                                                                .modifier(blueColorForAddTitles())
+                                                                .frame(width: 190, height: 30, alignment: .center)
+                                                            
+                                                            Spacer()
+                                                            Text(i.otherPrice)
+                                                                .modifier(blueColorForAddTitles())
+                                                                .frame(width: 100, height: 30, alignment: .center)
+                                                                .background(Color("blue button"))
+                                                        }.padding(.vertical,2)
+                                                    }
+                                                    if refreshNow{
+                                                        Text(newNameOth)
+                                                            .modifier(blueColorForAddTitles())
+                                                    }
+                                                }
+                                            }.padding(.horizontal, 15)
+                                            HStack{
+                                                TextField("Enter other", text: self.$newNameOth)
+                                                    .frame(width: 140, height: 30, alignment: .leading)
+                                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                TextField("Enter price", text: self.$newPriceOth)
+                                                    .frame(width: 140, height: 30, alignment: .leading)
+                                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                Image(systemName: "plus")
+                                                    .onTapGesture {
+                                                        if (self.newNameOth == "" && self.newPriceOth == "")
+                                                        { }  // if both field empty
+                                                        else if (self.newNameOth == ""){
+                                                        }  // only name empty
+                                                        else{
+                                                            if (self.newPriceOth == ""){
+                                                                self.newPriceOth = "0.0"
+                                                            } // only price empty will continue
+                                                            self.refreshNow = true
+                                                            arrayOfOther.append(otherStruct(otherName: self.newNameOth, otherPrice: self.newPriceOth))
+                                                            self.calculateTheRemainig(prc: self.newPriceOth)
+                                                            print(arrayOfOther)
+                                                            self.newNameOth = ""
+                                                            self.newPriceOth = ""
+                                                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                                            self.refreshNow = false
+                                                        }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    Spacer()
+                                    Group{
                                         HStack{
                                             Button(action: {
-                                                var newCelb = CelebrationStruct(listPicture: self.image1!, listName: self.listName, listBudget: self.budgetMon, listRemainig: self.budgetRem, listGifts: arrayOfGifts, listDecoration: arrayOfDecoration, listClothesAccessories: arrayOfClothes, listOther: arrayOfOther)
+                                                let newCelb = CelebrationStruct(listPicture: self.image1!, listName: self.listName, listBudget: self.budgetMon, listRemainig: self.budgetRem, listGifts: arrayOfGifts, listDecoration: arrayOfDecoration, listClothesAccessories: arrayOfClothes, listOther: arrayOfOther)
                                                 arrayOfCel13.append(newCelb)
                                                 print(arrayOfCel13)
                                                 self.showingAlert = true
-                                                 self.moveToMain = true
+                                                self.moveToMain = true
                                                 
                                             })
                                             {
@@ -501,8 +501,6 @@ struct celebrationDetailsList: View {
                                                     .cornerRadius(20)
                                             }
                                         }.padding()
-                                        }
-                                        }
                                     }
                                 }
                             }
@@ -510,25 +508,27 @@ struct celebrationDetailsList: View {
                     }
                 }
             }
-            
-            func calculateTheRemainig(prc : String) {
-                   var theRemain : Double = 0.0
-                   var theNewPrice : Double = 0.0
-                   theNewPrice = Double(prc) ?? 0.0
-                   if (self.budgetMon != "" && self.budgetRem == ""){
-                       self.budgetRem = self.budgetMon
-                       theRemain = Double(self.budgetRem) ?? 0.0
-                       self.budgetRem = String(theRemain-theNewPrice)
-                       print(theNewPrice)
-                   }
-                   else if (self.budgetMon != "" && self.budgetRem != ""){
-                       theRemain = Double(self.budgetRem) ?? 0.0
-                       self.budgetRem = String(theRemain-theNewPrice)
-                       print(theNewPrice)
-                       print(self.budgetRem)
-                   }
-               }
+        
     }
+    
+    func calculateTheRemainig(prc : String) {
+        var theRemain : Double = 0.0
+        var theNewPrice : Double = 0.0
+        theNewPrice = Double(prc) ?? 0.0
+        if (self.budgetMon != "" && self.budgetRem == ""){
+            self.budgetRem = self.budgetMon
+            theRemain = Double(self.budgetRem) ?? 0.0
+            self.budgetRem = String(theRemain-theNewPrice)
+            print(theNewPrice)
+        }
+        else if (self.budgetMon != "" && self.budgetRem != ""){
+            theRemain = Double(self.budgetRem) ?? 0.0
+            self.budgetRem = String(theRemain-theNewPrice)
+            print(theNewPrice)
+            print(self.budgetRem)
+        }
+    }
+}
 
 
 
@@ -561,11 +561,11 @@ struct SUImagePickerView: UIViewControllerRepresentable {
         pickerController.delegate = context.coordinator
         return pickerController
     }
-
+    
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {
         // Nothing to update here
     }
-
+    
 }
 
 class ImagePickerViewCoordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {

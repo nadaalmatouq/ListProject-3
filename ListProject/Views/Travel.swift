@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import SwiftUI
+import UIKit
 //
 //struct Expence{
 //    var name: String
@@ -15,16 +17,46 @@ import Foundation
 
 
 struct TravelStruct {
-    var Picture : String
+    
+   //
+    var Picture : Image
     var Name : String
     var Budget : String
     var Remainig : String
-    var Spend : String
-    var Others : String
+    var Spend : [spendMoney]
+    var Others : [others]
+    var befotrtraveling : [BeforeTraveling]
+    var aftertraveling : [AfterTraveling]
 }
 
+struct spendMoney : Hashable, Identifiable{
+    var SpendName : String
+    var SpendPrice : String = ""
+    var id = UUID()
+}
+struct others : Hashable, Identifiable{
+    var otherName : String
+    var otherPrice : String = ""
+    var id = UUID()
+}
 
-var arrayOfCel : [TravelStruct] = []
+struct BeforeTraveling: Hashable, Identifiable{
+    var beforeName : String
+    var beforePrice : String = ""
+    var id = UUID()
+}
+
+struct AfterTraveling: Hashable, Identifiable{
+    var AfterName : String
+    var AfterPrice : String = ""
+    var id = UUID()
+}
+
+var arrayOfTravels : [TravelStruct] = []
+var arrayOfBefore : [BeforeTraveling] = []
+var arrayOfAfter : [AfterTraveling] = []
+var arrayOfSpend : [spendMoney] = []
+var arrayOfOthers : [others] = []
 
 enum whenClick {
     case plus
@@ -40,6 +72,24 @@ enum whenClick {
         switch self {
         case .plus : return "plus.circle"
         case .minus : return "minus.circle"
+        }
+    }
+}
+
+enum whenTap {
+    case arrow
+    case update
+    
+    mutating func toggleClick(){
+        switch self {
+        case .arrow : self = .update
+        case .update : self = .arrow
+        }
+    }
+    func textNameClick() -> String {
+        switch self {
+        case .arrow : return "arrow.right"
+        case .update : return "arrow.2.circlepath.circle."
         }
     }
 }
