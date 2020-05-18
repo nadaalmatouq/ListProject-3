@@ -30,7 +30,7 @@ struct AddItems: View {
     var body: some View {
         ZStack {
                 VStack {
-                    NavigationView {
+                    //  NavigationView {
                         List {
                             ForEach(expenses, id: \.self) { expense in
                                 HStack{
@@ -48,7 +48,7 @@ struct AddItems: View {
                                 })
                                     
                         )
-                    }
+                    //}
                     .sheet(isPresented: $addItem) {
                         VStack {
                             HStack {

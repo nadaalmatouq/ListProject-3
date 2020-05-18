@@ -26,7 +26,7 @@ struct MainList: View {
                     .edgesIgnoringSafeArea(.all)
                 VStack{
                     HStack{
-                        NavigationLink(destination: Temp(), isActive: $isWorkWillAdd){
+                        NavigationLink(destination: CreateNewList(), isActive: $isWorkWillAdd){
                             Text("")
                         }
                         NavigationLink(destination: Temp2(name: nameList), isActive: $isWorkWillEdit){
@@ -34,6 +34,7 @@ struct MainList: View {
                         }
                         
                     }
+           
                     List(TotalList){ OneListLoop in
                         VStack{
                             Text(OneListLoop.MainName)
@@ -65,6 +66,7 @@ struct MainList: View {
                     .navigationBarItems(trailing:
                         Button(action: {
                             self.isWorkWillAdd = true
+                           
                         }) {
                             Image(systemName: "plus.circle").imageScale(.large)
                                 .foregroundColor(Color("red"))
