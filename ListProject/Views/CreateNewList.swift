@@ -50,6 +50,9 @@ struct CreateNewList: View {
                             .onTapGesture {
                                 print ("tap on index: \(typpe)")
                             }
+                        
+                        
+                        
                     }//geometry Reader
                     
                     
@@ -68,7 +71,7 @@ struct CreateNewList: View {
 
 struct SingleListView: View {
    // @Binding var listName: String
-    @State var currentListType: Type
+    var currentListType: Type
    @EnvironmentObject var env: Env
     @Binding var sheetViewStatus : Bool
   //  @Binding var lists : [Lista]
@@ -126,7 +129,7 @@ struct SingleListView: View {
         }.edgesIgnoringSafeArea(.all).sheet(isPresented: $sheetViewStatus) {
             
             
-            SheetView(sheetViewStatus: self.$sheetViewStatus, addListName: self.$addListName,addListBudget: self.$addListBudget, currentListType: self.currentListType)
+            SheetView(sheetViewStatus: self.$sheetViewStatus, addListName: self.$addListName,addListBudget: self.$addListBudget, currentListType: self.currentListType).environmentObject(self.env)
 
         }//sheet is presented
         
@@ -164,7 +167,8 @@ struct SheetView: View {
             Text("Give your list a name: ")
             Spacer()
             TextField("Enter your Name", text: self.$addListName)
-        }
+        }.onTapGesture {
+            print ("tap on index: \(self.currentListType)")}
         HStack {
             Text("Setup your Budget: ").font(.system(size: 20))
              Spacer()
@@ -176,7 +180,7 @@ struct SheetView: View {
         Button(action: {
                self.env.currentListType = self.currentListType
           
-            self.env.lists.append(Lista(givenName: self.addListName, budget: self.addListBudget, id: UUID(), type: self.env.currentListType)) //save in Lists array
+            self.env.lists.append(Lista(givenName: self.addListName, budget: self.addListBudget, id: UUID(), type: self.currentListType)) //save in Lists array
           //when continuebool is true toggled here when pressing cotinue func is called we pass index to singleview and then cal function to check what the index is and navigate to the corresponding view
             self.sheetViewStatus.toggle()
             
