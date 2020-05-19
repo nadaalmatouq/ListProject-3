@@ -9,7 +9,7 @@
 import Foundation
 class Env: ObservableObject{
 
-    @Published var lists: [Lista] = [Lista(givenName: "", budget: "", type: .travel)]
+    @Published var lists: [Lista] = [Lista(givenName: "", budget: "", id: UUID(), type: .travel)]
     @Published var currentListType: Type = .travel
 
     @Published var types: [Type] = [.travel,.celebration,.shopping]

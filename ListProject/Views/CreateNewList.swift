@@ -13,7 +13,7 @@ import SwiftUI
 struct Lista : Hashable{
     var givenName:  String
     var budget:  String
-     
+    var id: UUID
     var type: Type
     
     
@@ -176,7 +176,7 @@ struct SheetView: View {
         Button(action: {
                self.env.currentListType = self.currentListType
           
-            self.env.lists.append(Lista(givenName: self.addListName, budget: self.addListBudget, type: self.env.currentListType)) //save in Lists array
+            self.env.lists.append(Lista(givenName: self.addListName, budget: self.addListBudget, id: UUID(), type: self.env.currentListType)) //save in Lists array
           //when continuebool is true toggled here when pressing cotinue func is called we pass index to singleview and then cal function to check what the index is and navigate to the corresponding view
             self.sheetViewStatus.toggle()
             
