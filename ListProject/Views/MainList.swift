@@ -14,7 +14,10 @@
 import SwiftUI
 
 struct MainList: View {
+    
+     @EnvironmentObject var env: Env
     @State var OverallList : [OverallList] = TotalList
+   
     var backgroungColor = "Background"
     @State var isWorkWillAdd = false
     @State var isWorkWillEdit = false
@@ -26,7 +29,7 @@ struct MainList: View {
                     .edgesIgnoringSafeArea(.all)
                 VStack{
                     HStack{
-                        NavigationLink(destination: CreateNewList(), isActive: $isWorkWillAdd){
+                        NavigationLink(destination: CreateNewList(sheetViewStatus: false), isActive: $isWorkWillAdd){
                             Text("")
                         }
                         NavigationLink(destination: Temp2(name: nameList), isActive: $isWorkWillEdit){
@@ -82,6 +85,6 @@ struct MainList: View {
 
 struct MainList_Previews: PreviewProvider {
     static var previews: some View {
-        MainList()
+        MainList().environmentObject(Env())
     }
 }

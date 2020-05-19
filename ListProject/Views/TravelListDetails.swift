@@ -45,6 +45,10 @@ struct TravelListDetails: View {
     //    @State var expence: Expence
     //    @State var before = [BeforeTraveling]()
     //    @State var after = [AfterTraveling]()
+    
+      @EnvironmentObject var env: Env
+    
+    
     @State var listName: String = ""
     @State var NameOfTheList : String = ""
     @State var budget : String = ""

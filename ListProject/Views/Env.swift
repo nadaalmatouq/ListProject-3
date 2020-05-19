@@ -9,8 +9,10 @@
 import Foundation
 class Env: ObservableObject{
 
-    @Published var ListName: [String] = ["Travel List","Shopping List","Celebration List"]
+    @Published var lists: [Lista] = [Lista(givenName: "", budget: "", type: .travel)]
+    @Published var currentListType: Type = .travel
+
+    @Published var types: [Type] = [.travel,.celebration,.shopping]
     
-
-
+    
 }//End class Env
