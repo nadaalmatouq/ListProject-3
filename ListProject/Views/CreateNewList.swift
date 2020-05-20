@@ -135,7 +135,7 @@ struct SingleListView: View {
               
             }.offset(y:50)//VStackSheetView
             
-        }.edgesIgnoringSafeArea(.all).navigate(to: TravelListDetails())//takes you to corresponding list view
+        }.edgesIgnoringSafeArea(.all)//.navigateToCorresponding(type: env.currentListType)//takes you to corresponding list view
         
     }
 }
@@ -196,11 +196,15 @@ struct SheetView: View {
             
             self.env.currentListType = self.currentListType
           
-            self.env.lists.append(Lista(givenName: self.addListName, budget: self.addListBudget, id: UUID(), type: self.env.currentListType)) //save in Lists array
+            self.env.currentLista = Lista(givenName: self.addListName, budget: self.addListBudget, id: UUID(), type: self.env.currentListType)
+            self.env.lists.append(self.env.currentLista) //save in Lists array
+           
+            print(self.env.lists)
+            
           //when continuebool is true toggled here when pressing cotinue func is called we pass index to singleview and then cal function to check what the index is and navigate to the corresponding view
         
             
-            print(self.env.lists)
+            
             
             // Reset Values
             self.addListName = ""
@@ -208,7 +212,7 @@ struct SheetView: View {
           //if self.env.currentListType == .travel
           // if self.sheetViewStatus == false
           // {
-            self.env.willMoveToNextScreen.toggle() //move to next view
+            self.env.willMoveToNextScreen.toggle() //move to next view triggers SingleView to navigate
                 
           //  }
             
@@ -226,12 +230,18 @@ struct SheetView: View {
 }
 }
 
-struct CreateNewList_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        CreateNewList().environmentObject(Env())
-    }
-}
+
+
+//extension View {
+//
+//    /// Navigate to a new view.
+//    /// - Parameters:
+//    ///   - view: View to navigate to.
+//    ///   - binding: Only navigates when this condition is `true`.
+//    func navigate<SomeView: View>(to view: SomeView) -> some View {
+//        modifier(NavigateModifier(destination: view))
+//    }
+//}
 
 extension View {
 
@@ -239,10 +249,26 @@ extension View {
     /// - Parameters:
     ///   - view: View to navigate to.
     ///   - binding: Only navigates when this condition is `true`.
-    func navigate<SomeView: View>(to view: SomeView) -> some View {
-        modifier(NavigateModifier(destination: view))
+    func navigateToCorresponding<SomeView: View>(type: Type) -> some View {
+        
+        if type == .travel {
+        
+        return AnyView(modifier(NavigateModifier(destination: TravelListDetails())))
+        }
+        else if type == .celebration {
+            return
+             AnyView(modifier(NavigateModifier(destination: celebrationDetailsList())))
+        }
+        else {
+            
+            return AnyView(modifier(NavigateModifier(destination: TravelListDetails())))
+            
+        }
+        
     }
 }
+
+
 
 
 
@@ -275,4 +301,9 @@ fileprivate struct NavigateModifier<SomeView: View>: ViewModifier {
 }
 
 
-
+struct CreateNewList_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        CreateNewList().environmentObject(Env())
+    }
+}
