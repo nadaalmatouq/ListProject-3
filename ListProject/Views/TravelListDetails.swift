@@ -496,6 +496,7 @@ struct TravelListDetails: View {
                                                 //                        print(arrayOfTravels)
                                                 self.showingAlert = true
                                                 self.moveToMain = true
+                                               
                                                 
                                             })
                                             {
@@ -535,8 +536,8 @@ struct TravelListDetails: View {
             }
             
             
-        }}
-    
+        }.onDisappear(perform: {self.env.willMoveToNextScreen = false}) //so that mailList doesnt you take to this view immediatly and not passing CreateNewListView First
+    }
     
     func calculateTheRemainig(prc : String) {
         var theRemain : Double = 0.0

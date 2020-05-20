@@ -29,7 +29,7 @@ struct MainList: View {
                     .edgesIgnoringSafeArea(.all)
                 VStack{
                     HStack{
-                        NavigationLink(destination: CreateNewList(sheetViewStatus: false).environmentObject(self.env), isActive: $isWorkWillAdd){
+                        NavigationLink(destination: CreateNewList().environmentObject(self.env), isActive: $isWorkWillAdd){
                             Text("")
                         }
                         NavigationLink(destination: Temp2(name: nameList), isActive: $isWorkWillEdit){
