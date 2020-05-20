@@ -10,10 +10,10 @@
 import SwiftUI
 
 
-struct Lista : Hashable{
+struct Lista : Hashable, Identifiable{
     var givenName:  String
     var budget:  String
-    var id: UUID
+    var id : UUID
     var type: Type
    //  var Picture : Image
     

@@ -11,12 +11,12 @@ import Combine
 import UIKit
 
 
-struct TravelList {
+struct TravelList : Hashable, Identifiable{
     
     //
     var lista : Lista
     
-    
+        var id = UUID()
     var spendMoney : [SpendMoney]
     var others : [Others]
     var befotrtraveling : [BeforeTraveling]
@@ -506,7 +506,7 @@ struct TravelListDetails: View {
                                                 .resizable()
                                                 .frame(width: 20, height: 20, alignment: .center)
                                                 .foregroundColor(Color.black)
-                                            Text("Others.. ").modifier(blueColorForAddTitles())
+                                            Text("Others... ").modifier(blueColorForAddTitles())
                                             Spacer()
                                         }
                                     }.padding(.horizontal)

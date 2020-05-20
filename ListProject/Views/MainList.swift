@@ -32,39 +32,98 @@ struct MainList: View {
                         NavigationLink(destination: CreateNewList().environmentObject(self.env), isActive: $isWorkWillAdd){
                             Text("")
                         }
-                        NavigationLink(destination: Temp2(name: nameList), isActive: $isWorkWillEdit){
-                            Text("")
+                        NavigationLink(destination: TravelListDetails(), isActive: $isWorkWillEdit){
+                           Text("")
                         }
                         
                     }
            
-                    List(TotalList){ OneListLoop in
-                        VStack{
-                            Text(OneListLoop.MainName)
-                                .foregroundColor(Color.black)
-                                .bold()
-                                .font(.system(size:24))
+                              VStack{
+                                  
+                                Text(self.env.alltravelLists[0].lista.type.name())
+                                      .foregroundColor(Color.black)
+                                      .bold()
+                                      .font(.system(size:24))
+                                           }
+                
+                    
+                    
+                    ForEach(self.env.alltravelLists, id: \.self){ i in
+                                                       VStack{
+                                                  Text(i.lista.givenName)
+                                                  .foregroundColor(Color.black)
+                                                  .bold()
+                                                  .font(.system(size:24))
+                                                       }.padding(.vertical,2)
+                                                   
+                                      .onTapGesture {
+                                                                                        self.isWorkWillEdit = true
+                                                                                     self.env.currentTravelList = i
+                                                                                            //print(self.env.alltravelLists)
+                    ////                                                                      self.nameList = OneListLoop.lista.givenName
+                                                                                }
                             
-                            ScrollView(.horizontal, showsIndicators: false){
-                                HStack(spacing:60){
-                                    ForEach(OneListLoop.DetailName, id: \.self){ (name:String) in
-                                        VStack{
-                                            Image(name)
-                                                .resizable()
-                                                .edgesIgnoringSafeArea(.all)                    .frame(width: 100, height: 100, alignment: .leading)
-                                            Text(name)
-                                                .foregroundColor(Color.black)
-                                            
-                                        }
-                                        .onTapGesture {
-                                            self.isWorkWillEdit = true
-                                            self.nameList = name
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                     }
+                
+                    
+//                    List(self.env.alltravelLists){ OneListLoop in
+//
+//                          VStack  {
+//                                                        Text(OneListLoop.lista.givenName)
+//                                                            .foregroundColor(Color.black)
+//                                                            .bold()
+//                                                            .font(.system(size:24))
+//
+//
+//                                                      //  Text(OneListLoop.lista.givenName)
+//                            //                          ScrollView(.horizontal, showsIndicators: false){
+//                            //                              HStack(spacing:60){
+//                            //                                ForEach(OneListLoop , id: \.self){ (Travel: TravelList) in
+//                            //                                      VStack{
+//                            ////                                          Image(name)
+//                            ////                                              .resizable()
+//                            ////                                              .edgesIgnoringSafeArea(.all)                    .frame(width: 100, height: 100, alignment: .leading)
+//                            //                                        Text(Travel.lista.givenName)
+//                            //                                              .foregroundColor(Color.black)
+//                            //
+//                            //                                      }
+//                                                                  .onTapGesture {
+//                                                                      self.isWorkWillEdit = true
+////                                                                    self.env.currentTravelList = OneListLoop
+//                                                                        print(self.env.alltravelLists)
+////                                                                      self.nameList = OneListLoop.lista.givenName
+//                                                                  }
+//                            //                                  }
+//                            //                              }
+//                            //                          }
+//                                                    }
+////
+////
+//
+//                          //  Text(OneListLoop.lista.givenName)
+////                          ScrollView(.horizontal, showsIndicators: false){
+////                              HStack(spacing:60){
+////                                ForEach(OneListLoop , id: \.self){ (Travel: TravelList) in
+////                                      VStack{
+//////                                          Image(name)
+//////                                              .resizable()
+//////                                              .edgesIgnoringSafeArea(.all)                    .frame(width: 100, height: 100, alignment: .leading)
+////                                        Text(Travel.lista.givenName)
+////                                              .foregroundColor(Color.black)
+////
+////                                      }
+////                                      .onTapGesture {
+////                                          self.isWorkWillEdit = true
+////                                          //self.nameList = name
+////                                      }
+////                                  }
+////                              }
+////                          }
+//                        }
                     }
+//                        List(self.env.alltravelLists) { OneListLoop in
+//                                                      VStack
+//                                                  }
                     .navigationBarTitle(Text("To Do List"))
                     .navigationBarItems(trailing:
                         Button(action: {
@@ -77,10 +136,11 @@ struct MainList: View {
                         }
                     )
                 }.colorMultiply(Color(backgroungColor))
+     
             }
         }
     }
-}
+
 
 
 struct MainList_Previews: PreviewProvider {
