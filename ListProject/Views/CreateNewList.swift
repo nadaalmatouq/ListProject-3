@@ -15,7 +15,7 @@ struct Lista : Hashable{
     var budget:  String
     var id: UUID
     var type: Type
-    
+   //  var Picture : Image
     
 }
 
@@ -135,7 +135,7 @@ struct SingleListView: View {
               
             }.offset(y:50)//VStackSheetView
             
-        }.edgesIgnoringSafeArea(.all)//.navigateToCorresponding(type: env.currentListType)//takes you to corresponding list view
+            }.edgesIgnoringSafeArea(.all).navigate(to: TravelListDetails())//.navigateToCorresponding(type: env.currentListType)//takes you to corresponding list view
         
     }
 }
@@ -198,8 +198,16 @@ struct SheetView: View {
           
             self.env.currentLista = Lista(givenName: self.addListName, budget: self.addListBudget, id: UUID(), type: self.env.currentListType)
             self.env.lists.append(self.env.currentLista) //save in Lists array
-           
+            
+            
+            if  (self.env.currentLista.type == .travel){
+            
+            self.env.currentTravelList.lista = self.env.currentLista
+            }
+            
+          // self.env.alltravelLists.append(self.env.currentLista)
             print(self.env.lists)
+            print(self.env.currentTravelList.lista)
             
           //when continuebool is true toggled here when pressing cotinue func is called we pass index to singleview and then cal function to check what the index is and navigate to the corresponding view
         
@@ -232,16 +240,16 @@ struct SheetView: View {
 
 
 
-//extension View {
-//
-//    /// Navigate to a new view.
-//    /// - Parameters:
-//    ///   - view: View to navigate to.
-//    ///   - binding: Only navigates when this condition is `true`.
-//    func navigate<SomeView: View>(to view: SomeView) -> some View {
-//        modifier(NavigateModifier(destination: view))
-//    }
-//}
+extension View {
+
+    /// Navigate to a new view.
+    /// - Parameters:
+    ///   - view: View to navigate to.
+    ///   - binding: Only navigates when this condition is `true`.
+    func navigate<SomeView: View>(to view: SomeView) -> some View {
+        modifier(NavigateModifier(destination: view))
+    }
+}
 
 extension View {
 

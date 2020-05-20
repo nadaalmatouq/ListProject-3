@@ -8,15 +8,16 @@
 
 import SwiftUI
 
-struct CelebrationStruct {
-    var listPicture : Image
-    var listName : String
-    var listBudget : String
-    var listRemainig : String
-    var listGifts : [giftsStruct]
-    var listDecoration : [decorationStruct]
-    var listClothesAccessories : [clothesStruct]
-    var listOther : [otherStruct]
+struct CelebrationList {
+    
+      
+    var lista : Lista
+    
+    var remainig : String
+    var gifts : [giftsStruct]
+    var decoration : [decorationStruct]
+    var clothesAccessories : [clothesStruct]
+    var other : [otherStruct]
 }
 
 struct giftsStruct : Hashable, Identifiable{
@@ -43,7 +44,7 @@ struct otherStruct : Hashable, Identifiable{
     var id = UUID()
 }
 
-var arrayOfCel13 : [CelebrationStruct] = []
+var arrayOfCel13 : [CelebrationList] = []
 var arrayOfGifts : [giftsStruct] = []
 var arrayOfDecoration : [decorationStruct] = []
 var arrayOfClothes : [clothesStruct] = []
@@ -68,6 +69,9 @@ enum whenClick13 {
 }
 
 struct celebrationDetailsList: View {
+    
+    
+    @EnvironmentObject var env: Env
     
     @State var listName : String = ""
     @State var budgetMon : String = ""
@@ -467,8 +471,8 @@ struct celebrationDetailsList: View {
                                     Group{
                                         HStack{
                                             Button(action: {
-                                                let newCelb = CelebrationStruct(listPicture: self.image1!, listName: self.listName, listBudget: self.budgetMon, listRemainig: self.budgetRem, listGifts: arrayOfGifts, listDecoration: arrayOfDecoration, listClothesAccessories: arrayOfClothes, listOther: arrayOfOther)
-                                                arrayOfCel13.append(newCelb)
+                                             //   let newCelb = CelebrationList(listPicture: self.image1!, listName: self.lista.name, listBudget: self.budgetMon, listRemainig: self.budgetRem, listGifts: arrayOfGifts, listDecoration: arrayOfDecoration, listClothesAccessories: arrayOfClothes, listOther: arrayOfOther)
+                                              //  arrayOfCel13.append(newCelb)
                                                 print(arrayOfCel13)
                                                 self.showingAlert = true
                                                 self.moveToMain = true
