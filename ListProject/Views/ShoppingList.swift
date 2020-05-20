@@ -1,9 +1,9 @@
 //
-//  PartyList.swift
-//  ListProject
+//  ContentView.swift
+//  shoppinglistshaikha
 //
-//  Created by shaikha alqhtane on 5/16/20.
-//  Copyright © 2020 Alyaa. All rights reserved.
+//  Created by shaikha alqhtane on 5/20/20.
+//  Copyright © 2020 shaikha. All rights reserved.
 //
 
 import SwiftUI
@@ -13,6 +13,7 @@ struct ContentStruct {
    var listRemainig : String
    var listClothesAccessories : [AccessorisStruct]
    var listFoodVegetables : [foodStruct]
+   var listElectronicDevices : [electronicStruct]
    var listOthers : [othersStruct]
 }
 
@@ -26,6 +27,11 @@ struct foodStruct : Hashable, Identifiable{
     var foPrice : String = ""
     var id = UUID()
 }
+struct electronicStruct : Hashable, Identifiable{
+    var eleName : String
+    var elePrice : String = ""
+    var id = UUID()
+}
 struct othersStruct : Hashable, Identifiable{
     var otherName : String
     var otherPrice : String = ""
@@ -35,6 +41,7 @@ struct othersStruct : Hashable, Identifiable{
 var arrayOfAccessoris : [AccessorisStruct] = []
 var arrayOfFood : [foodStruct] = []
 var arrayOfOtherss : [othersStruct] = []
+var arrayOfelectronic : [electronicStruct] = []
 var arrayOfCel123 : [ContentStruct] = []
 
 enum whenClick123 {
@@ -61,19 +68,24 @@ struct ShoppingList: View {
     @State var listName : String = ""
     @State var budgetMon : String = ""
     @State var budgetRem : String = ""
-    @State var whenClickAccessoris = whenClick13.plus
-    @State var whenClickFood = whenClick13.plus
-    @State var whenClickOthers = whenClick13.plus
+    @State var whenClickAccessoris = whenClick123.plus
+    @State var whenClickFood = whenClick123.plus
+    @State var whenClickelectronic = whenClick123.plus
+    @State var whenClickOthers = whenClick123.plus
     @State var isClickAccessoris = false
     @State var isClickFood = false
+    @State var isClickelectronic = false
     @State var isClickOthers = false
     @State var listFoandVe : String = ""
     @State var listCAndA : String = ""
+    @State var listelectronic: String = ""
     @State var listOthers: String = ""
     @State var newNameFo : String = ""
     @State var newPriceFo : String = ""
     @State var newNameCloth : String = ""
     @State var newPriceCloth : String = ""
+    @State var newNameele : String = ""
+    @State var newPriceele : String = ""
     @State var newNameOth : String = ""
     @State var newPriceOth : String = ""
     @State var refreshNow = false
@@ -307,6 +319,77 @@ if refreshNow{
             }
         }
     }
+                Group{
+                    HStack{
+                        Button(action: {
+                            self.whenClickelectronic.toggleClick()
+                            self.isClickelectronic.toggle()
+                            if self.isClickelectronic {
+                                print("Electronic Devices")
+                            }
+                        }){
+                            Image(systemName:whenClickelectronic.textNameClick())
+                                .resizable()
+                                .frame(width: 20, height: 20, alignment: .center)
+                                .foregroundColor(Color("blue"))
+                            Text("Electronic Devices")
+                            Spacer()
+                        }
+                    }.padding(.horizontal)
+                    if self.isClickelectronic {
+                        VStack{
+                            Group{
+                                if arrayOfelectronic.count >= 0 {
+                                    ForEach(arrayOfelectronic, id: \.self){ i in
+                                        HStack{
+                                            Text(i.eleName)
+                                                
+                                                .frame(width: 190, height: 30, alignment: .center)
+                                            
+                                            Spacer()
+                                            Text(i.elePrice)
+                                                
+                                                .frame(width: 100, height: 30, alignment: .center)
+                                                .background(Color("blue button"))
+                                        }.padding(.vertical,2)
+                                    }
+                                    if refreshNow{
+                                        Text(newNameele)
+                                            
+                                    }
+                                }
+                            }.padding(.horizontal, 15)
+                            HStack{
+                                TextField("Food & Vegetables ", text: self.$newNameele)
+                                    .frame(width: 140, height: 30, alignment: .leading)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                TextField("Enter price", text: self.$newPriceele)
+                                    .frame(width: 140, height: 30, alignment: .leading)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                Image(systemName: "plus")
+                                    .onTapGesture {
+                                        if (self.newNameele == "" && self.newPriceele == "")
+                                        { }  // if both field empty
+                                        else if (self.newNameele == ""){
+                                        }  // only name empty
+                                        else{
+                                            if (self.newPriceele == ""){
+                                                self.newPriceele = "0.0"
+                                            } // only price empty will continue
+                                            self.refreshNow = true
+                                            arrayOfelectronic.append(electronicStruct(eleName: self.newNameele, elePrice: self.newPriceele))
+                                            self.calculateTheRemainig(prc: self.newPriceele)
+                                            print(arrayOfelectronic)
+                                            self.newNameele = ""
+                                            self.newPriceele = ""
+                                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                                            self.refreshNow = false
+                                        }
+                                }
+                            }
+                        }
+                    }
+                }
     Group{
      HStack{
        Button(action: {
@@ -327,8 +410,8 @@ if refreshNow{
           if self.isClickOthers {
     VStack{
           Group{
-              if arrayOfOthers.count >= 0 {
-             ForEach(arrayOfOthers, id: \.self){ i in
+              if arrayOfOtherss.count >= 0 {
+             ForEach(arrayOfOtherss, id: \.self){ i in
              HStack{
               Text(i.otherName)
                 
@@ -366,7 +449,7 @@ if refreshNow{
          self.refreshNow = true
           arrayOfOtherss.append(othersStruct(otherName: self.newNameOth, otherPrice: self.newPriceOth))
            self.calculateTheRemainig(prc: self.newPriceOth)
-              print(arrayOfOthers)
+              print(arrayOfOtherss)
               self.newNameOth = ""
               self.newPriceOth = ""
               UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -380,7 +463,7 @@ if refreshNow{
        Group{
        HStack{
        Button(action: {
-        let newCelb = ContentStruct( listName: self.listName, listBudget: self.budgetMon, listRemainig: self.budgetRem,  listClothesAccessories: arrayOfAccessoris, listFoodVegetables: arrayOfFood, listOthers: arrayOfOtherss)
+        let newCelb = ContentStruct( listName: self.listName, listBudget: self.budgetMon, listRemainig: self.budgetRem,  listClothesAccessories: arrayOfAccessoris, listFoodVegetables: arrayOfFood,listElectronicDevices: arrayOfelectronic, listOthers: arrayOfOtherss)
             arrayOfCel123.append(newCelb)
             print(arrayOfCel123)
             self.showingAlert = true
@@ -400,7 +483,7 @@ if refreshNow{
           Alert(title: Text("Your List is saved successfully"), message: Text(""), dismissButton: .default(Text("Back to main list")))
         }
             Button(action: {
-              print(arrayOfCel13)
+              print(arrayOfCel123)
                })
                {
            Text("Share")
