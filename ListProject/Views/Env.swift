@@ -9,8 +9,21 @@
 import Foundation
 class Env: ObservableObject{
 
-    @Published var ListName: [String] = ["Travel List","Shopping List","Celebration List"]
+    @Published var lists: [Lista] = [Lista(givenName: "", budget: "", id: UUID(), type: .travel)]
+    @Published var currentListType: Type = .travel
+
+    @Published var types: [Type] = [.travel,.celebration,.shopping]
+    @Published var currentLista : Lista = Lista(givenName: "", budget: "", id: UUID(), type: .travel)
+    
+    
+     @Published var willMoveToNextScreen = false
+    
+    
+      
+
+     
     
 
-
+    
+    
 }//End class Env
