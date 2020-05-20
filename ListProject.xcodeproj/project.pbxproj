@@ -14,13 +14,14 @@
 		01312ECD246DEAD700A69737 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01312ECC246DEAD700A69737 /* Preview Assets.xcassets */; };
 		01312ED0246DEAD700A69737 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01312ECE246DEAD700A69737 /* LaunchScreen.storyboard */; };
 		01312EDA246EB3EC00A69737 /* MainList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01312ED9246EB3EC00A69737 /* MainList.swift */; };
-		01312EDC246EB64100A69737 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01312EDB246EB64100A69737 /* List.swift */; };
+		01312EDC246EB64100A69737 /* OverallList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01312EDB246EB64100A69737 /* OverallList.swift */; };
 		01312EDE246EC1B200A69737 /* Temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01312EDD246EC1B200A69737 /* Temp.swift */; };
 		01A3339E247059AB008D7649 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A3339D247059AB008D7649 /* Task.swift */; };
 		01A333A02470678A008D7649 /* AddItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A3339F2470678A008D7649 /* AddItems.swift */; };
 		141EAD33246F5397009604DE /* TravelListDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141EAD32246F5397009604DE /* TravelListDetails.swift */; };
 		141EAD35246F5D6D009604DE /* PagingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141EAD34246F5D6D009604DE /* PagingScrollView.swift */; };
-		141EAD37246F9805009604DE /* Travel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141EAD36246F9805009604DE /* Travel.swift */; };
+		141EAD37246F9805009604DE /* TravelList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141EAD36246F9805009604DE /* TravelList.swift */; };
+		14731BD924736BA300466E86 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14731BD824736BA300466E86 /* Type.swift */; };
 		14788035246F048E008931EB /* CreateNewList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14788034246F048E008931EB /* CreateNewList.swift */; };
 		14788039246F07F1008931EB /* Env.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14788038246F07F1008931EB /* Env.swift */; };
 		1478803B246F156B008931EB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1478803A246F156B008931EB /* Images.xcassets */; };
@@ -40,13 +41,14 @@
 		01312ECF246DEAD700A69737 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		01312ED1246DEAD700A69737 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		01312ED9246EB3EC00A69737 /* MainList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainList.swift; sourceTree = "<group>"; };
-		01312EDB246EB64100A69737 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
+		01312EDB246EB64100A69737 /* OverallList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverallList.swift; sourceTree = "<group>"; };
 		01312EDD246EC1B200A69737 /* Temp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Temp.swift; sourceTree = "<group>"; };
 		01A3339D247059AB008D7649 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		01A3339F2470678A008D7649 /* AddItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItems.swift; sourceTree = "<group>"; };
 		141EAD32246F5397009604DE /* TravelListDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelListDetails.swift; sourceTree = "<group>"; };
 		141EAD34246F5D6D009604DE /* PagingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingScrollView.swift; sourceTree = "<group>"; };
-		141EAD36246F9805009604DE /* Travel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Travel.swift; path = ListProject/Views/Travel.swift; sourceTree = SOURCE_ROOT; };
+		141EAD36246F9805009604DE /* TravelList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TravelList.swift; path = ListProject/Models/TravelList.swift; sourceTree = SOURCE_ROOT; };
+		14731BD824736BA300466E86 /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		14788034246F048E008931EB /* CreateNewList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewList.swift; sourceTree = "<group>"; };
 		14788038246F07F1008931EB /* Env.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Env.swift; sourceTree = "<group>"; };
 		1478803A246F156B008931EB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -111,8 +113,9 @@
 		01312ED7246EB26000A69737 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				141EAD36246F9805009604DE /* Travel.swift */,
-				01312EDB246EB64100A69737 /* List.swift */,
+				141EAD36246F9805009604DE /* TravelList.swift */,
+				01312EDB246EB64100A69737 /* OverallList.swift */,
+				14731BD824736BA300466E86 /* Type.swift */,
 				01A3339D247059AB008D7649 /* Task.swift */,
 			);
 			path = Models;
@@ -122,13 +125,13 @@
 			isa = PBXGroup;
 			children = (
 				01312EC7246DEAD500A69737 /* ContentView.swift */,
-				14788038246F07F1008931EB /* Env.swift */,
+				01312ED9246EB3EC00A69737 /* MainList.swift */,
 				14788034246F048E008931EB /* CreateNewList.swift */,
 				141EAD32246F5397009604DE /* TravelListDetails.swift */,
+				14788038246F07F1008931EB /* Env.swift */,
 				3694F45D2471CDF2001F3C6A /* celebrationDetailsList.swift */,
 				DFFFE13F2471D96E00A4C756 /* ShoppingList.swift */,
 				141EAD34246F5D6D009604DE /* PagingScrollView.swift */,
-				01312ED9246EB3EC00A69737 /* MainList.swift */,
 				01312EDD246EC1B200A69737 /* Temp.swift */,
 				366F3EE924701696003E528F /* Temp2.swift */,
 				01A3339F2470678A008D7649 /* AddItems.swift */,
@@ -209,7 +212,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				141EAD37246F9805009604DE /* Travel.swift in Sources */,
+				141EAD37246F9805009604DE /* TravelList.swift in Sources */,
 				DFFFE1402471D96F00A4C756 /* ShoppingList.swift in Sources */,
 				14788039246F07F1008931EB /* Env.swift in Sources */,
 				141EAD35246F5D6D009604DE /* PagingScrollView.swift in Sources */,
@@ -220,11 +223,12 @@
 				01312EC6246DEAD500A69737 /* SceneDelegate.swift in Sources */,
 				01312EDA246EB3EC00A69737 /* MainList.swift in Sources */,
 				01A3339E247059AB008D7649 /* Task.swift in Sources */,
-				01312EDC246EB64100A69737 /* List.swift in Sources */,
+				01312EDC246EB64100A69737 /* OverallList.swift in Sources */,
 				366F3EEA24701696003E528F /* Temp2.swift in Sources */,
 				3694F45E2471CDF2001F3C6A /* celebrationDetailsList.swift in Sources */,
 				01312EC8246DEAD500A69737 /* ContentView.swift in Sources */,
 				01312EDE246EC1B200A69737 /* Temp.swift in Sources */,
+				14731BD924736BA300466E86 /* Type.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

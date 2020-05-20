@@ -10,6 +10,92 @@ import SwiftUI
 import Combine
 import UIKit
 
+
+struct TravelList {
+    
+    //
+    var lista : Lista
+    
+    
+    var spendMoney : [SpendMoney]
+    var others : [Others]
+    var befotrtraveling : [BeforeTraveling]
+    var aftertraveling : [AfterTraveling]
+}
+
+
+
+
+
+
+struct SpendMoney : Hashable, Identifiable{
+    var spendName : String
+    var spendPrice : String = ""
+    var id = UUID()
+}
+struct Others : Hashable, Identifiable{
+    var otherName : String
+    var otherPrice : String = ""
+    var id = UUID()
+}
+
+struct BeforeTraveling: Hashable, Identifiable{
+    var beforeName : String
+    var beforePrice : String = ""
+    var id = UUID()
+}
+
+struct AfterTraveling: Hashable, Identifiable{
+    var afterName : String
+    var afterPrice : String = ""
+    var id = UUID()
+}
+
+
+
+enum whenClick {
+    case plus
+    case minus
+    
+    mutating func toggleClick(){
+        switch self {
+        case .plus : self = .minus
+        case .minus : self = .plus
+        }
+    }
+    func textNameClick() -> String {
+        switch self {
+        case .plus : return "plus.circle"
+        case .minus : return "minus.circle"
+        }
+    }
+}
+
+enum whenTap {
+    case arrow
+    case update
+    
+    mutating func toggleClick(){
+        switch self {
+        case .arrow : self = .update
+        case .update : self = .arrow
+        }
+    }
+    func textNameClick() -> String {
+        switch self {
+        case .arrow : return "arrow.right"
+        case .update : return "arrow.2.circlepath.circle."
+        }
+    }
+}
+
+
+
+
+
+
+
+
 enum BeforeORAfter {
     case before
     case after
@@ -45,12 +131,16 @@ struct TravelListDetails: View {
     //    @State var expence: Expence
     //    @State var before = [BeforeTraveling]()
     //    @State var after = [AfterTraveling]()
-    @State var listName: String = ""
-    @State var NameOfTheList : String = ""
-    @State var budget : String = ""
+    
+      @EnvironmentObject var env: Env
+   // var TravelList :TravelList
+    
+  //  @State var listName: String = ""
+   // @State var NameOfTheList : String = ""
+   // @State var budget : String = ""
     @State var budgetRem : String = ""
-    @State var name = ""
-    @State var cost = ""
+   // @State var name = ""
+  //  @State var cost = ""
     @State var addItem = false
     @State var isClickSpend = false
     @State var isClickOthers = false
@@ -58,7 +148,7 @@ struct TravelListDetails: View {
     @State var isClickAfter = false
     @State var refresh = false
     @State var GoToMain = false
-    @State var expenses = [Expence]()
+   // @State var expenses = [Expence]()
     @State var addItemName: String = ""
     @State var addItemCost: String = ""
     @State var CurrencyFrom: String = ""
@@ -90,7 +180,7 @@ struct TravelListDetails: View {
     @State var imagePicker = false
     @State var source : UIImagePickerController.SourceType = .photoLibrary
     // second new picture : from github
-    @State private var image2: Image? = Image(systemName: "camera.circle")
+    @State private var image2: Image? = Image(systemName: "camera.circle")//should be deleted ifput in env
     @State private var shouldPresentImagePicker = false
     @State private var shouldPresentActionScheet = false
     @State private var shouldPresentCamera = false
@@ -140,14 +230,8 @@ struct TravelListDetails: View {
                         
                         VStack{
                             
-                            Text(listName).foregroundColor(Color.black).font(.system(size: 30, weight: .bold, design: .rounded)).padding(.vertical,20)
+                            Text(env.currentTravelList.lista.givenName).foregroundColor(Color.black).font(.system(size: 30, weight: .bold, design: .rounded)).padding(.vertical,20)
                             
-                            HStack{
-                                Text("List Name")
-                                TextField("Enter your List Name", text: $listName)
-                                    .frame(width: 270, height: 30, alignment: .leading)
-                                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                            }
                             HStack{
                                 Text("Currency From: ")
                                     .offset(x:20)
@@ -194,9 +278,8 @@ struct TravelListDetails: View {
                                 
                                 Spacer()
                                 VStack(alignment: .leading){
-                                    TextField("Enter Budget", text: $budget)
+                                    Text(env.currentTravelList.lista.budget)
                                         .frame(width: 140, height: 30, alignment: .leading)
-                                        .textFieldStyle(RoundedBorderTextFieldStyle())
                                         .offset(x:-38)
                                     Text(budgetRem)
                                         .frame(width: 140, height: 30, alignment: .leading)
@@ -223,15 +306,15 @@ struct TravelListDetails: View {
                             Group{ if self.isClickSpend {
                                 VStack{
                                     Group{
-                                        if arrayOfSpend.count >= 0 {
-                                            ForEach(arrayOfSpend, id: \.self){ i in
+                                        if env.currentTravelList.spendMoney.count >= 0 {
+                                            ForEach(env.currentTravelList.spendMoney, id: \.self){ i in
                                                 HStack{
-                                                    Text(i.SpendName)
+                                                    Text(i.spendName)
                                                         .modifier(blueColorForAddTitles())
                                                         .frame(width: 190, height: 30, alignment: .center)
                                                     
                                                     Spacer()
-                                                    Text(i.SpendPrice)
+                                                    Text(i.spendPrice)
                                                         .modifier(blueColorForAddTitles())
                                                         .frame(width: 100, height: 30, alignment: .center)
                                                         .background(Color("blue button"))
@@ -262,9 +345,9 @@ struct TravelListDetails: View {
                                                             self.newPriceSpend = "0.0"
                                                         } // only price empty will continue
                                                         self.refresh = true
-                                                        arrayOfSpend.append(spendMoney(SpendName: self.newNameSpend, SpendPrice: self.newPriceSpend))
+                                                        self.env.currentTravelList.spendMoney.append(SpendMoney(spendName: self.newNameSpend, spendPrice: self.newPriceSpend))
                                                         self.calculateTheRemainig(prc: self.newPriceSpend)
-                                                        print(arrayOfSpend)
+                                                        print(self.env.currentTravelList.spendMoney)
                                                         self.newNameSpend = ""
                                                         self.newPriceSpend = ""
                                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -294,8 +377,8 @@ struct TravelListDetails: View {
                                 if self.isClickBefore {
                                     VStack{
                                         Group{
-                                            if arrayOfBefore.count >= 0 {
-                                                ForEach(arrayOfBefore, id: \.self){ i in
+                                            if env.currentTravelList.befotrtraveling.count >= 0 {
+                                                ForEach(env.currentTravelList.befotrtraveling, id: \.self){ i in
                                                     HStack{
                                                         Text(i.beforeName)
                                                             .modifier(blueColorForAddTitles())
@@ -333,9 +416,9 @@ struct TravelListDetails: View {
                                                         self.newPriceBefore = "0.0"
                                                     } // only price empty will continue
                                                     self.refresh = true
-                                                    arrayOfBefore.append(BeforeTraveling(beforeName: self.newNameBefore, beforePrice: self.newPriceBefore))
+                                                    self.env.currentTravelList.befotrtraveling.append(BeforeTraveling(beforeName: self.newNameBefore, beforePrice: self.newPriceBefore))
                                                     self.calculateTheRemainig(prc: self.newPriceBefore)
-                                                    print(arrayOfBefore)
+                                                    print(self.env.currentTravelList.befotrtraveling)
                                                     self.newNameBefore = ""
                                                     self.newPriceBefore = ""
                                                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -363,15 +446,15 @@ struct TravelListDetails: View {
                                 if self.isClickAfter{
                                     VStack{
                                         Group{
-                                            if arrayOfAfter.count >= 0 {
-                                                ForEach(arrayOfAfter, id: \.self){ i in
+                                            if env.currentTravelList.aftertraveling.count >= 0 {
+                                                ForEach(env.currentTravelList.aftertraveling, id: \.self){ i in
                                                     HStack{
-                                                        Text(i.AfterName)
+                                                        Text(i.afterName)
                                                             .modifier(blueColorForAddTitles())
                                                             .frame(width: 190, height: 30, alignment: .center)
                                                         
                                                         Spacer()
-                                                        Text(i.AfterPrice)
+                                                        Text(i.afterPrice)
                                                             .modifier(blueColorForAddTitles())
                                                             .frame(width: 100, height: 30, alignment: .center)
                                                             .background(Color("blue button"))
@@ -401,9 +484,9 @@ struct TravelListDetails: View {
                                                             self.newPriceAfter = "0.0"
                                                         } // only price empty will continue
                                                         self.refresh = true
-                                                        arrayOfAfter.append(AfterTraveling(AfterName: self.newNameAfter, AfterPrice: self.newNameAfter))
+                                                        self.env.currentTravelList.aftertraveling.append(AfterTraveling(afterName: self.newNameAfter, afterPrice: self.newNameAfter))
                                                         self.calculateTheRemainig(prc: self.newPriceAfter)
-                                                        print(arrayOfAfter)
+                                                        print(self.env.currentTravelList.aftertraveling)
                                                         self.newNameAfter = ""
                                                         self.newPriceAfter = ""
                                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -430,8 +513,8 @@ struct TravelListDetails: View {
                                     if self.isClickOthers{
                                         VStack{
                                             Group{
-                                                if arrayOfOthers.count >= 0 {
-                                                    ForEach(arrayOfOthers, id: \.self){ i in
+                                                if env.currentTravelList.others.count >= 0 {
+                                                    ForEach(env.currentTravelList.others, id: \.self){ i in
                                                         HStack{
                                                             Text(i.otherName)
                                                                 .modifier(blueColorForAddTitles())
@@ -468,9 +551,12 @@ struct TravelListDetails: View {
                                                                 self.newPriceOthers = "0.0"
                                                             } // only price empty will continue
                                                             self.refresh = true
-                                                            arrayOfOthers.append(others(otherName: self.newNameOthers, otherPrice: self.newPriceOthers))
+                                                          //  self.env.currentTravelList.others.append(Others(otherName: self.newNameOthers, otherPrice: self.newPriceOthers))
+                                                            
+                                                            
+                                                            
                                                             self.calculateTheRemainig(prc: self.newPriceOthers)
-                                                            print(arrayOfOthers)
+                                                            print(self.env.currentTravelList.others)
                                                             self.newNameOthers = ""
                                                             self.newPriceOthers = ""
                                                             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -493,6 +579,14 @@ struct TravelListDetails: View {
                                                 self.showingAlert = true
                                                 self.moveToMain = true
                                                 
+                                                
+                                                    self.env.alltravelLists.append(self.env.currentTravelList)
+                                                    print(self.env.alltravelLists)
+                                                    
+                                                
+                                                
+                                               
+                                                
                                             })
                                             {
                                                 Text("Save")
@@ -505,10 +599,14 @@ struct TravelListDetails: View {
                                                     .cornerRadius(20)
                                             }
                                             .alert(isPresented: $showingAlert) {
+                                                
                                                 Alert(title: Text("Your List is saved successfully"), message: Text(""), dismissButton: .default(Text("Back to main list")))
                                             }
                                             Button(action: {
-                                                print(arrayOfTravels)
+                                                
+                                                
+                                                
+                                                print(self.env.alltravelLists)
                                             })
                                             {
                                                 Text("Share")
@@ -531,20 +629,20 @@ struct TravelListDetails: View {
             }
             
             
-        }}
-    
+        }.onDisappear(perform: {self.env.willMoveToNextScreen = false}) //so that mainList doesnt take you to this view immediatly and not passing CreateNewListView First
+    }
     
     func calculateTheRemainig(prc : String) {
         var theRemain : Double = 0.0
         var theNewPrice : Double = 0.0
         theNewPrice = Double(prc) ?? 0.0
-        if (self.budget != "" && self.budgetRem == ""){
-            self.budgetRem = self.budget
+        if (self.env.currentLista.budget != "" && self.budgetRem == ""){
+            self.budgetRem = self.env.currentLista.budget
             theRemain = Double(self.budgetRem) ?? 0.0
             self.budgetRem = String(theRemain-theNewPrice)
             print(theNewPrice)
         }
-        else if (self.budget != "" && self.budgetRem != ""){
+        else if (self.env.currentLista.budget != "" && self.budgetRem != ""){
             theRemain = Double(self.budgetRem) ?? 0.0
             self.budgetRem = String(theRemain-theNewPrice)
             print(theNewPrice)
@@ -553,7 +651,7 @@ struct TravelListDetails: View {
     }
     
     func Currency(){
-        let budget = Double(self.budget) ?? 0.0
+        let budget = Double(self.env.currentLista.budget) ?? 0.0
         if ((CurrencyFrom == "KWD") || (CurrencyFrom == "Dinar") || (CurrencyFrom == "kwd") || (CurrencyFrom == "dinar")) && (CurrencyTo == "USD") || ((CurrencyTo == "Usd") || (CurrencyTo == "dollar") || (CurrencyTo == "Dollar") || (CurrencyTo == "$")){
             let budget = budget / 0.1983
             self.value = String (format: "$ %.2f", budget)
