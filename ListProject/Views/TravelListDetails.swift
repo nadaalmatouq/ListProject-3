@@ -506,7 +506,7 @@ struct TravelListDetails: View {
                                                 .resizable()
                                                 .frame(width: 20, height: 20, alignment: .center)
                                                 .foregroundColor(Color.black)
-                                            Text("Others.. ").modifier(blueColorForAddTitles())
+                                            Text("Others... ").modifier(blueColorForAddTitles())
                                             Spacer()
                                         }
                                     }.padding(.horizontal)
