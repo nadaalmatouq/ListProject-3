@@ -26,7 +26,7 @@ class Env: ObservableObject{
     
     @Published var currentTravelList : TravelList = TravelList(lista: Lista(givenName: "", budget: "", id: UUID(), type: .travel), spendMoney: [SpendMoney(spendName: "", spendPrice: "", id: UUID())], others: [Others(otherName: "", otherPrice: "", id: UUID())], befotrtraveling: [BeforeTraveling(beforeName: "", beforePrice: "", id: UUID())], aftertraveling: [AfterTraveling(afterName: "", afterPrice: "", id: UUID())])
     
-    @Published var alltravelLists : [TravelList] = [TravelList(lista: Lista(givenName: "", budget: "", id: UUID(), type: .travel), spendMoney: [SpendMoney(spendName: "", spendPrice: "", id: UUID())], others: [Others(otherName: "", otherPrice: "", id: UUID())], befotrtraveling: [BeforeTraveling(beforeName: "", beforePrice: "", id: UUID())], aftertraveling: [AfterTraveling(afterName: "", afterPrice: "", id: UUID())])]
+    @Published var alltravelLists : [TravelList] = [TravelList(lista: Lista(givenName: "H", budget: "", id: UUID(), type: .travel), spendMoney: [SpendMoney(spendName: "", spendPrice: "", id: UUID())], others: [Others(otherName: "", otherPrice: "", id: UUID())], befotrtraveling: [BeforeTraveling(beforeName: "", beforePrice: "", id: UUID())], aftertraveling: [AfterTraveling(afterName: "", afterPrice: "", id: UUID())])]
     
    
    // @Published var currentCelebrationList : CelebrationList = CelebrationList(lista: Lista(givenName: "", budget: "", id: UUID(), type: .travel), spendMoney: [SpendMoney(spendName: "", spendPrice: "", id: UUID())],

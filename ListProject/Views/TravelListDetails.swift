@@ -11,12 +11,12 @@ import Combine
 import UIKit
 
 
-struct TravelList {
+struct TravelList : Hashable, Identifiable{
     
     //
     var lista : Lista
     
-    
+        var id = UUID()
     var spendMoney : [SpendMoney]
     var others : [Others]
     var befotrtraveling : [BeforeTraveling]
