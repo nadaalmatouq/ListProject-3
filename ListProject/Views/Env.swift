@@ -44,6 +44,12 @@ class Env: ObservableObject{
          , other: [OtherList(name: "", price: "", id: UUID()) ])
      ]
     
-   
+    @Published var currentShoppingList : ShoppingList = ShoppingList(lista: Lista(givenName: "testShop", budget: "50", id: UUID(), type: .shopping), listClothesAccessories: [AccessorisStruct(clothName: "t1", clothPrice: "")], listFoodVegetables: [foodStruct(foName: "t2", foPrice: "")], listElectronicDevices: [electronicStruct(eleName: "t3", elePrice: "")], listOthers: [othersStruct(otherName: "t4", otherPrice: "")])
+       
+ 
+    
+    @Published var allShoppingLists : [ShoppingList] = [ShoppingList(lista: Lista(givenName: "testShop", budget: "50", id: UUID(), type: .shopping), listClothesAccessories: [AccessorisStruct(clothName: "t1", clothPrice: "")], listFoodVegetables: [foodStruct(foName: "t2", foPrice: "")], listElectronicDevices: [electronicStruct(eleName: "t3", elePrice: "")], listOthers: [othersStruct(otherName: "t4", otherPrice: "")])]
+    
+    
     
 }//End class Env
