@@ -94,16 +94,14 @@ struct celebrationDetailsList: View {
     @State var refreshNow = false
     @State var moveToMain = false
     @State private var showingAlert = false  // alert for save button
-    // the below var for list picture
-    @State var imageData : Data = .init(capacity: 0)
-    @State var show = false
-    @State var imagePicker = false
-    @State var source : UIImagePickerController.SourceType = .photoLibrary
+    
     // second new picture : from github
     @State private var image1: Image? = Image(systemName: "camera.circle")
     @State private var shouldPresentImagePicker = false
     @State private var shouldPresentActionScheet = false
     @State private var shouldPresentCamera = false
+    
+    @Binding var isEdit : Bool // this var will be passed from main list, to make the save as edit array , not new one
     
     var body: some View {
    
@@ -530,8 +528,9 @@ struct celebrationDetailsList: View {
         }
     }
     
+  
     
-    }
+}
 
     
  
@@ -601,9 +600,9 @@ class ImagePickerViewCoordinator: NSObject, UINavigationControllerDelegate, UIIm
 
 
 
-
-struct celebrationDetailsList_Previews: PreviewProvider {
-    static var previews: some View {
-        celebrationDetailsList()
-    }
-}
+//
+//struct celebrationDetailsList_Previews: PreviewProvider {
+//    static var previews: some View {
+//        celebrationDetailsList()
+//    }
+//}

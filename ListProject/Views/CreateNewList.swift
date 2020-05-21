@@ -36,6 +36,9 @@ struct CreateNewList: View {
      let pageWidth: CGFloat = 380
      let pagePadding: CGFloat = 20
      let numberOfPages: Int = 3
+    
+       @Binding var isEdit : Bool // this var will be passed from main list, to make the save as edit array , not new one
+    
     var body: some View {
 
       
@@ -45,7 +48,7 @@ struct CreateNewList: View {
             PagingScrollView(activePageIndex: self.$activePageIndex, itemCount:self.numberOfPages ,pageWidth:geometry.size.width, tileWidth:self.pageWidth, tilePadding: self.pagePadding){
                 ForEach(self.env.types, id: \.self) { typpe in
                     GeometryReader { geometry2 in
-                        SingleListView(currentListType: typpe, sheetViewStatus: self.$sheetViewStatus, addListName: self.$addListName,addListBudget: self.$addListBudget)
+                        SingleListView(currentListType: typpe, sheetViewStatus: self.$sheetViewStatus, addListName: self.$addListName,addListBudget: self.$addListBudget, isEdit: self.$isEdit)
                             
                             .onTapGesture {
                                 print ("tap on index: \(typpe)")
@@ -78,21 +81,23 @@ struct SingleListView: View {
     @Binding var addListBudget: String
     
     
+    @Binding var isEdit : Bool // this var will be passed from main list, to make the save as edit array , not new one
+    
     var body: some View {
         
         
         ZStack{
             
             HStack{
-                NavigationLink(destination: TravelListDetails().environmentObject(self.env), isActive: self.$env.itsatravelList){
+                NavigationLink(destination: TravelListDetails(isEdit: $isEdit).environmentObject(self.env), isActive: self.$env.itsatravelList){
                     EmptyView()
                 }
-                NavigationLink(destination: celebrationDetailsList().environmentObject(self.env), isActive: self.$env.itsaCelebrationList){
+                NavigationLink(destination: celebrationDetailsList(isEdit: $isEdit).environmentObject(self.env), isActive: self.$env.itsaCelebrationList){
                    EmptyView()
-                    
+
                 }
-                
-                NavigationLink(destination: ShoppingList().environmentObject(self.env), isActive: self.$env.itsaShoppingList){
+
+                NavigationLink(destination: ShoppingListDetail(isEdit: $isEdit).environmentObject(self.env), isActive: self.$env.itsaShoppingList){
                    EmptyView()
                 }
                 
@@ -222,7 +227,8 @@ struct SheetView: View {
             else {
                 
                 
-               // self.env.currentShoppingList.lista = self.env.currentLista   SHOULD BE ADDED
+                self.env.currentShoppingList.lista = self.env.currentLista
+                //SHOULD BE ADDED ... done
                 self.env.itsaShoppingList = true
                 
             }
@@ -257,9 +263,9 @@ struct SheetView: View {
 
 
 
-struct CreateNewList_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        CreateNewList().environmentObject(Env())
-    }
-}
+//struct CreateNewList_Previews: PreviewProvider {
+//    
+//    static var previews: some View {
+//        CreateNewList().environmentObject(Env())
+//    }
+//}

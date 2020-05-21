@@ -166,17 +166,14 @@ struct TravelListDetails: View {
     @State private var showingAlert = false
     @State var moveToMain = false
     
-    
-    // the below var for list picture
-    @State var imageData : Data = .init(capacity: 0)
-    @State var show = false
-    @State var imagePicker = false
-    @State var source : UIImagePickerController.SourceType = .photoLibrary
     // second new picture : from github
     @State private var image2: Image? = Image(systemName: "camera.circle")//should be deleted ifput in env
     @State private var shouldPresentImagePicker = false
     @State private var shouldPresentActionScheet = false
     @State private var shouldPresentCamera = false
+    
+    @Binding var isEdit : Bool // this var will be passed from main list, to make the save as edit array , not new one
+    
     var body: some View {
         
         ZStack {
@@ -689,9 +686,9 @@ struct TravelListDetails: View {
 //}
 //}
 
-struct TravelListDetails_Previews: PreviewProvider {
-    static var previews: some View {
-        TravelListDetails()
-    }
-}
+//struct TravelListDetails_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TravelListDetails()
+//    }
+//}
 

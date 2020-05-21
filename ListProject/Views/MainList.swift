@@ -17,7 +17,7 @@ struct MainList: View {
     
      @EnvironmentObject var env: Env
    // @State var OverallList : [OverallList] = TotalList
-   
+   @State var isEdit = false // this var to make the array edit not append new one
     var backgroungColor = "Background"
     @State var isWorkWillAdd = false
     @State var isWorkWillEdit = false   //DONT FORGET TO TOGGLE IT SO WHEN YOU COME BACK AFTER THE FIRST TIME ITS NOT ALWAYS TRUE
@@ -29,10 +29,10 @@ struct MainList: View {
                     .edgesIgnoringSafeArea(.all)
                 VStack{
                     HStack{
-                        NavigationLink(destination: CreateNewList().environmentObject(self.env), isActive: $isWorkWillAdd){
+                        NavigationLink(destination: CreateNewList(isEdit: $isEdit).environmentObject(self.env), isActive: $isWorkWillAdd){
                             Text("")
                         }
-                        NavigationLink(destination: TravelListDetails().environmentObject(self.env), isActive: $isWorkWillEdit){
+                        NavigationLink(destination: TravelListDetails(isEdit: $isEdit).environmentObject(self.env), isActive: $isWorkWillEdit){
                            Text("")
                         }
                         
@@ -59,6 +59,7 @@ struct MainList: View {
                                       .onTapGesture {
                                                                                         self.isWorkWillEdit = true
                                                                                      self.env.currentTravelList = i
+                                        self.isEdit = true
                                                                                             //print(self.env.alltravelLists)
                     ////                                                                      self.nameList = OneListLoop.lista.givenName
                                                                                 }
