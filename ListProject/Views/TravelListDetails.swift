@@ -675,6 +675,15 @@ struct TravelListDetails: View {
         
         
     }
+    
+//    func editArray() -> Int{
+//        var theIndex : Int = 0
+//        if let i = env.currentTravelList.lista.id.firstIndex(where: { $0. }) {
+//            print("\(students[i]) starts with 'A'! with \(i)")
+//            theIndex = i
+//        }
+//        return theIndex
+//    }
 }
 
 // the struct bellow for modifier with blue
