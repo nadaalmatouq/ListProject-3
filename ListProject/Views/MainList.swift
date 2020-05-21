@@ -17,7 +17,10 @@ struct MainList: View {
     
      @EnvironmentObject var env: Env
    // @State var OverallList : [OverallList] = TotalList
-   @State var isEdit = false // this var to make the array edit not append new one
+   @State var isEditTravel = false // this var to make the array edit not append new one
+    @State var isEdit = false
+     @State var isEditShopping = false
+     @State var isEditCeleb = false
     var backgroungColor = "Background"
     @State var isWorkWillAdd = false
     @State var isWorkWillEdit = false   //DONT FORGET TO TOGGLE IT SO WHEN YOU COME BACK AFTER THE FIRST TIME ITS NOT ALWAYS TRUE
@@ -32,9 +35,15 @@ struct MainList: View {
                         NavigationLink(destination: CreateNewList(isEdit: $isEdit).environmentObject(self.env), isActive: $isWorkWillAdd){
                             Text("")
                         }
-                        NavigationLink(destination: TravelListDetails(isEdit: $isEdit).environmentObject(self.env), isActive: $isWorkWillEdit){
+                        NavigationLink(destination: TravelListDetails(isEdit: $isEditTravel).environmentObject(self.env), isActive: $isWorkWillEdit){
                            Text("")
                         }
+                        NavigationLink(destination: celebrationDetailsList(isEdit: $isEditCeleb).environmentObject(self.env), isActive: $isWorkWillEdit){
+                                               Text("")
+                                            }
+                                                NavigationLink(destination: ShoppingListDetail(isEdit: $isEditShopping).environmentObject(self.env), isActive: $isWorkWillEdit){
+                                                                       Text("")
+                                                                    }
                         
                     }
            
@@ -59,72 +68,73 @@ struct MainList: View {
                                       .onTapGesture {
                                                                                         self.isWorkWillEdit = true
                                                                                      self.env.currentTravelList = i
-                                        self.isEdit = true
+                                        self.isEditTravel = true
                                                                                             //print(self.env.alltravelLists)
-                    ////                                                                      self.nameList = OneListLoop.lista.givenName
+               
                                                                                 }
                             
-                     }
-                
-                    
-//                    List(self.env.alltravelLists){ OneListLoop in
-//
-//                          VStack  {
-//                                                        Text(OneListLoop.lista.givenName)
-//                                                            .foregroundColor(Color.black)
-//                                                            .bold()
-//                                                            .font(.system(size:24))
-//
-//
-//                                                      //  Text(OneListLoop.lista.givenName)
-//                            //                          ScrollView(.horizontal, showsIndicators: false){
-//                            //                              HStack(spacing:60){
-//                            //                                ForEach(OneListLoop , id: \.self){ (Travel: TravelList) in
-//                            //                                      VStack{
-//                            ////                                          Image(name)
-//                            ////                                              .resizable()
-//                            ////                                              .edgesIgnoringSafeArea(.all)                    .frame(width: 100, height: 100, alignment: .leading)
-//                            //                                        Text(Travel.lista.givenName)
-//                            //                                              .foregroundColor(Color.black)
-//                            //
-//                            //                                      }
-//                                                                  .onTapGesture {
-//                                                                      self.isWorkWillEdit = true
-////                                                                    self.env.currentTravelList = OneListLoop
-//                                                                        print(self.env.alltravelLists)
-////                                                                      self.nameList = OneListLoop.lista.givenName
-//                                                                  }
-//                            //                                  }
-//                            //                              }
-//                            //                          }
-//                                                    }
-////
-////
-//
-//                          //  Text(OneListLoop.lista.givenName)
-////                          ScrollView(.horizontal, showsIndicators: false){
-////                              HStack(spacing:60){
-////                                ForEach(OneListLoop , id: \.self){ (Travel: TravelList) in
-////                                      VStack{
-//////                                          Image(name)
-//////                                              .resizable()
-//////                                              .edgesIgnoringSafeArea(.all)                    .frame(width: 100, height: 100, alignment: .leading)
-////                                        Text(Travel.lista.givenName)
-////                                              .foregroundColor(Color.black)
-////
-////                                      }
-////                                      .onTapGesture {
-////                                          self.isWorkWillEdit = true
-////                                          //self.nameList = name
-////                                      }
-////                                  }
-////                              }
-////                          }
-//                        }
                     }
-//                        List(self.env.alltravelLists) { OneListLoop in
-//                                                      VStack
-//                                                  }
+                    VStack{
+                                                  
+                                                Text(self.env.allCelebrationLists[0].lista.type.name())
+                                                      .foregroundColor(Color.black)
+                                                      .bold()
+                                                      .font(.system(size:24))
+                        
+                        
+                           
+                             ForEach(self.env.allCelebrationLists, id: \.self){ i in
+                                                                VStack{
+                                                           Text(i.lista.givenName)
+                                                           .foregroundColor(Color.black)
+                                                           .bold()
+                                                           .font(.system(size:24))
+                                                                }.padding(.vertical,2)
+                                                            
+                                               .onTapGesture {
+                                                                                                 self.isWorkWillEdit = true
+                                                                                              self.env.currentCelebrationList = i
+                                                 self.isEditCeleb = true
+                                                                                                     //print(self.env.alltravelLists)
+                        
+                                                                                         }
+                        
+                        
+                                                                   }
+                            }
+                    VStack{
+                                              
+                                            Text(self.env.allShoppingLists[0].lista.type.name())
+                                                  .foregroundColor(Color.black)
+                                                  .bold()
+                                                  .font(.system(size:24))
+                    
+                    
+                       
+                         ForEach(self.env.allShoppingLists, id: \.self){ i in
+                                                            VStack{
+                                                       Text(i.lista.givenName)
+                                                       .foregroundColor(Color.black)
+                                                       .bold()
+                                                       .font(.system(size:24))
+                                                            }.padding(.vertical,2)
+                                                        
+                                           .onTapGesture {
+                                                                                             self.isWorkWillEdit = true
+                                                                                          self.env.currentShoppingList = i
+                                             self.isEditShopping = true
+                                                                                                 //print(self.env.alltravelLists)
+                    
+                            }
+                    }
+                                            }
+                    
+                    
+//                                                               }
+                    
+
+                    }
+
                     .navigationBarTitle(Text("To Do List"))
                     .navigationBarItems(trailing:
                         Button(action: {

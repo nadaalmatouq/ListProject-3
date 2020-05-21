@@ -6,12 +6,17 @@
 //  Copyright © 2020 shaikha. All rights reserved.
 //
 
+//
+
 import SwiftUI
-struct ShoppingList {
+import Combine
+import UIKit
+struct ShoppingList : Hashable, Identifiable {
      var lista : Lista
 //   var listName : String
 //   var listBudget : String
 //   var listRemainig : String
+       var id = UUID()
    var listClothesAccessories : [AccessorisStruct]
    var listFoodVegetables : [foodStruct]
    var listElectronicDevices : [electronicStruct]
@@ -142,7 +147,7 @@ struct ShoppingListDetail: View {
 
             Spacer()
                 VStack{
-           Text(env.currentCelebrationList.lista.type.name())
+           Text(env.currentShoppingList.lista.type.name())
                 .background(Color("light orange"))
                 .cornerRadius(20)
                 .font(.custom("Georgia Regular", size: 50))
@@ -150,7 +155,7 @@ struct ShoppingListDetail: View {
                 .shadow(color:.white, radius: 2)
                 .padding(.bottom, 30)
             HStack{
-              Text(env.currentCelebrationList.lista.givenName).bold()
+              Text(env.currentShoppingList.lista.givenName).bold()
                     .background(Color("light orange"))
                     .cornerRadius(90)
                     .font(.custom("Georgia Regular", size: 25))
@@ -167,7 +172,7 @@ struct ShoppingListDetail: View {
                         .foregroundColor(Color("blue"))
                         .frame(width: 120, height: 0, alignment: .leading)
                         .offset(x:-40)
-                     Text(env.currentCelebrationList.lista.budget)
+                     Text(env.currentShoppingList.lista.budget)
                         .frame(width: 150, height: 30, alignment: .leading)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                 }.offset(x:30,y:30)

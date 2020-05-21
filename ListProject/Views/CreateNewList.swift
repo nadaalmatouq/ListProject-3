@@ -79,7 +79,7 @@ struct SingleListView: View {
     @Binding var sheetViewStatus : Bool
     @Binding var addListName: String
     @Binding var addListBudget: String
-    
+
     
     @Binding var isEdit : Bool // this var will be passed from main list, to make the save as edit array , not new one
     
@@ -90,15 +90,18 @@ struct SingleListView: View {
             
             HStack{
                 NavigationLink(destination: TravelListDetails(isEdit: $isEdit).environmentObject(self.env), isActive: self.$env.itsatravelList){
-                    EmptyView()
+//                    EmptyView()
+                    Text("")
                 }
                 NavigationLink(destination: celebrationDetailsList(isEdit: $isEdit).environmentObject(self.env), isActive: self.$env.itsaCelebrationList){
-                   EmptyView()
+//                   EmptyView()
+                           Text("")
 
                 }
 
                 NavigationLink(destination: ShoppingListDetail(isEdit: $isEdit).environmentObject(self.env), isActive: self.$env.itsaShoppingList){
-                   EmptyView()
+//                   EmptyView()
+                           Text("")
                 }
                 
                 
@@ -161,7 +164,7 @@ struct SingleListView: View {
                 }//sheet is presented
               
             }.offset(y:50)//VStackSheetView
-            
+         
             }.edgesIgnoringSafeArea(.all)
         
     }
@@ -179,7 +182,7 @@ struct SheetView: View {
       @Binding var addListBudget: String
     
     var currentListType: Type
-   
+
       
        
    
@@ -209,7 +212,7 @@ struct SheetView: View {
             self.env.currentListType = self.currentListType
           
             self.env.currentLista = Lista(givenName: self.addListName, budget: self.addListBudget, id: UUID(), type: self.env.currentListType)
-            self.env.lists.append(self.env.currentLista) //save in Lists array that has all the lists of all types
+//            self.env.lists.append(self.env.currentLista) //save in Lists array that has all the lists of all types
             
             
             if  (self.env.currentLista.type == .travel){
@@ -252,12 +255,13 @@ struct SheetView: View {
         }, label: {
     
             Text("Continue").foregroundColor(Color("orange button")).font(.largeTitle)
+     
             
-            
-        })
+            })
         
      
-    }.padding(100)
+    }
+    .padding(100)
 }
 }
 
