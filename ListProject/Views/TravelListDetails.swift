@@ -13,7 +13,7 @@ import UIKit
 
 struct TravelList : Hashable, Identifiable{
     
-    //
+    
     var lista : Lista
     
         var id = UUID()
@@ -128,19 +128,12 @@ enum whenClickeOn {
     }
 }
 struct TravelListDetails: View {
-    //    @State var expence: Expence
-    //    @State var before = [BeforeTraveling]()
-    //    @State var after = [AfterTraveling]()
+    
     
       @EnvironmentObject var env: Env
-   // var TravelList :TravelList
-    
-  //  @State var listName: String = ""
-   // @State var NameOfTheList : String = ""
-   // @State var budget : String = ""
+  
     @State var budgetRem : String = ""
-   // @State var name = ""
-  //  @State var cost = ""
+ 
     @State var addItem = false
     @State var isClickSpend = false
     @State var isClickOthers = false
@@ -148,7 +141,7 @@ struct TravelListDetails: View {
     @State var isClickAfter = false
     @State var refresh = false
     @State var GoToMain = false
-   // @State var expenses = [Expence]()
+  
     @State var addItemName: String = ""
     @State var addItemCost: String = ""
     @State var CurrencyFrom: String = ""
@@ -172,7 +165,7 @@ struct TravelListDetails: View {
     @State var whenClickOther = whenClickeOn.plus
     @State private var showingAlert = false
     @State var moveToMain = false
-    //    @ObservedObject var taskStore = TaskStored()
+    
     
     // the below var for list picture
     @State var imageData : Data = .init(capacity: 0)
@@ -629,20 +622,20 @@ struct TravelListDetails: View {
             }
             
             
-        }.onDisappear(perform: {self.env.willMoveToNextScreen = false}) //so that mainList doesnt take you to this view immediatly and not passing CreateNewListView First
+        }//.onDisappear(perform: {self.env.willMoveToNextScreen = false}) //so that mainList doesnt take you to this view immediatly and not passing CreateNewListView First
     }
     
     func calculateTheRemainig(prc : String) {
         var theRemain : Double = 0.0
         var theNewPrice : Double = 0.0
         theNewPrice = Double(prc) ?? 0.0
-        if (self.env.currentLista.budget != "" && self.budgetRem == ""){
-            self.budgetRem = self.env.currentLista.budget
+        if (self.env.currentTravelList.lista.budget != "" && self.budgetRem == ""){
+            self.budgetRem = self.env.currentTravelList.lista.budget
             theRemain = Double(self.budgetRem) ?? 0.0
             self.budgetRem = String(theRemain-theNewPrice)
             print(theNewPrice)
         }
-        else if (self.env.currentLista.budget != "" && self.budgetRem != ""){
+        else if (self.env.currentTravelList.lista.budget != "" && self.budgetRem != ""){
             theRemain = Double(self.budgetRem) ?? 0.0
             self.budgetRem = String(theRemain-theNewPrice)
             print(theNewPrice)
@@ -651,7 +644,7 @@ struct TravelListDetails: View {
     }
     
     func Currency(){
-        let budget = Double(self.env.currentLista.budget) ?? 0.0
+        let budget = Double(self.env.currentTravelList.lista.budget) ?? 0.0
         if ((CurrencyFrom == "KWD") || (CurrencyFrom == "Dinar") || (CurrencyFrom == "kwd") || (CurrencyFrom == "dinar")) && (CurrencyTo == "USD") || ((CurrencyTo == "Usd") || (CurrencyTo == "dollar") || (CurrencyTo == "Dollar") || (CurrencyTo == "$")){
             let budget = budget / 0.1983
             self.value = String (format: "$ %.2f", budget)

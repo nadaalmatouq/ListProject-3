@@ -20,7 +20,6 @@
 		01A333A02470678A008D7649 /* AddItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A3339F2470678A008D7649 /* AddItems.swift */; };
 		141EAD33246F5397009604DE /* TravelListDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141EAD32246F5397009604DE /* TravelListDetails.swift */; };
 		141EAD35246F5D6D009604DE /* PagingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141EAD34246F5D6D009604DE /* PagingScrollView.swift */; };
-		141EAD37246F9805009604DE /* TravelList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141EAD36246F9805009604DE /* TravelList.swift */; };
 		14731BD924736BA300466E86 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14731BD824736BA300466E86 /* Type.swift */; };
 		14788035246F048E008931EB /* CreateNewList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14788034246F048E008931EB /* CreateNewList.swift */; };
 		14788039246F07F1008931EB /* Env.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14788038246F07F1008931EB /* Env.swift */; };
@@ -47,7 +46,6 @@
 		01A3339F2470678A008D7649 /* AddItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItems.swift; sourceTree = "<group>"; };
 		141EAD32246F5397009604DE /* TravelListDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelListDetails.swift; sourceTree = "<group>"; };
 		141EAD34246F5D6D009604DE /* PagingScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingScrollView.swift; sourceTree = "<group>"; };
-		141EAD36246F9805009604DE /* TravelList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TravelList.swift; path = ListProject/Models/TravelList.swift; sourceTree = SOURCE_ROOT; };
 		14731BD824736BA300466E86 /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		14788034246F048E008931EB /* CreateNewList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewList.swift; sourceTree = "<group>"; };
 		14788038246F07F1008931EB /* Env.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Env.swift; sourceTree = "<group>"; };
@@ -113,7 +111,6 @@
 		01312ED7246EB26000A69737 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				141EAD36246F9805009604DE /* TravelList.swift */,
 				01312EDB246EB64100A69737 /* OverallList.swift */,
 				14731BD824736BA300466E86 /* Type.swift */,
 				01A3339D247059AB008D7649 /* Task.swift */,
@@ -212,7 +209,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				141EAD37246F9805009604DE /* TravelList.swift in Sources */,
 				DFFFE1402471D96F00A4C756 /* ShoppingList.swift in Sources */,
 				14788039246F07F1008931EB /* Env.swift in Sources */,
 				141EAD35246F5D6D009604DE /* PagingScrollView.swift in Sources */,

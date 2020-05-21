@@ -15,27 +15,35 @@ class Env: ObservableObject{
     @Published var types: [Type] = [.travel,.celebration,.shopping]
     @Published var currentLista : Lista = Lista(givenName: "", budget: "", id: UUID(), type: .travel)
     
-      @Published var willMoveToNextScreen = false
+     // @Published var willMoveToNextScreen = false
     
+    @Published var itsatravelList: Bool = false   //DONT FORGET TO TOGGLE IT
+    @Published var itsaCelebrationList: Bool = false
+    @Published var itsaShoppingList: Bool = false 
     
-      //  var arrayOfBefore : [BeforeTraveling] = []
-      //  var arrayOfAfter : [AfterTraveling] = []
-      //  var arrayOfSpend : [SpendMoney] = []
-      //  var arrayOfOthers : [others] = []
-       
     
     @Published var currentTravelList : TravelList = TravelList(lista: Lista(givenName: "", budget: "", id: UUID(), type: .travel), spendMoney: [SpendMoney(spendName: "", spendPrice: "", id: UUID())], others: [Others(otherName: "", otherPrice: "", id: UUID())], befotrtraveling: [BeforeTraveling(beforeName: "", beforePrice: "", id: UUID())], aftertraveling: [AfterTraveling(afterName: "", afterPrice: "", id: UUID())])
     
     @Published var alltravelLists : [TravelList] = [TravelList(lista: Lista(givenName: "H", budget: "", id: UUID(), type: .travel), spendMoney: [SpendMoney(spendName: "", spendPrice: "", id: UUID())], others: [Others(otherName: "", otherPrice: "", id: UUID())], befotrtraveling: [BeforeTraveling(beforeName: "", beforePrice: "", id: UUID())], aftertraveling: [AfterTraveling(afterName: "", afterPrice: "", id: UUID())])]
     
    
-   // @Published var currentCelebrationList : CelebrationList = CelebrationList(lista: Lista(givenName: "", budget: "", id: UUID(), type: .travel), spendMoney: [SpendMoney(spendName: "", spendPrice: "", id: UUID())],
-   //  remainig : "", gifts : giftsStruct(giftName: "", giftPrice: "",id: UUID())
-   // , decoration : decorationStruct(decorationName: "", decorationPrice: "", id = UUID())
-   // , clothesAccessories : clothesStruct(clothName: "", clothPrice: "",id = UUID())
-   // , other : otherStruct(otherName : "", otherPrice : String = "", id = UUID())
-   //
-
+    @Published var currentCelebrationList : CelebrationList = CelebrationList(
+        lista: Lista(givenName: "H", budget: "", id: UUID(), type: .travel)
+        , gifts: [GiftsList(name: "", price: "", id: UUID())]
+        , decoration: [DecorationList(name: "", price: "", id: UUID())]
+        , clothesAccessories: [ClothesList(name: "", price: "", id: UUID())]
+        , other: [OtherList(name: "", price: "", id: UUID()) ])
     
+    
+    
+     @Published var allCelebrationLists : [CelebrationList] = [CelebrationList(
+         lista: Lista(givenName: "H", budget: "", id: UUID(), type: .travel)
+         , gifts: [GiftsList(name: "", price: "", id: UUID())]
+         , decoration: [DecorationList(name: "", price: "", id: UUID())]
+         , clothesAccessories: [ClothesList(name: "", price: "", id: UUID())]
+         , other: [OtherList(name: "", price: "", id: UUID()) ])
+     ]
+    
+   
     
 }//End class Env
