@@ -174,6 +174,8 @@ struct TravelListDetails: View {
     
     @Binding var isEdit : Bool // this var will be passed from main list, to make the save as edit array , not new one
     
+     @Environment(\.presentationMode) var presentationMode // to dismiss the sheet after update only . only for update view : for now
+    
     var body: some View {
         
         ZStack {
@@ -563,20 +565,20 @@ struct TravelListDetails: View {
                                     Group{
                                         HStack{
                                             Button(action: {
-                                                //                            let newTravel = TravelStruct(Picture: self.image2!, Name: self.name, Budget: self.budget, Remainig: self.budgetRem, Spend: arrayOfSpend, Others: arrayOfOthers, befotrtraveling: arrayOfBefore)
-                                                //                        arrayOfTravels.append(newTravel)
-                                                //                        print(arrayOfTravels)
-                                                self.showingAlert = true
+                                               if self.isEdit {
+                                                          // func edit array .. done
+                                                         var theIndexHere = 0
+                                                         theIndexHere = self.editArray()
+                                                         print(" here in no function \(theIndexHere) end")
+                                                         self.editUsingIndex(indexx: theIndexHere)
+                                                      }
+                                                      else {
+                                                        self.env.alltravelLists.append(self.env.currentTravelList)
+                                                        print(self.env.alltravelLists)
                                                 self.moveToMain = true
-                                                
-                                                
-                                                self.env.alltravelLists.append(self.env.currentTravelList)
-                                                print(self.env.alltravelLists)
-                                                
-                                                
-                                                
-                                                
-                                                
+                                                      }
+                                                          self.showingAlert = true
+                                                           
                                                 })
                                             {
                                                 Text("Save")
@@ -590,7 +592,11 @@ struct TravelListDetails: View {
                                             }
                                             .alert(isPresented: $showingAlert) {
 
-                                                Alert(title: Text("Your List is saved successfully"), message: Text(""), dismissButton: .default(Text("Back to main list")))
+                                                Alert(title: Text("Your List is saved successfully"), message: Text(""), dismissButton: .default(Text("Back to main list")){
+                                                if self.isEdit {
+                                                     self.presentationMode.wrappedValue.dismiss()
+                                                }
+                                                })
                                             }
                                             Button(action: {
                                                 
@@ -672,28 +678,26 @@ struct TravelListDetails: View {
             self.value = String (format: "The currency is not available")
         }
         
-        
-        
     }
     
-    //    func editArray() -> Int{
-    //        var theIndex : Int = 0
-    //        if let i = env.currentTravelList.lista.id.firstIndex(where: { $0. }) {
-    //            print("\(students[i]) starts with 'A'! with \(i)")
-    //            theIndex = i
-    //        }
-    //        return theIndex
-    //    }
+    func editArray() -> Int{
+               var theIndex : Int = 0
+               if let i = env.alltravelLists.firstIndex(where: { $0.lista.id == env.currentTravelList.lista.id }) {
+                  print(" this is teeeeeest ... \(env.alltravelLists[i]) ! with index \(i) ... yes end")
+                   theIndex = i
+               }
+               return theIndex
+           }
+       
+       func editUsingIndex (indexx : Int) {
+           env.alltravelLists[indexx] = env.currentTravelList
+           print("test for update the array ... \(env.alltravelLists))")
+       }
+
+   
 }
 
-// the struct bellow for modifier with blue
-//struct blueColorForAddTitles: ViewModifier {
-//func body(content: Content) -> some View {
-//content
-//.font(.custom("Georgia Regular", size: 20))
-//.foregroundColor(Color("blue"))
-//}
-//}
+
 
 //struct TravelListDetails_Previews: PreviewProvider {
 //    static var previews: some View {

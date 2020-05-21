@@ -109,6 +109,8 @@ struct ShoppingListDetail: View {
     
     @Binding var isEdit : Bool // this var will be passed from main list, to make the save as edit array , not new one
     
+     @Environment(\.presentationMode) var presentationMode // to dismiss the sheet after update only . only for update view : for now
+    
     var body: some View {
         
         ZStack{
@@ -485,15 +487,19 @@ if refreshNow{
        Group{
        HStack{
        Button(action: {
-        if self.isEdit {
-            // func edit array
-        }
-        else {
-        self.env.allShoppingLists.append(self.env.currentShoppingList)
-            print(self.env.allShoppingLists)
-        }
-            self.showingAlert = true
-             self.moveToMain = true
+         if self.isEdit {
+                            // func edit array .. done
+                    var theIndexHere = 0
+                    theIndexHere = self.editArray()
+                print(" here in no function \(theIndexHere) end")
+                    self.editUsingIndex(indexx: theIndexHere)
+                            }
+                        else {
+            self.env.allShoppingLists.append(self.env.currentShoppingList)
+                    print(self.env.allShoppingLists)
+                               self.moveToMain = true
+                            }
+                   self.showingAlert = true
                })
                {
      Text("Save")
@@ -506,7 +512,11 @@ if refreshNow{
        .cornerRadius(20)
         }
          .alert(isPresented: $showingAlert) {
-          Alert(title: Text("Your List is saved successfully"), message: Text(""), dismissButton: .default(Text("Back to main list")))
+            Alert(title: Text("Your List is saved successfully"), message: Text(""), dismissButton: .default(Text("Back to main list")){
+                if self.isEdit {
+                     self.presentationMode.wrappedValue.dismiss()
+                }
+                })
         }
             Button(action: {
               print(self.env.allShoppingLists)
@@ -546,6 +556,23 @@ if refreshNow{
            print(self.budgetRem)
        }
    }
+    
+    func editArray() -> Int{
+                  var theIndex : Int = 0
+                  if let i = env.allShoppingLists.firstIndex(where: { $0.lista.id == env.currentShoppingList.lista.id }) {
+                     print(" this is teeeeeest ... \(env.allShoppingLists[i]) ! with index \(i) ... yes end")
+                      theIndex = i
+                  }
+                  return theIndex
+              }
+          
+          func editUsingIndex (indexx : Int) {
+              env.allShoppingLists[indexx] = env.currentShoppingList
+              print("test for update the array ... \(env.allShoppingLists))")
+          }
+
+    
+    
 }
     
                 

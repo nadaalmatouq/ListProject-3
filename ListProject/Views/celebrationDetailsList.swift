@@ -105,6 +105,8 @@ struct celebrationDetailsList: View {
     
     @Binding var isEdit : Bool // this var will be passed from main list, to make the save as edit array , not new one
     
+     @Environment(\.presentationMode) var presentationMode // to dismiss the sheet after update only . only for update view : for now
+    
     var body: some View {
         
         ZStack{
@@ -467,14 +469,19 @@ struct celebrationDetailsList: View {
                             Group{
                                 HStack{
                                     Button(action: {
-                                        
-                                        
+                                        if self.isEdit {
+                                                                                                 // func edit array .. done
+                                        var theIndexHere = 0
+                                        theIndexHere = self.editArray()
+                                        print(" here in no function \(theIndexHere) end")
+                                        self.editUsingIndex(indexx: theIndexHere)
+                                        }
+                                        else {
                                         self.env.allCelebrationLists.append(self.env.currentCelebrationList)
-                                        
                                         print(self.env.allCelebrationLists)
+                                             self.moveToMain = true
+                                        }
                                         self.showingAlert = true
-                                        self.moveToMain = true
-                                        
                                     })
                                     {
                                         Text("Save")
@@ -487,7 +494,11 @@ struct celebrationDetailsList: View {
                                             .cornerRadius(20)
                                     }
                                     .alert(isPresented: $showingAlert) {
-                                        Alert(title: Text("Your List is saved successfully"), message: Text(""), dismissButton: .default(Text("Back to main list")))
+                                        Alert(title: Text("Your List is saved successfully"), message: Text(""), dismissButton: .default(Text("Back to main list")){
+                                        if self.isEdit {
+                                             self.presentationMode.wrappedValue.dismiss()
+                                        }
+                                        })
                                     }
                                     Button(action: {
                                         print(self.env.allCelebrationLists)
@@ -531,6 +542,19 @@ struct celebrationDetailsList: View {
     }
     
     
+       func editArray() -> Int{
+                  var theIndex : Int = 0
+                  if let i = env.allCelebrationLists.firstIndex(where: { $0.lista.id == env.currentCelebrationList.lista.id }) {
+                     print(" this is teeeeeest ... \(env.allCelebrationLists[i]) ! with index \(i) ... yes end")
+                      theIndex = i
+                  }
+                  return theIndex
+              }
+          
+          func editUsingIndex (indexx : Int) {
+              env.allCelebrationLists[indexx] = env.currentCelebrationList
+              print("test for update the array ... \(env.allCelebrationLists))")
+          }
     
 }
 
