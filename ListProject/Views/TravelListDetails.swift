@@ -16,7 +16,7 @@ struct TravelList : Hashable, Identifiable{
     
     var lista : Lista
     
-        var id = UUID()
+    var id = UUID()
     var spendMoney : [SpendMoney]
     var others : [Others]
     var befotrtraveling : [BeforeTraveling]
@@ -130,10 +130,10 @@ enum whenClickeOn {
 struct TravelListDetails: View {
     
     
-      @EnvironmentObject var env: Env
-  
+    @EnvironmentObject var env: Env
+    
     @State var budgetRem : String = ""
- 
+    
     @State var addItem = false
     @State var isClickSpend = false
     @State var isClickOthers = false
@@ -141,7 +141,7 @@ struct TravelListDetails: View {
     @State var isClickAfter = false
     @State var refresh = false
     @State var GoToMain = false
-  
+    
     @State var addItemName: String = ""
     @State var addItemCost: String = ""
     @State var CurrencyFrom: String = ""
@@ -190,7 +190,7 @@ struct TravelListDetails: View {
                     
                     HStack{
                         Spacer()
-//                        RoundedRectangle(cornerRadius: 40).foregroundColor(Color("Background")).offset(y:200)
+                        //                        RoundedRectangle(cornerRadius: 40).foregroundColor(Color("Background")).offset(y:200)
                         image2!
                             .resizable()
                             .aspectRatio(contentMode: .fill)
@@ -541,7 +541,7 @@ struct TravelListDetails: View {
                                                                 self.newPriceOthers = "0.0"
                                                             } // only price empty will continue
                                                             self.refresh = true
-                                                          //  self.env.currentTravelList.others.append(Others(otherName: self.newNameOthers, otherPrice: self.newPriceOthers))
+                                                            //  self.env.currentTravelList.others.append(Others(otherName: self.newNameOthers, otherPrice: self.newPriceOthers))
                                                             
                                                             
                                                             
@@ -570,14 +570,14 @@ struct TravelListDetails: View {
                                                 self.moveToMain = true
                                                 
                                                 
-                                                    self.env.alltravelLists.append(self.env.currentTravelList)
-                                                    print(self.env.alltravelLists)
-                                                    
+                                                self.env.alltravelLists.append(self.env.currentTravelList)
+                                                print(self.env.alltravelLists)
                                                 
                                                 
-                                               
                                                 
-                                            })
+                                                
+                                                
+                                                })
                                             {
                                                 Text("Save")
                                                     .fontWeight(.semibold)
@@ -589,7 +589,7 @@ struct TravelListDetails: View {
                                                     .cornerRadius(20)
                                             }
                                             .alert(isPresented: $showingAlert) {
-                                                
+
                                                 Alert(title: Text("Your List is saved successfully"), message: Text(""), dismissButton: .default(Text("Back to main list")))
                                             }
                                             Button(action: {
@@ -676,14 +676,14 @@ struct TravelListDetails: View {
         
     }
     
-//    func editArray() -> Int{
-//        var theIndex : Int = 0
-//        if let i = env.currentTravelList.lista.id.firstIndex(where: { $0. }) {
-//            print("\(students[i]) starts with 'A'! with \(i)")
-//            theIndex = i
-//        }
-//        return theIndex
-//    }
+    //    func editArray() -> Int{
+    //        var theIndex : Int = 0
+    //        if let i = env.currentTravelList.lista.id.firstIndex(where: { $0. }) {
+    //            print("\(students[i]) starts with 'A'! with \(i)")
+    //            theIndex = i
+    //        }
+    //        return theIndex
+    //    }
 }
 
 // the struct bellow for modifier with blue
