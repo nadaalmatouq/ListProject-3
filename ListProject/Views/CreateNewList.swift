@@ -135,7 +135,7 @@ struct SingleListView: View {
               
             }.offset(y:50)//VStackSheetView
             
-            }.edgesIgnoringSafeArea(.all).navigate(to: TravelListDetails())//.navigateToCorresponding(type: env.currentListType)//takes you to corresponding list view
+            }.edgesIgnoringSafeArea(.all).navigateToCorresponding(type: env.currentListType)//takes you to corresponding list view//.navigate(to: TravelListDetails())
         
     }
 }
