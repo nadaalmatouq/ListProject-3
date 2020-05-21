@@ -70,20 +70,42 @@ struct CreateNewList: View {
 
 
 struct SingleListView: View {
-   // @Binding var listName: String
+   
+    @EnvironmentObject var env: Env
     @State var currentListType: Type
-   @EnvironmentObject var env: Env
     @Binding var sheetViewStatus : Bool
-  //  @Binding var lists : [Lista]
     @Binding var addListName: String
     @Binding var addListBudget: String
     
-  
     
     var body: some View {
         
         
         ZStack{
+            
+            HStack{
+                NavigationLink(destination: TravelListDetails().environmentObject(self.env), isActive: self.$env.itsatravelList){
+                    EmptyView()
+                }
+                NavigationLink(destination: celebrationDetailsList().environmentObject(self.env), isActive: self.$env.itsaCelebrationList){
+                   EmptyView()
+                    
+                }
+                
+                NavigationLink(destination: ShoppingList().environmentObject(self.env), isActive: self.$env.itsaShoppingList){
+                   EmptyView()
+                }
+                
+                
+            }/*.onDisappear(perform: {     self.env.itsatravelList = false
+                          
+                      
+                          self.env.itsaCelebrationList = false
+                          
+                      
+                          
+                          self.env.itsaShoppingList = false     }) */
+            
             
             
             Image(currentListType.name()).resizable().scaledToFill()
@@ -135,41 +157,26 @@ struct SingleListView: View {
               
             }.offset(y:50)//VStackSheetView
             
-            }.edgesIgnoringSafeArea(.all).navigateToCorresponding(type: env.currentListType)//takes you to corresponding list view//.navigate(to: TravelListDetails())
+            }.edgesIgnoringSafeArea(.all)
         
     }
 }
-
-struct DecideCorrespondingView: View {
-
-   @EnvironmentObject var env: Env
-var body: some View{
-    
-    
-    Text("")
-    
-    
-    
-    }
-
-}
-
-
-
-
-
-
-
 
 
 struct SheetView: View {
    // @Binding var lists : [Lista]
     @EnvironmentObject var env: Env
-    @Binding var sheetViewStatus: Bool
-    @Binding var addListName: String
-    @Binding var addListBudget: String
+ 
+    
+    @Binding var sheetViewStatus : Bool
+    
+      @Binding var addListName: String
+      @Binding var addListBudget: String
+    
     var currentListType: Type
    
+      
+       
    
     
     var body: some View{
@@ -197,19 +204,36 @@ struct SheetView: View {
             self.env.currentListType = self.currentListType
           
             self.env.currentLista = Lista(givenName: self.addListName, budget: self.addListBudget, id: UUID(), type: self.env.currentListType)
-            self.env.lists.append(self.env.currentLista) //save in Lists array
+            self.env.lists.append(self.env.currentLista) //save in Lists array that has all the lists of all types
             
             
             if  (self.env.currentLista.type == .travel){
             
             self.env.currentTravelList.lista = self.env.currentLista
+                self.env.itsatravelList = true
+                
+            }
+            else if  (self.env.currentLista.type == .celebration){
+            
+            self.env.currentCelebrationList.lista = self.env.currentLista
+                self.env.itsaCelebrationList = true
+                
+            }
+            else {
+                
+                
+               // self.env.currentShoppingList.lista = self.env.currentLista   SHOULD BE ADDED
+                self.env.itsaShoppingList = true
+                
             }
             
-          // self.env.alltravelLists.append(self.env.currentLista)
+            
+            
+          
             print(self.env.lists)
             print(self.env.currentTravelList.lista)
             
-          //when continuebool is true toggled here when pressing cotinue func is called we pass index to singleview and then cal function to check what the index is and navigate to the corresponding view
+        
         
             
             
@@ -217,14 +241,7 @@ struct SheetView: View {
             // Reset Values
             self.addListName = ""
             self.addListBudget = ""
-          //if self.env.currentListType == .travel
-          // if self.sheetViewStatus == false
-          // {
-            self.env.willMoveToNextScreen.toggle() //move to next view triggers SingleView to navigate
-                
-          //  }
-            
-            
+         
             
         }, label: {
     
@@ -238,75 +255,6 @@ struct SheetView: View {
 }
 }
 
-
-
-extension View {
-
-    /// Navigate to a new view.
-    /// - Parameters:
-    ///   - view: View to navigate to.
-    ///   - binding: Only navigates when this condition is `true`.
-    func navigate<SomeView: View>(to view: SomeView) -> some View {
-        modifier(NavigateModifier(destination: view))
-    }
-}
-
-extension View {
-
-    /// Navigate to a new view.
-    /// - Parameters:
-    ///   - view: View to navigate to.
-    ///   - binding: Only navigates when this condition is `true`.
-    func navigateToCorresponding<SomeView: View>(type: Type) -> some View {
-        
-        if type == .travel {
-        
-        return AnyView(modifier(NavigateModifier(destination: TravelListDetails())))
-        }
-        else if type == .celebration {
-            return
-             AnyView(modifier(NavigateModifier(destination: celebrationDetailsList())))
-        }
-        else {
-            
-            return AnyView(modifier(NavigateModifier(destination: TravelListDetails())))
-            
-        }
-        
-    }
-}
-
-
-
-
-
-fileprivate struct NavigateModifier<SomeView: View>: ViewModifier {
-
-    // MARK: Private properties
-    fileprivate let destination: SomeView
-   // @Binding fileprivate var binding: Bool
-  @EnvironmentObject var env: Env
-
-    // MARK: - View body
-    fileprivate func body(content: Content) -> some View {
-        NavigationView {
-            ZStack {
-                content
-                    .navigationBarTitle("")
-                    .navigationBarHidden(true)
-                
-                
-                NavigationLink(destination: destination
-                    .navigationBarTitle("")
-                    .navigationBarHidden(true),
-                               isActive: $env.willMoveToNextScreen) {
-                                EmptyView()
-
-            }
-        }//ZStack
-    }
-}
-}
 
 
 struct CreateNewList_Previews: PreviewProvider {

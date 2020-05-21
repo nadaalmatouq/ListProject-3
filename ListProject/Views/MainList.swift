@@ -16,11 +16,11 @@ import SwiftUI
 struct MainList: View {
     
      @EnvironmentObject var env: Env
-    @State var OverallList : [OverallList] = TotalList
+   // @State var OverallList : [OverallList] = TotalList
    
     var backgroungColor = "Background"
     @State var isWorkWillAdd = false
-    @State var isWorkWillEdit = false
+    @State var isWorkWillEdit = false   //DONT FORGET TO TOGGLE IT SO WHEN YOU COME BACK AFTER THE FIRST TIME ITS NOT ALWAYS TRUE
     @State var nameList = ""
     var body: some View {
         NavigationView{
@@ -32,7 +32,7 @@ struct MainList: View {
                         NavigationLink(destination: CreateNewList().environmentObject(self.env), isActive: $isWorkWillAdd){
                             Text("")
                         }
-                        NavigationLink(destination: TravelListDetails(), isActive: $isWorkWillEdit){
+                        NavigationLink(destination: TravelListDetails().environmentObject(self.env), isActive: $isWorkWillEdit){
                            Text("")
                         }
                         

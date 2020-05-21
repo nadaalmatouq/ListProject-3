@@ -13,7 +13,7 @@ struct CelebrationList {
       
     var lista : Lista
     
-    var remainig : String //should be added to TravelList also
+    //var remainig : String //should be added to Lista so all types have it also
     var gifts : [GiftsList]
     var decoration : [DecorationList]
     var clothesAccessories : [ClothesList]
@@ -44,11 +44,7 @@ struct OtherList : Hashable, Identifiable{
     var id = UUID()
 }
 
-var arrayOfCeleb : [CelebrationList] = []
-var arrayOfGifts : [GiftsList] = []
-var arrayOfDecoration : [DecorationList] = []
-var arrayOfClothes : [ClothesList] = []
-var arrayOfOther : [OtherList] = []
+
 
 enum whenClick13 {
     case plus
@@ -73,8 +69,7 @@ struct celebrationDetailsList: View {
     
     @EnvironmentObject var env: Env
     
-    @State var listName : String = ""
-    @State var budgetMon : String = ""
+   
     @State var budgetRem : String = ""
     @State var whenClickGift = whenClick13.plus
     @State var whenClickDecoration = whenClick13.plus
@@ -149,16 +144,14 @@ struct celebrationDetailsList: View {
                             
                             VStack{
                                 Spacer()
-                                Text("Celebration List")
+                                Text(env.currentCelebrationList.lista.type.name())
                                     .font(.largeTitle)
                                     .modifier(blueColorForAddTitles())
                                     .padding(.bottom, 30)
                                 HStack{
-                                    Text("List Name")
+                                    Text(env.currentCelebrationList.lista.givenName)
                                         .modifier(blueColorForAddTitles())
-                                    TextField("Enter your List Name", text: $listName)
-                                        .frame(width: 240, height: 30, alignment: .leading)
-                                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                                  
                                 }
                                 HStack{
                                     VStack(alignment: .leading, spacing:7){
@@ -172,14 +165,17 @@ struct celebrationDetailsList: View {
                                             .frame(width: 100, height: 30, alignment: .leading)
                                     }
                                     Spacer()
-                                    VStack(alignment: .leading, spacing:7){
-                                        TextField("Enter Budget", text: $budgetMon)
-                                            .keyboardType(.decimalPad)
-                                            .frame(width: 140, height: 30, alignment: .leading)
-                                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                                        Text(self.budgetRem)
+                                    VStack{
+                                   
+                                        Text(env.currentCelebrationList.lista.budget)
                                             .frame(width: 140, height: 30, alignment: .leading)
                                         // .background(Color.white)
+                                    
+                                    Text(budgetRem)
+                                    .frame(width: 140, height: 30, alignment: .leading)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                    
+                                }
                                     }
                                 }.padding(.horizontal)
                                     .padding(.vertical)
@@ -203,8 +199,8 @@ struct celebrationDetailsList: View {
                                 if self.isClickGift {
                                     VStack{
                                         Group{
-                                            if arrayOfGifts.count >= 0 {
-                                                ForEach(arrayOfGifts, id: \.self){ i in
+                                            if env.currentCelebrationList.gifts.count >= 0 {
+                                                ForEach(env.currentCelebrationList.gifts, id: \.self){ i in
                                                     HStack{
                                                         Text(i.name)
                                                             .modifier(blueColorForAddTitles())
@@ -241,9 +237,9 @@ struct celebrationDetailsList: View {
                                                             self.newPriceGifts = "0.0"
                                                         } // only price empty will continue
                                                         self.refreshNow = true
-                                                        arrayOfGifts.append(GiftsList(name: self.newNameGift, price: self.newPriceGifts))
-                                                        self.calculateTheRemainig(prc: self.newPriceGifts)
-                                                        print(arrayOfGifts)
+                                                        self.env.currentCelebrationList.gifts.append(GiftsList(name: self.newNameGift, price: self.newPriceGifts))
+                                                       self.calculateTheRemainig(prc: self.newPriceGifts)
+                                                        print(self.env.currentCelebrationList.gifts)
                                                         self.newNameGift = ""
                                                         self.newPriceGifts = ""
                                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -273,8 +269,8 @@ struct celebrationDetailsList: View {
                                     if self.isClickDecoration {
                                         VStack{
                                             Group{
-                                                if arrayOfDecoration.count >= 0 {
-                                                    ForEach(arrayOfDecoration, id: \.self){ i in
+                                                if self.env.currentCelebrationList.decoration.count >= 0 {
+                                                    ForEach(self.env.currentCelebrationList.decoration, id: \.self){ i in
                                                         HStack{
                                                             Text(i.name)
                                                                 .modifier(blueColorForAddTitles())
@@ -311,9 +307,9 @@ struct celebrationDetailsList: View {
                                                                 self.newPriceDec = "0.0"
                                                             } // only price empty will continue
                                                             self.refreshNow = true
-                                                            arrayOfDecoration.append(DecorationList(name: self.newNameDec, price: self.newPriceDec))
+                                                            self.env.currentCelebrationList.decoration.append(DecorationList(name: self.newNameDec, price: self.newPriceDec))
                                                             self.calculateTheRemainig(prc: self.newPriceDec)
-                                                            print(arrayOfDecoration)
+                                                            print(self.env.currentCelebrationList.decoration)
                                                             self.newNameDec = ""
                                                             self.newPriceDec = ""
                                                             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -344,8 +340,8 @@ struct celebrationDetailsList: View {
                                     if self.isClickClothes {
                                         VStack{
                                             Group{
-                                                if arrayOfClothes.count >= 0 {
-                                                    ForEach(arrayOfClothes, id: \.self){ i in
+                                                if self.env.currentCelebrationList.clothesAccessories.count >= 0 {
+                                                    ForEach(self.env.currentCelebrationList.clothesAccessories, id: \.self){ i in
                                                         HStack{
                                                             Text(i.name)
                                                                 .modifier(blueColorForAddTitles())
@@ -382,9 +378,9 @@ struct celebrationDetailsList: View {
                                                                 self.newPriceCloth = "0.0"
                                                             } // only price empty will continue
                                                             self.refreshNow = true
-                                                            arrayOfClothes.append(ClothesList(name: self.newNameCloth, price: self.newPriceCloth))
+                                                            self.env.currentCelebrationList.clothesAccessories.append(ClothesList(name: self.newNameCloth, price: self.newPriceCloth))
                                                             self.calculateTheRemainig(prc: self.newPriceCloth)
-                                                            print(arrayOfClothes)
+                                                            print(self.env.currentCelebrationList.clothesAccessories)
                                                             self.newNameCloth = ""
                                                             self.newPriceCloth = ""
                                                             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -416,8 +412,8 @@ struct celebrationDetailsList: View {
                                     if self.isClickOther {
                                         VStack{
                                             Group{
-                                                if arrayOfOther.count >= 0 {
-                                                    ForEach(arrayOfOther, id: \.self){ i in
+                                                if self.env.currentCelebrationList.other.count >= 0 {
+                                                    ForEach(self.env.currentCelebrationList.other, id: \.self){ i in
                                                         HStack{
                                                             Text(i.name)
                                                                 .modifier(blueColorForAddTitles())
@@ -454,9 +450,9 @@ struct celebrationDetailsList: View {
                                                                 self.newPriceOth = "0.0"
                                                             } // only price empty will continue
                                                             self.refreshNow = true
-                                                            arrayOfOther.append(OtherList(name: self.newNameOth, price: self.newPriceOth))
+                                                           self.env.currentCelebrationList.other.append(OtherList(name: self.newNameOth, price: self.newPriceOth))
                                                             self.calculateTheRemainig(prc: self.newPriceOth)
-                                                            print(arrayOfOther)
+                                                            print(self.env.currentCelebrationList.other)
                                                             self.newNameOth = ""
                                                             self.newPriceOth = ""
                                                             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -471,9 +467,11 @@ struct celebrationDetailsList: View {
                                     Group{
                                         HStack{
                                             Button(action: {
-                                             //   let newCelb = CelebrationList(listPicture: self.image1!, listName: self.lista.name, listBudget: self.budgetMon, listRemainig: self.budgetRem, listGifts: arrayOfGifts, listDecoration: arrayOfDecoration, listClothesAccessories: arrayOfClothes, listOther: arrayOfOther)
-                                              //  arrayOfCel13.append(newCelb)
-                                                print(arrayOfCeleb)
+                                             
+                                            
+                                                self.env.allCelebrationLists.append(self.env.currentCelebrationList)
+                                                
+                                                print(self.env.allCelebrationLists)
                                                 self.showingAlert = true
                                                 self.moveToMain = true
                                                 
@@ -492,7 +490,7 @@ struct celebrationDetailsList: View {
                                                 Alert(title: Text("Your List is saved successfully"), message: Text(""), dismissButton: .default(Text("Back to main list")))
                                             }
                                             Button(action: {
-                                                print(arrayOfCeleb)
+                                                print(self.env.allCelebrationLists)
                                             })
                                             {
                                                 Text("Share")
@@ -513,26 +511,31 @@ struct celebrationDetailsList: View {
                 }
             }
         
-    }
     
     func calculateTheRemainig(prc : String) {
         var theRemain : Double = 0.0
         var theNewPrice : Double = 0.0
         theNewPrice = Double(prc) ?? 0.0
-        if (self.budgetMon != "" && self.budgetRem == ""){
-            self.budgetRem = self.budgetMon
-            theRemain = Double(self.budgetRem) ?? 0.0
+    if (self.env.currentCelebrationList.lista.budget != "" && self.budgetRem == ""){
+        self.budgetRem = self.self.env.currentCelebrationList.lista.budget
+    theRemain = Double(self.budgetRem) ?? 0.0
             self.budgetRem = String(theRemain-theNewPrice)
             print(theNewPrice)
         }
-        else if (self.budgetMon != "" && self.budgetRem != ""){
+        else if (self.env.currentCelebrationList.lista.budget != "" && self.budgetRem != ""){
             theRemain = Double(self.budgetRem) ?? 0.0
             self.budgetRem = String(theRemain-theNewPrice)
             print(theNewPrice)
             print(self.budgetRem)
         }
     }
-}
+    
+    
+    }
+
+    
+ 
+
 
 
 
