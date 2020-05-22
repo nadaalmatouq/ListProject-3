@@ -10,7 +10,7 @@ import SwiftUI
 
 struct CallingWeather: View {
     var body: some View {
-              CityWeatherInfoAndMapView()
+        Text("")
     }
 }
 

@@ -50,22 +50,33 @@ struct MainList: View {
                         Text("")
                     }
                     VStack{
+                        if self.env.alltravelLists.count != 0{
+                        self.env.alltravelLists[0].picture
+                            .resizable()
+                            .frame(width: 80, height: 80)
+                        }
+                        
                         List{
+                           
                             VStack{
                         Text(self.env.currentTravelList.lista.type.name())
                             .foregroundColor(Color.black)
                             .bold()
                             .font(.system(size:24))
+                                
                                 ScrollView(.horizontal){
                                     HStack{
                     ForEach(self.env.alltravelLists, id: \.self){ i in
+                           
+                        
                             Text(i.lista.givenName)
                                
                                 .foregroundColor(Color.black)
                                 .bold()
                                 .font(.system(size:24))
                   
-                        
+                       
+                            
                             .onTapGesture {
                                 self.isWorkWillEditT = true
                                 self.env.currentTravelList = i
@@ -132,6 +143,7 @@ struct MainList: View {
                     }
                      }
                      }
+                   
                 }
                 .navigationBarTitle(Text("To Do List"))
                 .navigationBarItems(trailing:
