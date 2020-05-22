@@ -50,25 +50,43 @@ struct MainList: View {
                         Text("")
                     }
                     VStack{
+                        if self.env.alltravelLists.count != 0{
+                        self.env.alltravelLists[0].picture
+                            .resizable()
+                            .frame(width: 80, height: 80)
+                        }
+                        
                         List{
+                           
                             VStack{
                         Text(self.env.currentTravelList.lista.type.name())
                             .foregroundColor(Color.black)
                             .bold()
                             .font(.system(size:24))
+                                
                                 ScrollView(.horizontal){
                                     HStack{
                     ForEach(self.env.alltravelLists, id: \.self){ i in
+                           
+                        
                             Text(i.lista.givenName)
+                               
                                 .foregroundColor(Color.black)
                                 .bold()
                                 .font(.system(size:24))
+                  
+                       
+                            
                             .onTapGesture {
                                 self.isWorkWillEditT = true
                                 self.env.currentTravelList = i
                                 self.isEditTravel = true
-                                //print(self.env.alltravelLists)
+                                print(self.env.alltravelLists)
+                                       print(i.lista.givenName)
+                                print("HEREEEEEEE")
                         }
+                          
+                 
                     }.sheet(isPresented: $isEditTravel) {
                         TravelListDetails(isEdit: self.$isEditTravel).environmentObject(self.env)
                     }
@@ -125,6 +143,7 @@ struct MainList: View {
                     }
                      }
                      }
+                   
                 }
                 .navigationBarTitle(Text("To Do List"))
                 .navigationBarItems(trailing:
