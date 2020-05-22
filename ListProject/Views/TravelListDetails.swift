@@ -203,6 +203,9 @@ struct TravelListDetails: View {
     
      @Environment(\.presentationMode) var presentationMode // to dismiss the sheet after update only . only for update view : for now
     
+    @State var changeSaveToUpdate = "Save"  // this var for change save button text to update
+    @State var changeAlertSaveToUpdate = "Your List is saved successfully" // this var for change alert save text to update
+    
     var body: some View {
         
         ZStack {
@@ -610,7 +613,7 @@ struct TravelListDetails: View {
                                                            
                                                 })
                                             {
-                                                Text("Save")
+                                                Text(changeSaveToUpdate)
                                                     .fontWeight(.semibold)
                                                     .font(.custom("Georgia Regular", size: 25))
                                                     .padding(.horizontal, 40)
@@ -621,7 +624,7 @@ struct TravelListDetails: View {
                                             }
                                             .alert(isPresented: $showingAlert) {
 
-                                                Alert(title: Text("Your List is saved successfully"), message: Text(""), dismissButton: .default(Text("Back to main list")){
+                                                Alert(title: Text(changeAlertSaveToUpdate), message: Text(""), dismissButton: .default(Text("Back to main list")){
                                                 if self.isEdit {
                                                      self.presentationMode.wrappedValue.dismiss()
                                                 }
@@ -654,7 +657,13 @@ struct TravelListDetails: View {
             }
             
             
-        }//.onDisappear(perform: {self.env.willMoveToNextScreen = false}) //so that mainList doesnt take you to this view immediatly and not passing CreateNewListView First
+        }.onAppear {  // this on apper to change save button text to update
+            if self.isEdit{
+                self.changeSaveToUpdate = "Update"
+                self.changeAlertSaveToUpdate = "Your List is updated successfully"
+            }
+        }
+        //.onDisappear(perform: {self.env.willMoveToNextScreen = false}) //so that mainList doesnt take you to this view immediatly and not passing CreateNewListView First
     }
     
     func calculateTheRemainig(prc : String) {
