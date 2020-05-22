@@ -57,7 +57,7 @@ struct MainList: View {
                     VStack{
                         List{
                             VStack{
-                        Text(self.env.alltravelLists[0].lista.type.name())
+                        Text(self.env.currentTravelList.lista.type.name())
                             .foregroundColor(Color.black)
                             .bold()
                             .font(.system(size:24))
@@ -90,7 +90,7 @@ struct MainList: View {
                       }
                     VStack{
                         
-                        Text(self.env.allCelebrationLists[0].lista.type.name())
+                        Text(self.env.currentCelebrationList.lista.type.name())
                             .foregroundColor(Color.black)
                             .bold()
                             .font(.system(size:24))
@@ -124,7 +124,7 @@ struct MainList: View {
                     }
                     VStack{
                         
-                        Text(self.env.allShoppingLists[0].lista.type.name())
+                        Text(self.env.currentShoppingList.lista.type.name())
                             .foregroundColor(Color.black)
                             .bold()
                             .font(.system(size:24))

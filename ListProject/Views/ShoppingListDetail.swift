@@ -13,14 +13,29 @@ import Combine
 import UIKit
 struct ShoppingList : Hashable, Identifiable {
      var lista : Lista
-//   var listName : String
-//   var listBudget : String
-//   var listRemainig : String
+
        var id = UUID()
    var listClothesAccessories : [AccessorisStruct]
    var listFoodVegetables : [foodStruct]
    var listElectronicDevices : [electronicStruct]
    var listOthers : [othersStruct]
+    
+    
+    
+    
+    
+    func hash(into hasher: inout Hasher) {
+           hasher.combine(id)
+       }
+       
+       static func ==(lhs: ShoppingList, rhs: ShoppingList) -> Bool {
+            return lhs.id == rhs.id
+       }
+       
+       
+       var picture : Image = Image(systemName: "camera.circle")
+    
+    
 }
 
 struct AccessorisStruct : Hashable, Identifiable{
@@ -44,11 +59,6 @@ struct othersStruct : Hashable, Identifiable{
     var id = UUID()
 }
 
-//var arrayOfAccessoris : [AccessorisStruct] = []
-//var arrayOfFood : [foodStruct] = []
-//var arrayOfOtherss : [othersStruct] = []
-//var arrayOfelectronic : [electronicStruct] = []
-//var arrayOfCel123 : [ShoppingList] = []
 
 enum whenClick123 {
     case plus
@@ -74,9 +84,6 @@ struct ShoppingListDetail: View {
     
     @EnvironmentObject var env: Env
     
-//    @State var listName : String = ""
-//    @State var budgetMon : String = ""
-    @State var budgetRem : String = ""
     @State var whenClickAccessoris = whenClick123.plus
     @State var whenClickFood = whenClick123.plus
     @State var whenClickelectronic = whenClick123.plus
@@ -188,7 +195,7 @@ struct ShoppingListDetail: View {
                         .font(.system(size:30))
                         .frame(width: 180, height: 100, alignment: .leading)
                         
-                            Text(budgetRem)
+                        Text(env.currentShoppingList.lista.remaining)
                             .frame(width: 150, height: 30, alignment: .leading)
                             .background(Color.white)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -543,17 +550,17 @@ if refreshNow{
        var theRemain : Double = 0.0
        var theNewPrice : Double = 0.0
        theNewPrice = Double(prc) ?? 0.0
-    if (self.env.currentShoppingList.lista.budget != "" && self.budgetRem == ""){
-           self.budgetRem = self.env.currentShoppingList.lista.budget
-           theRemain = Double(self.budgetRem) ?? 0.0
-           self.budgetRem = String(theRemain-theNewPrice)
+    if (self.env.currentShoppingList.lista.budget != "" && self.env.currentShoppingList.lista.remaining == ""){
+           self.env.currentShoppingList.lista.remaining = self.env.currentShoppingList.lista.budget
+           theRemain = Double(self.env.currentShoppingList.lista.remaining) ?? 0.0
+           self.env.currentShoppingList.lista.remaining = String(theRemain-theNewPrice)
            print(theNewPrice)
        }
-       else if (self.env.currentShoppingList.lista.budget != "" && self.budgetRem != ""){
-           theRemain = Double(self.budgetRem) ?? 0.0
-           self.budgetRem = String(theRemain-theNewPrice)
+       else if (self.env.currentShoppingList.lista.budget != "" && self.env.currentShoppingList.lista.remaining != ""){
+           theRemain = Double(self.env.currentShoppingList.lista.remaining) ?? 0.0
+           self.env.currentShoppingList.lista.remaining = String(theRemain-theNewPrice)
            print(theNewPrice)
-           print(self.budgetRem)
+           print(self.env.currentShoppingList.lista.remaining)
        }
    }
     

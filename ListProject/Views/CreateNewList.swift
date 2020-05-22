@@ -15,7 +15,8 @@ struct Lista : Hashable, Identifiable{
     var budget:  String
     var id : UUID
     var type: Type
-   //  var Picture : Image
+    var remaining:  String
+  //  var picture : Image? = 
     
 }
 
@@ -189,6 +190,14 @@ struct SheetView: View {
     
     var body: some View{
     VStack {
+        
+        HStack{
+        Image(systemName: "xmark").font(.system(size: 30, weight: .bold, design: .rounded)).foregroundColor(Color("orange button")).font(.largeTitle).onTapGesture {
+             self.sheetViewStatus.toggle() //turn off sheet View
+        }
+          Spacer()
+        }.padding(.vertical,30)
+        
         HStack {
             Text("Give your list a name: ")
             Spacer()
@@ -211,7 +220,7 @@ struct SheetView: View {
             
             self.env.currentListType = self.currentListType
           
-            self.env.currentLista = Lista(givenName: self.addListName, budget: self.addListBudget, id: UUID(), type: self.env.currentListType)
+            self.env.currentLista = Lista(givenName: self.addListName, budget: self.addListBudget, id: UUID(), type: self.env.currentListType, remaining: "")
 //            self.env.lists.append(self.env.currentLista) //save in Lists array that has all the lists of all types
             
             
