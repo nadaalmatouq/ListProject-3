@@ -60,15 +60,22 @@ struct MainList: View {
                                     HStack{
                     ForEach(self.env.alltravelLists, id: \.self){ i in
                             Text(i.lista.givenName)
+                               
                                 .foregroundColor(Color.black)
                                 .bold()
                                 .font(.system(size:24))
+                  
+                        
                             .onTapGesture {
                                 self.isWorkWillEditT = true
                                 self.env.currentTravelList = i
                                 self.isEditTravel = true
-                                //print(self.env.alltravelLists)
+                                print(self.env.alltravelLists)
+                                       print(i.lista.givenName)
+                                print("HEREEEEEEE")
                         }
+                          
+                 
                     }.sheet(isPresented: $isEditTravel) {
                         TravelListDetails(isEdit: self.$isEditTravel).environmentObject(self.env)
                     }

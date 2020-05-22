@@ -27,24 +27,24 @@ struct TravelList : Hashable, Identifiable{
     }
     
     static func ==(lhs: TravelList, rhs: TravelList) -> Bool {
-         return lhs.id == rhs.id
+        return lhs.id == rhs.id
     }
     
     
     var picture : Image = Image(systemName: "camera.circle")
     
     
-   // init(lista : Lista, id : UUID,
-   //      spendMoney : [SpendMoney], others : [Others], beforetraveling : [BeforeTraveling], aftertraveling : [AfterTraveling]) {
-   //
-   //       self.lista = lista
-   //       self.id = id
-   //       self.spendMoney = spendMoney
-   //       self.others = others
-   //       self.beforetraveling = beforetraveling
-   //       self.aftertraveling = aftertraveling
-   //
-   // }
+    // init(lista : Lista, id : UUID,
+    //      spendMoney : [SpendMoney], others : [Others], beforetraveling : [BeforeTraveling], aftertraveling : [AfterTraveling]) {
+    //
+    //       self.lista = lista
+    //       self.id = id
+    //       self.spendMoney = spendMoney
+    //       self.others = others
+    //       self.beforetraveling = beforetraveling
+    //       self.aftertraveling = aftertraveling
+    //
+    // }
     
     
     
@@ -165,6 +165,7 @@ struct TravelListDetails: View {
     @State var isClickSpend = false
     @State var isClickOthers = false
     @State var isClickBefore = false
+    @State var isClickMap = false
     @State var isClickAfter = false
     @State var refresh = false
     @State var GoToMain = false
@@ -188,10 +189,12 @@ struct TravelListDetails: View {
     @State var newPriceOthers : String = ""
     @State var whenClickSpend = whenClickeOn.plus
     @State var whenClickBefore = whenClickeOn.plus
+    @State var whenClickMap = whenClickeOn.plus
     @State var whenClickAfter = whenClickeOn.plus
     @State var whenClickOther = whenClickeOn.plus
     @State private var showingAlert = false
     @State var moveToMain = false
+    @ObservedObject var netService = NetService()
     
     // second new picture : from github
     @State private var image2: Image? = Image(systemName: "camera.circle")//should be deleted ifput in env
@@ -201,7 +204,7 @@ struct TravelListDetails: View {
     
     @Binding var isEdit : Bool // this var will be passed from main list, to make the save as edit array , not new one
     
-     @Environment(\.presentationMode) var presentationMode // to dismiss the sheet after update only . only for update view : for now
+    @Environment(\.presentationMode) var presentationMode // to dismiss the sheet after update only . only for update view : for now
     
     @State var changeSaveToUpdate = "Save"  // this var for change save button text to update
     @State var changeAlertSaveToUpdate = "Your List is saved successfully" // this var for change alert save text to update
@@ -252,9 +255,17 @@ struct TravelListDetails: View {
                     VStack{
                         
                         VStack{
-                           
+                            
                             
                             Text(env.currentTravelList.lista.givenName).foregroundColor(Color.black).font(.system(size: 30, weight: .bold, design: .rounded)).padding(.vertical,20)
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
                             
                             HStack{
                                 Text("Currency From: ")
@@ -382,6 +393,7 @@ struct TravelListDetails: View {
                                     }
                                 }
                                 }
+                                
                                 HStack{
                                     Button(action: {
                                         self.whenClickBefore.toggleClick()
@@ -590,6 +602,43 @@ struct TravelListDetails: View {
                                             }
                                         }
                                     }
+                                    HStack{
+                                        Button(action: {
+                                            self.whenClickMap.toggleClick()
+                                            self.isClickMap.toggle()
+                                        }){
+                                            VStack{
+                                                HStack{
+                                                    Image(systemName:whenClickMap.textNameClick())
+                                                        .resizable()
+                                                        .frame(width: 20, height: 20, alignment: .center)
+                                                        .foregroundColor(Color("blue"))
+                                                    Text("Search Map: ").modifier(blueColorForAddTitles())
+                                                    Spacer()
+                                                }
+                                            }
+                                        }
+                                    }.padding(.horizontal)
+                                    if self.isClickMap {
+                                        VStack  {
+                                            
+                                            MapView(weather: netService.weather ?? WeatherData.all())
+                                                .frame(width: UIScreen.main.bounds.width / 1.11, height: 200)
+                                                .cornerRadius(10)
+                                                .shadow(color: .secondary, radius: 10)
+                                            TextField("Please enter city name", text: $netService.city)
+                                            { self.netService.loadWeatherInfo(by: self.netService.city)}
+                                                .font(.custom("", size: 15))
+                                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                .shadow(color: .secondary, radius: 5)
+                                                .padding()
+                                            Spacer()
+                                            CityWeatherInfo(weather: netService.weather ?? WeatherData.all())
+                                            
+                                            
+                                        }
+                                        
+                                    }
                                     
                                     
                                     Spacer()
@@ -597,21 +646,21 @@ struct TravelListDetails: View {
                                     Group{
                                         HStack{
                                             Button(action: {
-                                               if self.isEdit {
-                                                          // func edit array .. done
-                                                         var theIndexHere = 0
-                                                         theIndexHere = self.editArray()
-                                                         print(" here in no function \(theIndexHere) end")
-                                                         self.editUsingIndex(indexx: theIndexHere)
-                                                      }
-                                                      else {
-                                                        self.env.alltravelLists.append(self.env.currentTravelList)
-                                                        print(self.env.alltravelLists)
-                                                self.moveToMain = true
-                                                      }
-                                                          self.showingAlert = true
-                                                           
-                                                })
+                                                if self.isEdit {
+                                                    // func edit array .. done
+                                                    var theIndexHere = 0
+                                                    theIndexHere = self.editArray()
+                                                    print(" here in no function \(theIndexHere) end")
+                                                    self.editUsingIndex(indexx: theIndexHere)
+                                                }
+                                                else {
+                                                    self.env.alltravelLists.append(self.env.currentTravelList)
+                                                    print(self.env.alltravelLists)
+                                                    self.moveToMain = true
+                                                }
+                                                self.showingAlert = true
+                                                
+                                            })
                                             {
                                                 Text(changeSaveToUpdate)
                                                     .fontWeight(.semibold)
@@ -623,12 +672,12 @@ struct TravelListDetails: View {
                                                     .cornerRadius(20)
                                             }
                                             .alert(isPresented: $showingAlert) {
-
+                                                
                                                 Alert(title: Text(changeAlertSaveToUpdate), message: Text(""), dismissButton: .default(Text("Back to main list")){
-                                                if self.isEdit {
-                                                     self.presentationMode.wrappedValue.dismiss()
-                                                }
-                                                })
+                                                    if self.isEdit {
+                                                        self.presentationMode.wrappedValue.dismiss()
+                                                    }
+                                                    })
                                             }
                                             Button(action: {
                                                 
@@ -719,20 +768,20 @@ struct TravelListDetails: View {
     }
     
     func editArray() -> Int{
-               var theIndex : Int = 0
-               if let i = env.alltravelLists.firstIndex(where: { $0.lista.id == env.currentTravelList.lista.id }) {
-                  print(" this is teeeeeest ... \(env.alltravelLists[i]) ! with index \(i) ... yes end")
-                   theIndex = i
-               }
-               return theIndex
-           }
-       
-       func editUsingIndex (indexx : Int) {
-           env.alltravelLists[indexx] = env.currentTravelList
-           print("test for update the array ... \(env.alltravelLists))")
-       }
-
-   
+        var theIndex : Int = 0
+        if let i = env.alltravelLists.firstIndex(where: { $0.lista.id == env.currentTravelList.lista.id }) {
+            print(" this is teeeeeest ... \(env.alltravelLists[i]) ! with index \(i) ... yes end")
+            theIndex = i
+        }
+        return theIndex
+    }
+    
+    func editUsingIndex (indexx : Int) {
+        env.alltravelLists[indexx] = env.currentTravelList
+        print("test for update the array ... \(env.alltravelLists))")
+    }
+    
+    
 }
 
 
