@@ -19,8 +19,35 @@ struct TravelList : Hashable, Identifiable{
     var id = UUID()
     var spendMoney : [SpendMoney]
     var others : [Others]
-    var befotrtraveling : [BeforeTraveling]
+    var beforetraveling : [BeforeTraveling]
     var aftertraveling : [AfterTraveling]
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func ==(lhs: TravelList, rhs: TravelList) -> Bool {
+         return lhs.id == rhs.id
+    }
+    
+    
+    var picture : Image = Image(systemName: "camera.circle")
+    
+    
+   // init(lista : Lista, id : UUID,
+   //      spendMoney : [SpendMoney], others : [Others], beforetraveling : [BeforeTraveling], aftertraveling : [AfterTraveling]) {
+   //
+   //       self.lista = lista
+   //       self.id = id
+   //       self.spendMoney = spendMoney
+   //       self.others = others
+   //       self.beforetraveling = beforetraveling
+   //       self.aftertraveling = aftertraveling
+   //
+   // }
+    
+    
+    
 }
 
 
@@ -132,7 +159,7 @@ struct TravelListDetails: View {
     
     @EnvironmentObject var env: Env
     
-    @State var budgetRem : String = ""
+    
     
     @State var addItem = false
     @State var isClickSpend = false
@@ -180,6 +207,7 @@ struct TravelListDetails: View {
         
         ZStack {
             
+            
             Color(.white)
                 .edgesIgnoringSafeArea(.all)
             NavigationLink(destination: MainList(), isActive: $moveToMain){
@@ -193,7 +221,7 @@ struct TravelListDetails: View {
                     HStack{
                         Spacer()
                         //                        RoundedRectangle(cornerRadius: 40).foregroundColor(Color("Background")).offset(y:200)
-                        image2!
+                        image2?
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 70, height: 70)
@@ -221,6 +249,7 @@ struct TravelListDetails: View {
                     VStack{
                         
                         VStack{
+                           
                             
                             Text(env.currentTravelList.lista.givenName).foregroundColor(Color.black).font(.system(size: 30, weight: .bold, design: .rounded)).padding(.vertical,20)
                             
@@ -273,7 +302,7 @@ struct TravelListDetails: View {
                                     Text(env.currentTravelList.lista.budget)
                                         .frame(width: 140, height: 30, alignment: .leading)
                                         .offset(x:-38)
-                                    Text(budgetRem)
+                                    Text(self.env.currentTravelList.lista.remaining)
                                         .frame(width: 140, height: 30, alignment: .leading)
                                         .textFieldStyle(RoundedBorderTextFieldStyle())
                                 }
@@ -369,8 +398,8 @@ struct TravelListDetails: View {
                                 if self.isClickBefore {
                                     VStack{
                                         Group{
-                                            if env.currentTravelList.befotrtraveling.count >= 0 {
-                                                ForEach(env.currentTravelList.befotrtraveling, id: \.self){ i in
+                                            if env.currentTravelList.beforetraveling.count >= 0 {
+                                                ForEach(env.currentTravelList.beforetraveling, id: \.self){ i in
                                                     HStack{
                                                         Text(i.beforeName)
                                                             .modifier(blueColorForAddTitles())
@@ -408,9 +437,9 @@ struct TravelListDetails: View {
                                                         self.newPriceBefore = "0.0"
                                                     } // only price empty will continue
                                                     self.refresh = true
-                                                    self.env.currentTravelList.befotrtraveling.append(BeforeTraveling(beforeName: self.newNameBefore, beforePrice: self.newPriceBefore))
+                                                    self.env.currentTravelList.beforetraveling.append(BeforeTraveling(beforeName: self.newNameBefore, beforePrice: self.newPriceBefore))
                                                     self.calculateTheRemainig(prc: self.newPriceBefore)
-                                                    print(self.env.currentTravelList.befotrtraveling)
+                                                    print(self.env.currentTravelList.beforetraveling)
                                                     self.newNameBefore = ""
                                                     self.newPriceBefore = ""
                                                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -632,17 +661,17 @@ struct TravelListDetails: View {
         var theRemain : Double = 0.0
         var theNewPrice : Double = 0.0
         theNewPrice = Double(prc) ?? 0.0
-        if (self.env.currentTravelList.lista.budget != "" && self.budgetRem == ""){
-            self.budgetRem = self.env.currentTravelList.lista.budget
-            theRemain = Double(self.budgetRem) ?? 0.0
-            self.budgetRem = String(theRemain-theNewPrice)
+        if (self.env.currentTravelList.lista.budget != "" && self.env.currentTravelList.lista.remaining == ""){
+            self.env.currentTravelList.lista.remaining = self.env.currentTravelList.lista.budget
+            theRemain = Double(self.env.currentTravelList.lista.remaining) ?? 0.0
+            self.env.currentTravelList.lista.remaining = String(theRemain-theNewPrice)
             print(theNewPrice)
         }
-        else if (self.env.currentTravelList.lista.budget != "" && self.budgetRem != ""){
-            theRemain = Double(self.budgetRem) ?? 0.0
-            self.budgetRem = String(theRemain-theNewPrice)
+        else if (self.env.currentTravelList.lista.budget != "" && self.env.currentTravelList.lista.remaining != ""){
+            theRemain = Double(self.env.currentTravelList.lista.remaining) ?? 0.0
+            self.env.currentTravelList.lista.remaining = String(theRemain-theNewPrice)
             print(theNewPrice)
-            print(self.budgetRem)
+            print(self.env.currentTravelList.lista.remaining)
         }
     }
     

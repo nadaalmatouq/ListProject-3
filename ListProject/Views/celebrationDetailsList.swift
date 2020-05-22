@@ -20,6 +20,17 @@ struct CelebrationList : Hashable, Identifiable {
     var decoration : [DecorationList]
     var clothesAccessories : [ClothesList]
     var other : [OtherList]
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func ==(lhs: CelebrationList, rhs: CelebrationList) -> Bool {
+         return lhs.id == rhs.id
+    }
+    
+    
+    var picture : Image = Image(systemName: "camera.circle")
 }
 
 struct GiftsList : Hashable, Identifiable{
@@ -71,8 +82,6 @@ struct celebrationDetailsList: View {
     
     @EnvironmentObject var env: Env
     
-    
-    @State var budgetRem : String = ""
     @State var whenClickGift = whenClick13.plus
     @State var whenClickDecoration = whenClick13.plus
     @State var whenClickClothes = whenClick13.plus
@@ -173,7 +182,7 @@ struct celebrationDetailsList: View {
                                         .frame(width: 140, height: 30, alignment: .leading)
                                     // .background(Color.white)
                                     
-                                    Text(budgetRem)
+                                    Text(env.currentCelebrationList.lista.remaining)
                                         .frame(width: 140, height: 30, alignment: .leading)
                                         .textFieldStyle(RoundedBorderTextFieldStyle())
                                     
@@ -527,17 +536,17 @@ struct celebrationDetailsList: View {
         var theRemain : Double = 0.0
         var theNewPrice : Double = 0.0
         theNewPrice = Double(prc) ?? 0.0
-        if (self.env.currentCelebrationList.lista.budget != "" && self.budgetRem == ""){
-            self.budgetRem = self.self.env.currentCelebrationList.lista.budget
-            theRemain = Double(self.budgetRem) ?? 0.0
-            self.budgetRem = String(theRemain-theNewPrice)
+        if (self.env.currentCelebrationList.lista.budget != "" && self.env.currentCelebrationList.lista.remaining == ""){
+            self.env.currentCelebrationList.lista.remaining = self.self.env.currentCelebrationList.lista.budget
+            theRemain = Double(self.env.currentCelebrationList.lista.remaining) ?? 0.0
+            self.env.currentCelebrationList.lista.remaining = String(theRemain-theNewPrice)
             print(theNewPrice)
         }
-        else if (self.env.currentCelebrationList.lista.budget != "" && self.budgetRem != ""){
-            theRemain = Double(self.budgetRem) ?? 0.0
-            self.budgetRem = String(theRemain-theNewPrice)
+        else if (self.env.currentCelebrationList.lista.budget != "" && self.env.currentCelebrationList.lista.remaining != ""){
+            theRemain = Double(self.env.currentCelebrationList.lista.remaining) ?? 0.0
+            self.env.currentCelebrationList.lista.remaining = String(theRemain-theNewPrice)
             print(theNewPrice)
-            print(self.budgetRem)
+            print(self.env.currentCelebrationList.lista.remaining)
         }
     }
     
