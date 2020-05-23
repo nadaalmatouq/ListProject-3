@@ -671,7 +671,10 @@ self.editUsingIndex(indexx: theIndexHere)
 }
 else {
         self.env.currentTravelList.picture = self.image2!
-
+    
+    
+self.env.currentTravelList.id = UUID()
+    
 self.env.alltravelLists.append(self.env.currentTravelList)
 print(self.env.alltravelLists)
 self.moveToMain = true
