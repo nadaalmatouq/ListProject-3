@@ -26,7 +26,7 @@ class Env: ObservableObject{
     //SEE HOW WE CAN INITIALIZE 
     
     //@Published var currentTravelList : TravelList = TravelList(lista: Lista(givenName: "", budget: "", id: UUID(), type: .travel, remaining: ""), id: UUID(), spendMoney: [SpendMoney(spendName: "", spendPrice: "", id: UUID())], others: [Others(otherName: "", otherPrice: "", id: UUID())], beforetraveling: [BeforeTraveling(beforeName: "", beforePrice: "", id: UUID())], aftertraveling: [AfterTraveling(afterName: "", afterPrice: "", id: UUID())])
-    @Published var currentTravelList : TravelList = TravelList( lista: Lista(givenName: "", budget: "", id: UUID(), type: .travel, remaining: ""), picture: Image(systemName: "camera.circle") , id: UUID(), spendMoney: [], others: [], beforetraveling: [], aftertraveling: [])
+    @Published var currentTravelList : TravelList = TravelList( lista: Lista(givenName: "", budget: "", id: UUID(), type: .travel, remaining: ""), picture: UIImage(systemName: "camera.circle") , id: UUID(), spendMoney: [], others: [], beforetraveling: [], aftertraveling: [])
    
     
     //@Published var alltravelLists : [TravelList] = [TravelList(lista: Lista(givenName: "Bali", budget: "", id: UUID(), type: .travel, remaining: ""), id: UUID(), spendMoney: [SpendMoney(spendName: "", spendPrice: "", id: UUID())], others: [Others(otherName: "", otherPrice: "", id: UUID())], beforetraveling: [BeforeTraveling(beforeName: "", beforePrice: "", id: UUID())], aftertraveling: [AfterTraveling(afterName: "", afterPrice: "", id: UUID())])]

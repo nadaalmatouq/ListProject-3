@@ -13,27 +13,21 @@ import Combine
 import UIKit
 struct ShoppingList : Hashable, Identifiable {
      var lista : Lista
-
+ var picture : UIImage? = UIImage(systemName: "camera.circle")
        var id = UUID()
    var listClothesAccessories : [AccessorisStruct]
    var listFoodVegetables : [foodStruct]
    var listElectronicDevices : [electronicStruct]
    var listOthers : [othersStruct]
-    
-    
-    
-    
-    
-    func hash(into hasher: inout Hasher) {
-           hasher.combine(id)
-       }
-       
-       static func ==(lhs: ShoppingList, rhs: ShoppingList) -> Bool {
-            return lhs.id == rhs.id
-       }
-       
-       
-       var picture : Image = Image(systemName: "camera.circle")
+
+//
+//    func hash(into hasher: inout Hasher) {
+//           hasher.combine(id)
+//       }
+//
+//       static func ==(lhs: ShoppingList, rhs: ShoppingList) -> Bool {
+//            return lhs.id == rhs.id
+//       }
     
     
 }
@@ -109,7 +103,7 @@ struct ShoppingListDetail: View {
     @State var moveToMain = false
     
     // second new picture : from github
-    @State private var image1: Image? = Image(systemName: "camera.circle")
+    @State private var image1: UIImage? = UIImage(systemName: "camera.circle")
     @State private var shouldPresentImagePicker = false
     @State private var shouldPresentActionScheet = false
     @State private var shouldPresentCamera = false
@@ -135,7 +129,7 @@ struct ShoppingListDetail: View {
                 //                ZStack{
                 HStack{
                     Spacer()
-                    image1!
+                       Image(uiImage: image1!)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 70, height: 70)
@@ -501,10 +495,12 @@ if refreshNow{
                             // func edit array .. done
                     var theIndexHere = 0
                     theIndexHere = self.editArray()
+              self.env.currentShoppingList.picture = self.image1
                 print(" here in no function \(theIndexHere) end")
                     self.editUsingIndex(indexx: theIndexHere)
                             }
                         else {
+            self.env.currentShoppingList.picture = self.image1
             self.env.allShoppingLists.append(self.env.currentShoppingList)
                     print(self.env.allShoppingLists)
                                self.moveToMain = true
@@ -549,6 +545,7 @@ if refreshNow{
                 if self.isEdit{
                     self.changeSaveToUpdate = "Update"
                     self.changeAlertSaveToUpdate = "Your List is updated successfully"
+                    self.image1 = self.env.currentShoppingList.picture
                 }
             }
 

@@ -50,11 +50,11 @@ struct MainList: View {
                         Text("")
                     }
                     VStack{
-                        if self.env.alltravelLists.count != 0{
-                        self.env.alltravelLists[0].picture
-                            .resizable()
-                            .frame(width: 80, height: 80)
-                        }
+//                        if self.env.alltravelLists.count != 0{
+//                        self.env.alltravelLists[0].picture
+//                            .resizable()
+//                            .frame(width: 80, height: 80)
+//                        }
                         
                         List{
                            

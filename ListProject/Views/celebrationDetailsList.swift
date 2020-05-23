@@ -15,22 +15,23 @@ struct CelebrationList : Hashable, Identifiable {
     
     var lista : Lista
     var id = UUID()
+     var picture : UIImage? = UIImage(systemName: "camera.circle")
     //var remainig : String //should be added to Lista so all types have it also
     var gifts : [GiftsList]
     var decoration : [DecorationList]
     var clothesAccessories : [ClothesList]
     var other : [OtherList]
     
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
+//    func hash(into hasher: inout Hasher) {
+//        hasher.combine(id)
+//    }
+//
+//    static func ==(lhs: CelebrationList, rhs: CelebrationList) -> Bool {
+//         return lhs.id == rhs.id
+//    }
     
-    static func ==(lhs: CelebrationList, rhs: CelebrationList) -> Bool {
-         return lhs.id == rhs.id
-    }
     
-    
-    var picture : Image = Image(systemName: "camera.circle")
+   
 }
 
 struct GiftsList : Hashable, Identifiable{
@@ -107,7 +108,7 @@ struct celebrationDetailsList: View {
     @State private var showingAlert = false  // alert for save button
     
     // second new picture : from github
-    @State private var image1: Image? = Image(systemName: "camera.circle")
+    @State private var image1: UIImage? = UIImage(systemName: "camera.circle")
     @State private var shouldPresentImagePicker = false
     @State private var shouldPresentActionScheet = false
     @State private var shouldPresentCamera = false
@@ -133,7 +134,7 @@ struct celebrationDetailsList: View {
                     //                ZStack{
                     HStack{
                         Spacer()
-                        image1!
+                       Image(uiImage: image1!)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: 70, height: 70)
@@ -485,10 +486,12 @@ struct celebrationDetailsList: View {
                                                                                                  // func edit array .. done
                                         var theIndexHere = 0
                                         theIndexHere = self.editArray()
+                                            self.env.currentCelebrationList.picture = self.image1
                                         print(" here in no function \(theIndexHere) end")
                                         self.editUsingIndex(indexx: theIndexHere)
                                         }
                                         else {
+                                             self.env.currentCelebrationList.picture = self.image1
                                         self.env.allCelebrationLists.append(self.env.currentCelebrationList)
                                         print(self.env.allCelebrationLists)
                                              self.moveToMain = true
@@ -535,6 +538,7 @@ struct celebrationDetailsList: View {
             if self.isEdit{
                 self.changeSaveToUpdate = "Update"
                 self.changeAlertSaveToUpdate = "Your List is updated successfully"
+                self.image1 = self.env.currentCelebrationList.picture
             }
         }
 
@@ -598,7 +602,7 @@ import UIKit
 struct SUImagePickerView: UIViewControllerRepresentable {
     
     var sourceType: UIImagePickerController.SourceType = .photoLibrary
-    @Binding var image: Image?
+    @Binding var image: UIImage?
     @Binding var isPresented: Bool
     
     func makeCoordinator() -> ImagePickerViewCoordinator {
@@ -620,17 +624,19 @@ struct SUImagePickerView: UIViewControllerRepresentable {
 
 class ImagePickerViewCoordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-    @Binding var image: Image?
+    @Binding var image: UIImage?
     @Binding var isPresented: Bool
     
-    init(image: Binding<Image?>, isPresented: Binding<Bool>) {
+    init(image: Binding<UIImage?>, isPresented: Binding<Bool>) {
         self._image = image
         self._isPresented = isPresented
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            self.image = Image(uiImage: image)
+           // self.image = UIImage(uiImage: image)
+            self.image = image
+
         }
         self.isPresented = false
     }

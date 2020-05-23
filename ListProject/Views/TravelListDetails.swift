@@ -21,20 +21,20 @@ struct TravelList : Hashable, Identifiable{
 
 
 var lista : Lista
-var picture : Image = Image(systemName: "camera.circle")
+var picture : UIImage? = UIImage(systemName: "camera.circle")
 var id = UUID()
 var spendMoney : [SpendMoney]
 var others : [Others]
 var beforetraveling : [BeforeTraveling]
 var aftertraveling : [AfterTraveling]
 
-func hash(into hasher: inout Hasher) {
-hasher.combine(id)
-}
-
-static func ==(lhs: TravelList, rhs: TravelList) -> Bool {
-return lhs.id == rhs.id
-}
+//func hash(into hasher: inout Hasher) {
+//hasher.combine(id)
+//}
+//
+//static func ==(lhs: TravelList, rhs: TravelList) -> Bool {
+//return lhs.id == rhs.id
+//}
 
 
 
@@ -201,7 +201,7 @@ struct TravelListDetails: View {
 @ObservedObject var netService = NetService()
 
 // second new picture : from github
-@State private var image2: Image? = Image(systemName: "camera.circle")//should be deleted ifput in env
+@State private var image2: UIImage? = UIImage(systemName: "camera.circle")//should be deleted ifput in env
 @State private var shouldPresentImagePicker = false
 @State private var shouldPresentActionScheet = false
 @State private var shouldPresentCamera = false
@@ -232,7 +232,8 @@ HStack{
 Spacer()
 //  RoundedRectangle(cornerRadius: 40).foregroundColor(Color("Background")).offset(y:200)
 //    if isEdit == false{
-    image2?
+    
+        Image(uiImage: image2!)
 .resizable()
 .aspectRatio(contentMode: .fill)
 .frame(width: 70, height: 70)
@@ -665,7 +666,6 @@ if self.isEdit {
 var theIndexHere = 0
 theIndexHere = self.editArray()
 self.env.currentTravelList.picture = self.image2!
-
 print(" here in no function \(theIndexHere) end")
 self.editUsingIndex(indexx: theIndexHere)
 }
@@ -728,6 +728,7 @@ Text("Share")
 if self.isEdit{
 self.changeSaveToUpdate = "Update"
 self.changeAlertSaveToUpdate = "Your List is updated successfully"
+    self.image2 = self.env.currentTravelList.picture
 }
 }
 //.onDisappear(perform: {self.env.willMoveToNextScreen = false}) //so that mainList doesnt take you to this view immediatly and not passing CreateNewListView First
