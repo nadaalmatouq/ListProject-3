@@ -55,7 +55,8 @@ struct MainList: View {
 //                            .resizable()
 //                            .frame(width: 80, height: 80)
 //                        }
-                        
+                                
+
                         List{
                            
                             VStack{
@@ -66,27 +67,26 @@ struct MainList: View {
                                 
                                 ScrollView(.horizontal){
                                     HStack{
+                                    
                     ForEach(self.env.alltravelLists, id: \.self){ i in
-                           
-                        
+                        VStack{
+                        Image(uiImage: i.picture!)
+                            .resizable()
+                            .frame(width: 100, height: 100)
                             Text(i.lista.givenName)
-                               
                                 .foregroundColor(Color.black)
                                 .bold()
                                 .font(.system(size:24))
-                  
-                       
                             
-                            .onTapGesture {
-                                self.isWorkWillEditT = true
-                                self.env.currentTravelList = i
-                                self.isEditTravel = true
-                                print(self.env.alltravelLists)
-                                       print(i.lista.givenName)
-                                print("HEREEEEEEE")
-                        }
+                        }.onTapGesture {
+                        self.isWorkWillEditT = true
+                        self.env.currentTravelList = i
+                        self.isEditTravel = true
+                        print(self.env.alltravelLists)
+                               print(i.lista.givenName)
+                        print("HEREEEEEEE")
                           
-                 
+                        }.padding(.all, 20)
                     }.sheet(isPresented: $isEditTravel) {
                         TravelListDetails(isEdit: self.$isEditTravel).environmentObject(self.env)
                     }
@@ -101,16 +101,24 @@ struct MainList: View {
                         ScrollView(.horizontal){
                          HStack{
                         ForEach(self.env.allCelebrationLists, id: \.self){ i in
+                            VStack{
+                            Image(uiImage: i.picture!)
+                                .resizable()
+                                .frame(width: 100, height: 100)
                                 Text(i.lista.givenName)
                                     .foregroundColor(Color.black)
                                     .bold()
                                     .font(.system(size:24))
-                                .onTapGesture {
-                                    self.isWorkWillEditC = true
-                                    self.env.currentCelebrationList = i
-                                    self.isEditCeleb = true
-                                    //print(self.env.alltravelLists)
-                            }
+                                
+                            }.onTapGesture {
+                            self.isWorkWillEditT = true
+                            self.env.currentCelebrationList = i
+                            self.isEditTravel = true
+                            print(self.env.allCelebrationLists)
+                                   print(i.lista.givenName)
+                            print("HEREEEEEEE")
+                              
+                            }.padding(.all, 20)
                         }.sheet(isPresented: $isEditCeleb) {
                             celebrationDetailsList(isEdit: self.$isEditCeleb).environmentObject(self.env)
                         }
@@ -125,16 +133,24 @@ struct MainList: View {
                         ScrollView(.horizontal){
                              HStack{
                         ForEach(self.env.allShoppingLists, id: \.self){ i in
-                                Text(i.lista.givenName)
-                                    .foregroundColor(Color.black)
-                                    .bold()
-                                    .font(.system(size:24))
-                                .onTapGesture {
-                                    self.isWorkWillEditS = true
-                                    self.env.currentShoppingList = i
-                                    self.isEditShopping = true
-                                    //print(self.env.alltravelLists)
-                            }
+                               VStack{
+                                Image(uiImage: i.picture!)
+                                    .resizable()
+                                    .frame(width: 100, height: 100)
+                                    Text(i.lista.givenName)
+                                        .foregroundColor(Color.black)
+                                        .bold()
+                                        .font(.system(size:24))
+                                    
+                                }.onTapGesture {
+                                self.isWorkWillEditT = true
+                                self.env.currentShoppingList = i
+                                self.isEditTravel = true
+                                print(self.env.alltravelLists)
+                                       print(i.lista.givenName)
+                                print("HEREEEEEEE")
+                                  
+                                }.padding(.all, 20)
                         }.sheet(isPresented: $isEditShopping) {
                             ShoppingListDetail(isEdit: self.$isEditShopping).environmentObject(self.env)
                            }
