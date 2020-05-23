@@ -501,6 +501,7 @@ if refreshNow{
                             }
                         else {
             self.env.currentShoppingList.picture = self.image1
+            self.env.currentShoppingList.id = UUID()
             self.env.allShoppingLists.append(self.env.currentShoppingList)
                     print(self.env.allShoppingLists)
                                self.moveToMain = true

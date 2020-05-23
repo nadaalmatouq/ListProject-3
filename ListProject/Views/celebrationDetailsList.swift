@@ -492,6 +492,11 @@ struct celebrationDetailsList: View {
                                         }
                                         else {
                                              self.env.currentCelebrationList.picture = self.image1
+                                            
+                                                
+                                            self.env.currentCelebrationList.id = UUID()
+                                            
+                                            
                                         self.env.allCelebrationLists.append(self.env.currentCelebrationList)
                                         print(self.env.allCelebrationLists)
                                              self.moveToMain = true
