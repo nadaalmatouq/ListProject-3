@@ -20,15 +20,6 @@ struct ShoppingList : Hashable, Identifiable {
    var listElectronicDevices : [electronicStruct]
    var listOthers : [othersStruct]
 
-//
-//    func hash(into hasher: inout Hasher) {
-//           hasher.combine(id)
-//       }
-//
-//       static func ==(lhs: ShoppingList, rhs: ShoppingList) -> Bool {
-//            return lhs.id == rhs.id
-//       }
-    
     
 }
 

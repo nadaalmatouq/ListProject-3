@@ -22,14 +22,6 @@ struct CelebrationList : Hashable, Identifiable {
     var clothesAccessories : [ClothesList]
     var other : [OtherList]
     
-//    func hash(into hasher: inout Hasher) {
-//        hasher.combine(id)
-//    }
-//
-//    static func ==(lhs: CelebrationList, rhs: CelebrationList) -> Bool {
-//         return lhs.id == rhs.id
-//    }
-    
     
    
 }

@@ -16,7 +16,7 @@ import SwiftUI
 struct MainList: View {
     
     @EnvironmentObject var env: Env
-
+    @Environment(\.presentationMode) var presentationMode
     @State var isEditTravel = false // this var to make the array edit not append new one
     @State var isEdit = false
     @State var isEditShopping = false
@@ -50,13 +50,6 @@ struct MainList: View {
                         Text("")
                     }
                     VStack{
-//                        if self.env.alltravelLists.count != 0{
-//                        self.env.alltravelLists[0].picture
-//                            .resizable()
-//                            .frame(width: 80, height: 80)
-//                        }
-                                
-
                         List{
                            
                             VStack{
@@ -77,15 +70,10 @@ struct MainList: View {
                                 .foregroundColor(Color.black)
                                 .bold()
                                 .font(.system(size:24))
-                            
                         }.onTapGesture {
                         self.isWorkWillEditT = true
                         self.env.currentTravelList = i
                         self.isEditTravel = true
-                        print(self.env.alltravelLists)
-                               print(i.lista.givenName)
-                        print("HEREEEEEEE")
-                          
                         }.padding(.all, 20)
                     }.sheet(isPresented: $isEditTravel) {
                         TravelListDetails(isEdit: self.$isEditTravel).environmentObject(self.env)
@@ -111,13 +99,9 @@ struct MainList: View {
                                     .font(.system(size:24))
                                 
                             }.onTapGesture {
-                            self.isWorkWillEditT = true
+                            self.isWorkWillEditC = true
                             self.env.currentCelebrationList = i
-                            self.isEditTravel = true
-                            print(self.env.allCelebrationLists)
-                                   print(i.lista.givenName)
-                            print("HEREEEEEEE")
-                              
+                            self.isEditCeleb = true
                             }.padding(.all, 20)
                         }.sheet(isPresented: $isEditCeleb) {
                             celebrationDetailsList(isEdit: self.$isEditCeleb).environmentObject(self.env)
@@ -143,13 +127,9 @@ struct MainList: View {
                                         .font(.system(size:24))
                                     
                                 }.onTapGesture {
-                                self.isWorkWillEditT = true
+                                self.isWorkWillEditS = true
                                 self.env.currentShoppingList = i
-                                self.isEditTravel = true
-                                print(self.env.alltravelLists)
-                                       print(i.lista.givenName)
-                                print("HEREEEEEEE")
-                                  
+                                self.isEditShopping = true
                                 }.padding(.all, 20)
                         }.sheet(isPresented: $isEditShopping) {
                             ShoppingListDetail(isEdit: self.$isEditShopping).environmentObject(self.env)
@@ -161,12 +141,19 @@ struct MainList: View {
                      }
                    
                 }
-                .navigationBarTitle(Text("To Do List"))
+//                .navigationBarTitle(Text("To Do List"))
                 .navigationBarItems(trailing:
-                    NavigationLink(destination: CreateNewList(isEdit: $isEdit).environmentObject(self.env)){
+                    NavigationLink(destination: CreateNewList(isEdit: $isEdit).environmentObject(self.env), isActive:
+                    self.$env.taskDone2){
                         Image(systemName: "plus.circle").imageScale(.large)
                         .foregroundColor(Color("red"))
-                        .font(.system(size: 25)) }
+                        .font(.system(size: 25)) }.isDetailLink(self.env.taskDone)
+                        .onTapGesture {
+                            self.env.taskDone2.toggle()
+                    }
+                      
+                )
+           
                     // the above navigation is instead of the below , and i remove navigation from the beginning of the page
 //                    Button(action: {
 //                        self.isWorkWillAdd = true
@@ -176,14 +163,19 @@ struct MainList: View {
 //                            .foregroundColor(Color("red"))
 //                            .font(.system(size: 25))
 //                    }
-                )
+              
             }.colorMultiply(Color(backgroungColor))
             .navigationBarBackButtonHidden(true)
+                .onAppear {
+                    self.env.sheetT = false
+                    self.env.sheetC = false
+                    self.env.sheetS = false
+            }
         }
     }
+
+
 }
-
-
 
 struct MainList_Previews: PreviewProvider {
     static var previews: some View {

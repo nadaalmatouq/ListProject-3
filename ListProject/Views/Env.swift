@@ -69,7 +69,11 @@ class Env: ObservableObject{
     
     @Published var allShoppingLists : [ShoppingList] = []
       
+    @Published var sheetT = false
+    @Published var sheetC = false
+    @Published var sheetS = false
     
-    
+     @Published var taskDone = false
+    @Published var taskDone2 = false
     
 }//End class Env
