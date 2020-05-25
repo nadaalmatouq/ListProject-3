@@ -18,8 +18,6 @@ import UIKit
 
 
 struct TravelList : Hashable, Identifiable{
-    
-    
     var lista : Lista
     var picture : UIImage? = UIImage(systemName: "camera.circle")
     var id = UUID()
@@ -27,23 +25,14 @@ struct TravelList : Hashable, Identifiable{
     var others : [Others]
     var beforetraveling : [BeforeTraveling]
     var aftertraveling : [AfterTraveling]
-    
-    
-    
-    
-    
 }
-
-
-
-
-
 
 struct SpendMoney : Hashable, Identifiable{
     var spendName : String
     var spendPrice : String = ""
     var id = UUID()
 }
+
 struct Others : Hashable, Identifiable{
     var otherName : String
     var otherPrice : String = ""
@@ -62,12 +51,9 @@ struct AfterTraveling: Hashable, Identifiable{
     var id = UUID()
 }
 
-
-
 enum whenClick {
     case plus
     case minus
-    
     mutating func toggleClick(){
         switch self {
         case .plus : self = .minus
@@ -85,7 +71,6 @@ enum whenClick {
 enum whenTap {
     case arrow
     case update
-    
     mutating func toggleClick(){
         switch self {
         case .arrow : self = .update
@@ -100,31 +85,20 @@ enum whenTap {
     }
 }
 
-
-
-
-
-
-
-
 enum BeforeORAfter {
     case before
     case after
-    
-    
     func text () -> String {
         switch self {
         case .before : return"before"
         case .after : return"after"
-            
         }
     }
-    
 }
+
 enum whenClickeOn {
     case plus
     case minus
-    
     mutating func toggleClick(){
         switch self {
         case .plus : self = .minus
@@ -138,12 +112,9 @@ enum whenClickeOn {
         }
     }
 }
+
 struct TravelListDetails: View {
-    
-    
     @EnvironmentObject var env: Env
-    
-    
     
     @State var addItem = false
     @State var isClickSpend = false
@@ -153,7 +124,6 @@ struct TravelListDetails: View {
     @State var isClickAfter = false
     @State var refresh = false
     @State var GoToMain = false
-    
     @State var addItemName: String = ""
     @State var addItemCost: String = ""
     @State var CurrencyFrom: String = ""
@@ -195,24 +165,16 @@ struct TravelListDetails: View {
     var body: some View {
         
         ZStack {
-            
-            
             Color(.white)
                 .edgesIgnoringSafeArea(.all)
             //NavigationLink(destination: MainList().environmentObject(self.env), isActive: $moveToMain){
             //Text("")
             //}
-            
-            
             ScrollView{
-                
                 VStack{
-                    
                     HStack{
                         Spacer()
                         //  RoundedRectangle(cornerRadius: 40).foregroundColor(Color("Background")).offset(y:200)
-                        //    if isEdit == false{
-                        
                         Image(uiImage: image2!)
                             .resizable()
                             .aspectRatio(contentMode: .fill)
@@ -224,9 +186,7 @@ struct TravelListDetails: View {
                             .onTapGesture { self.shouldPresentActionScheet = true }
                             .sheet(isPresented: $shouldPresentImagePicker) {
                                 SUImagePickerView(sourceType: self.shouldPresentCamera ? .camera : .photoLibrary, image: self.$image2, isPresented: self.$shouldPresentImagePicker)
-                                
                         }
-                            
                         .actionSheet(isPresented: $shouldPresentActionScheet) { () -> ActionSheet in
                             ActionSheet(title: Text("Take a photo or select from photo library"), message: Text(""), buttons: [ActionSheet.Button.default(Text("Camera"), action: {
                                 self.shouldPresentImagePicker = true
@@ -236,35 +196,17 @@ struct TravelListDetails: View {
                                 self.shouldPresentCamera = false
                             }), ActionSheet.Button.cancel()])
                         }
-                        
                     }
                     //}
-                    
                     VStack{
-                        
-                        
-                        
-                        
                         VStack{
-                            
-                            
                             Text(env.currentTravelList.lista.givenName).foregroundColor(Color.black).font(.system(size: 30, weight: .bold, design: .rounded)).padding(.vertical,20)
-                            
-                            
-                            
-                            
-                            
-                            
                             HStack{
-                                
                                 Text("Currency From: ")
                                     .offset(x:20)
                                 Spacer()
-                                
                                 Text("Currency To: ")
-                                
                                 Spacer()
-                                
                             }
                             HStack{
                                 TextField("Enter Currency From..", text: $CurrencyFrom)
@@ -279,7 +221,6 @@ struct TravelListDetails: View {
                             HStack{
                                 Text("Currency in \(CurrencyTo) is: ")
                                 Button(action: {
-                                    
                                     self.Currency()
                                 }) {
                                     Text(self.value)
@@ -293,13 +234,10 @@ struct TravelListDetails: View {
                                     Text("Budget")
                                         .frame(width: 90, height: 30, alignment: .leading)
                                         .offset(x:20)
-                                    
                                     Text("Remaining")
                                         .frame(width: 90, height: 30, alignment: .leading)
                                         .offset(x:20)
-                                    
                                 }
-                                
                                 Spacer()
                                 VStack(alignment: .leading){
                                     Text(env.currentTravelList.lista.budget)
@@ -336,7 +274,6 @@ struct TravelListDetails: View {
                                                     Text(i.spendName)
                                                         .modifier(blueColorForAddTitles())
                                                         .frame(width: 190, height: 30, alignment: .center)
-                                                    
                                                     Spacer()
                                                     Text(i.spendPrice)
                                                         .modifier(blueColorForAddTitles())
@@ -382,7 +319,6 @@ struct TravelListDetails: View {
                                     }
                                 }
                                 }
-                                
                                 HStack{
                                     Button(action: {
                                         self.whenClickBefore.toggleClick()
@@ -408,7 +344,6 @@ struct TravelListDetails: View {
                                                         Text(i.beforeName)
                                                             .modifier(blueColorForAddTitles())
                                                             .frame(width: 190, height: 30, alignment: .center)
-                                                        
                                                         Spacer()
                                                         Text(i.beforePrice)
                                                             .modifier(blueColorForAddTitles())
@@ -477,7 +412,6 @@ struct TravelListDetails: View {
                                                         Text(i.afterName)
                                                             .modifier(blueColorForAddTitles())
                                                             .frame(width: 190, height: 30, alignment: .center)
-                                                        
                                                         Spacer()
                                                         Text(i.afterPrice)
                                                             .modifier(blueColorForAddTitles())
@@ -544,7 +478,6 @@ struct TravelListDetails: View {
                                                             Text(i.otherName)
                                                                 .modifier(blueColorForAddTitles())
                                                                 .frame(width: 190, height: 30, alignment: .center)
-                                                            
                                                             Spacer()
                                                             Text(i.otherPrice)
                                                                 .modifier(blueColorForAddTitles())
@@ -607,7 +540,6 @@ struct TravelListDetails: View {
                                     }.padding(.horizontal)
                                     if self.isClickMap {
                                         VStack  {
-                                            
                                             MapView(weather: netService.weather ?? WeatherData.all())
                                                 .frame(width: UIScreen.main.bounds.width / 1.11, height: 200)
                                                 .cornerRadius(10)
@@ -620,15 +552,9 @@ struct TravelListDetails: View {
                                                 .padding()
                                             Spacer()
                                             CityWeatherInfo(weather: netService.weather ?? WeatherData.all())
-                                            
-                                            
                                         }
-                                        
                                     }
-                                    
-                                    
                                     Spacer()
-                                    
                                     Group{
                                         HStack{
                                             Button(action: {
@@ -648,14 +574,10 @@ struct TravelListDetails: View {
                                                     self.env.taskDone = true
                                                     //self.moveToMain = true
                                                     self.env.sheetT = false
-                                                   // self.env.taskDone2 = false
                                                     self.env.itsatravelList.toggle()
                                                     self.presentationMode.wrappedValue.dismiss()
-                                                    //    self.presentationMode.wrappedValue.dismiss()
-                                                    
                                                 }
                                                 self.showingAlert = true
-                                                
                                             })
                                             {
                                                 Text(changeSaveToUpdate)
@@ -668,22 +590,20 @@ struct TravelListDetails: View {
                                                     .cornerRadius(20)
                                             }
                                             .alert(isPresented: $showingAlert) {
-                                                
                                                 Alert(title: Text(changeAlertSaveToUpdate), message: Text(""), dismissButton: .default(Text("Back to main list")){
                                                     if self.isEdit {
-                                                       // self.env.taskDone2 = false
+                                                        // self.env.taskDone2 = false
                                                         self.presentationMode.wrappedValue.dismiss()
                                                     }
                                                     })
                                             }
                                             Button(action: {
-                                                
-                                                
-                                                //self.presentationMode.wrappedValue.dismiss()
+                                                self.env.taskDone = true
+                                                self.presentationMode.wrappedValue.dismiss()
                                                 print(self.env.alltravelLists)
                                             })
                                             {
-                                                Text("Share")
+                                                Text("Cancel")
                                                     .fontWeight(.semibold)
                                                     .font(.custom("Georgia Regular", size: 25))
                                                     .padding(.horizontal, 40)
@@ -695,14 +615,11 @@ struct TravelListDetails: View {
                                         }.padding()
                                     }
                                 }
-                                
                             }
                         }
                     }
                 }
             }
-            
-            
         }//.navigationBarBackButtonHidden(true)
             .onAppear {  // this on apper to change save button text to update
                 if self.isEdit{
@@ -779,8 +696,6 @@ struct TravelListDetails: View {
         env.alltravelLists[indexx] = env.currentTravelList
         print("test for update the array ... \(env.alltravelLists))")
     }
-    
-    
 }
 
 

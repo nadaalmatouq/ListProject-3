@@ -11,19 +11,13 @@ import Combine
 import UIKit
 
 struct CelebrationList : Hashable, Identifiable {
-    
-    
     var lista : Lista
     var id = UUID()
      var picture : UIImage? = UIImage(systemName: "camera.circle")
-    //var remainig : String //should be added to Lista so all types have it also
     var gifts : [GiftsList]
     var decoration : [DecorationList]
     var clothesAccessories : [ClothesList]
     var other : [OtherList]
-    
-    
-   
 }
 
 struct GiftsList : Hashable, Identifiable{
@@ -50,12 +44,9 @@ struct OtherList : Hashable, Identifiable{
     var id = UUID()
 }
 
-
-
 enum whenClick13 {
     case plus
     case minus
-    
     mutating func toggleClick(){
         switch self {
         case .plus : self = .minus
@@ -71,8 +62,6 @@ enum whenClick13 {
 }
 
 struct celebrationDetailsList: View {
-    
-    
     @EnvironmentObject var env: Env
     
     @State var whenClickGift = whenClick13.plus
@@ -117,9 +106,9 @@ struct celebrationDetailsList: View {
         ZStack{
             Color("Background")
                 .edgesIgnoringSafeArea(.all)
-            NavigationLink(destination: MainList(), isActive: $moveToMain){
-                Text("")
-            }
+//            NavigationLink(destination: MainList(), isActive: $moveToMain){
+//                Text("")
+//            }
             ScrollView{
                 VStack{
                     // the bellow z,v,hstack for list picture
@@ -137,7 +126,8 @@ struct celebrationDetailsList: View {
                             .onTapGesture { self.shouldPresentActionScheet = true }
                             .sheet(isPresented: $shouldPresentImagePicker) {
                                 SUImagePickerView(sourceType: self.shouldPresentCamera ? .camera : .photoLibrary, image: self.$image1, isPresented: self.$shouldPresentImagePicker)
-                        }.actionSheet(isPresented: $shouldPresentActionScheet) { () -> ActionSheet in
+                        }
+                       .actionSheet(isPresented: $shouldPresentActionScheet) { () -> ActionSheet in
                             ActionSheet(title: Text("Take a photo or select from photo library"), message: Text(""), buttons: [ActionSheet.Button.default(Text("Camera"), action: {
                                 self.shouldPresentImagePicker = true
                                 self.shouldPresentCamera = true
@@ -148,7 +138,6 @@ struct celebrationDetailsList: View {
                         }
                     }
                     VStack{
-                        
                         VStack{
                             Spacer()
                             Text(env.currentCelebrationList.lista.type.name())
@@ -158,30 +147,24 @@ struct celebrationDetailsList: View {
                             HStack{
                                 Text(env.currentCelebrationList.lista.givenName)
                                     .modifier(blueColorForAddTitles())
-                                
                             }
                             HStack{
                                 VStack(alignment: .leading, spacing:7){
-                                    
                                     Text("Budget")
                                         .modifier(blueColorForAddTitles())
                                         .frame(width: 100, height: 30, alignment: .leading)
-                                    
                                     Text("Remaining")
                                         .modifier(blueColorForAddTitles())
                                         .frame(width: 100, height: 30, alignment: .leading)
                                 }
                                 Spacer()
                                 VStack{
-                                    
                                     Text(env.currentCelebrationList.lista.budget)
                                         .frame(width: 140, height: 30, alignment: .leading)
                                     // .background(Color.white)
-                                    
                                     Text(env.currentCelebrationList.lista.remaining)
                                         .frame(width: 140, height: 30, alignment: .leading)
                                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                                    
                                 }
                             }
                         }.padding(.horizontal)
@@ -282,7 +265,6 @@ struct celebrationDetailsList: View {
                                                     Text(i.name)
                                                         .modifier(blueColorForAddTitles())
                                                         .frame(width: 190, height: 30, alignment: .center)
-                                                    
                                                     Spacer()
                                                     Text(i.price)
                                                         .modifier(blueColorForAddTitles())
@@ -353,7 +335,6 @@ struct celebrationDetailsList: View {
                                                     Text(i.name)
                                                         .modifier(blueColorForAddTitles())
                                                         .frame(width: 190, height: 30, alignment: .center)
-                                                    
                                                     Spacer()
                                                     Text(i.price)
                                                         .modifier(blueColorForAddTitles())
@@ -411,7 +392,6 @@ struct celebrationDetailsList: View {
                                         .resizable()
                                         .frame(width: 20, height: 20, alignment: .center)
                                         .foregroundColor(Color("blue"))
-                                    
                                     Text("Other").modifier(blueColorForAddTitles())
                                     Spacer()
                                 }
@@ -425,7 +405,6 @@ struct celebrationDetailsList: View {
                                                     Text(i.name)
                                                         .modifier(blueColorForAddTitles())
                                                         .frame(width: 190, height: 30, alignment: .center)
-                                                    
                                                     Spacer()
                                                     Text(i.price)
                                                         .modifier(blueColorForAddTitles())
@@ -469,13 +448,12 @@ struct celebrationDetailsList: View {
                                     }
                                 }
                             }
-                            
                             Spacer()
                             Group{
                                 HStack{
                                     Button(action: {
                                         if self.isEdit {
-                                                                                                 // func edit array .. done
+                                    // func edit array .. done
                                         var theIndexHere = 0
                                         theIndexHere = self.editArray()
                                             self.env.currentCelebrationList.picture = self.image1
@@ -484,14 +462,14 @@ struct celebrationDetailsList: View {
                                         }
                                         else {
                                              self.env.currentCelebrationList.picture = self.image1
-                                            
-                                                
                                             self.env.currentCelebrationList.id = UUID()
-                                            
-                                            
                                         self.env.allCelebrationLists.append(self.env.currentCelebrationList)
                                         print(self.env.allCelebrationLists)
-                                             self.moveToMain = true
+                                            // self.moveToMain = true
+                                        self.env.taskDone = true
+                                          self.env.sheetC = false
+                                         self.env.itsaCelebrationList.toggle()
+                                          self.presentationMode.wrappedValue.dismiss()
                                         }
                                         self.showingAlert = true
                                     })
@@ -513,10 +491,12 @@ struct celebrationDetailsList: View {
                                         })
                                     }
                                     Button(action: {
+                                        self.env.taskDone = true
+                                        self.presentationMode.wrappedValue.dismiss()
                                         print(self.env.allCelebrationLists)
                                     })
                                     {
-                                        Text("Share")
+                                        Text("Cancel")
                                             .fontWeight(.semibold)
                                             .font(.custom("Georgia Regular", size: 25))
                                             .padding(.horizontal, 40)
@@ -538,9 +518,7 @@ struct celebrationDetailsList: View {
                 self.image1 = self.env.currentCelebrationList.picture
             }
         }
-
     }
-    
     
     func calculateTheRemainig(prc : String) {
         var theRemain : Double = 0.0
@@ -560,7 +538,6 @@ struct celebrationDetailsList: View {
         }
     }
     
-    
        func editArray() -> Int{
                   var theIndex : Int = 0
                   if let i = env.allCelebrationLists.firstIndex(where: { $0.lista.id == env.currentCelebrationList.lista.id }) {
@@ -574,14 +551,7 @@ struct celebrationDetailsList: View {
               env.allCelebrationLists[indexx] = env.currentCelebrationList
               print("test for update the array ... \(env.allCelebrationLists))")
           }
-    
 }
-
-
-
-
-
-
 
 // the struct bellow for modifier with blue
 struct blueColorForAddTitles: ViewModifier {
@@ -592,12 +562,9 @@ struct blueColorForAddTitles: ViewModifier {
     }
 }
 
-
 // second new picture : from github
-
 import UIKit
 struct SUImagePickerView: UIViewControllerRepresentable {
-    
     var sourceType: UIImagePickerController.SourceType = .photoLibrary
     @Binding var image: UIImage?
     @Binding var isPresented: Bool
@@ -620,10 +587,8 @@ struct SUImagePickerView: UIViewControllerRepresentable {
 }
 
 class ImagePickerViewCoordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-    
     @Binding var image: UIImage?
     @Binding var isPresented: Bool
-    
     init(image: Binding<UIImage?>, isPresented: Binding<Bool>) {
         self._image = image
         self._isPresented = isPresented
@@ -633,7 +598,6 @@ class ImagePickerViewCoordinator: NSObject, UINavigationControllerDelegate, UIIm
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
            // self.image = UIImage(uiImage: image)
             self.image = image
-
         }
         self.isPresented = false
     }
@@ -641,9 +605,8 @@ class ImagePickerViewCoordinator: NSObject, UINavigationControllerDelegate, UIIm
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.isPresented = false
     }
-    
 }
-
+// end of second new picture : from github
 
 
 

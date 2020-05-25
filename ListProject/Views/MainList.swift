@@ -141,7 +141,7 @@ struct MainList: View {
                      }
                    
                 }
-//                .navigationBarTitle(Text("To Do List"))
+                .navigationBarTitle(Text("To Do List"))
                 .navigationBarItems(trailing:
                     NavigationLink(destination: CreateNewList(isEdit: $isEdit).environmentObject(self.env), isActive:
                     self.$env.taskDone2){
