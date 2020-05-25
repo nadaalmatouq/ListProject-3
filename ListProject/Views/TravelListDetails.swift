@@ -645,10 +645,10 @@ struct TravelListDetails: View {
                                                     self.env.currentTravelList.id = UUID()
                                                     self.env.alltravelLists.append(self.env.currentTravelList)
                                                     print(self.env.alltravelLists)
-                                                    self.env.taskDone = false
+                                                    self.env.taskDone = true
                                                     //self.moveToMain = true
                                                     self.env.sheetT = false
-                                                    self.env.taskDone2 = false
+                                                   // self.env.taskDone2 = false
                                                     self.env.itsatravelList.toggle()
                                                     self.presentationMode.wrappedValue.dismiss()
                                                     //    self.presentationMode.wrappedValue.dismiss()
@@ -671,6 +671,7 @@ struct TravelListDetails: View {
                                                 
                                                 Alert(title: Text(changeAlertSaveToUpdate), message: Text(""), dismissButton: .default(Text("Back to main list")){
                                                     if self.isEdit {
+                                                       // self.env.taskDone2 = false
                                                         self.presentationMode.wrappedValue.dismiss()
                                                     }
                                                     })
