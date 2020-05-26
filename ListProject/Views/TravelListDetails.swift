@@ -165,7 +165,7 @@ struct TravelListDetails: View {
     var body: some View {
         
         ZStack {
-            Color(.white)
+            Color("Background")
                 .edgesIgnoringSafeArea(.all)
             //NavigationLink(destination: MainList().environmentObject(self.env), isActive: $moveToMain){
             //Text("")
@@ -200,7 +200,29 @@ struct TravelListDetails: View {
                     //}
                     VStack{
                         VStack{
-                            Text(env.currentTravelList.lista.givenName).foregroundColor(Color.black).font(.system(size: 30, weight: .bold, design: .rounded)).padding(.vertical,20)
+
+                            VStack{
+                                
+                                                      Text(env.currentTravelList.lista.givenName)
+                                .foregroundColor(Color.black).font(.system(size: 40, weight: .bold, design: .rounded)).padding(.vertical,20)
+                            HStack{
+                            VStack(alignment: .leading){
+                            Text("Budget")
+                                .font(.system(size: 30))
+                            Text(env.currentTravelList.lista.budget)
+                              .font(.system(size: 40))
+                                }
+                                Spacer()
+                                VStack{
+                            Text("Remaining")
+                                      .font(.system(size: 30))
+                            Text(self.env.currentTravelList.lista.remaining)
+                                  .font(.system(size: 40))
+                                }
+                            }.padding(.horizontal, 20)
+                            }
+                            .offset(y: 20)
+
                             HStack{
                                 Text("Currency From: ")
                                     .offset(x:20)
@@ -208,6 +230,7 @@ struct TravelListDetails: View {
                                 Text("Currency To: ")
                                 Spacer()
                             }
+                                
                             HStack{
                                 TextField("Enter Currency From..", text: $CurrencyFrom)
                                     .frame(width: 170, height: 30, alignment: .leading)
@@ -229,25 +252,7 @@ struct TravelListDetails: View {
                                         .foregroundColor(Color("orange button"))
                                 }
                             }
-                            HStack{
-                                VStack(alignment: .leading){
-                                    Text("Budget")
-                                        .frame(width: 90, height: 30, alignment: .leading)
-                                        .offset(x:20)
-                                    Text("Remaining")
-                                        .frame(width: 90, height: 30, alignment: .leading)
-                                        .offset(x:20)
-                                }
-                                Spacer()
-                                VStack(alignment: .leading){
-                                    Text(env.currentTravelList.lista.budget)
-                                        .frame(width: 140, height: 30, alignment: .leading)
-                                        .offset(x:-38)
-                                    Text(self.env.currentTravelList.lista.remaining)
-                                        .frame(width: 140, height: 30, alignment: .leading)
-                                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                                }
-                            }
+                            
                             HStack{
                                 Button(action: {
                                     self.whenClickSpend.toggleClick()
@@ -259,7 +264,7 @@ struct TravelListDetails: View {
                                                 .resizable()
                                                 .frame(width: 20, height: 20, alignment: .center)
                                                 .foregroundColor(Color("blue"))
-                                            Text("Spend: ").modifier(blueColorForAddTitles())
+                                            Text("What to pack: ").modifier(blueColorForAddTitles())
                                             Spacer()
                                         }
                                     }
@@ -275,10 +280,7 @@ struct TravelListDetails: View {
                                                         .modifier(blueColorForAddTitles())
                                                         .frame(width: 190, height: 30, alignment: .center)
                                                     Spacer()
-                                                    Text(i.spendPrice)
-                                                        .modifier(blueColorForAddTitles())
-                                                        .frame(width: 100, height: 30, alignment: .center)
-                                                        .background(Color("blue button"))
+                                                    
                                                 }.padding(.vertical,2)
                                             }
                                             if refresh{
@@ -292,9 +294,7 @@ struct TravelListDetails: View {
                                             TextField("Enter Items to Spend", text: self.$newNameSpend)
                                                 .frame(width: 140, height: 30, alignment: .leading)
                                                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                                            TextField("Enter price", text: self.$newPriceSpend)
-                                                .frame(width: 140, height: 30, alignment: .leading)
-                                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                            
                                             Image(systemName: "plus")
                                                 .onTapGesture {
                                                     if (self.newNameSpend == "" && self.newPriceSpend == "")
@@ -443,7 +443,7 @@ struct TravelListDetails: View {
                                                             self.newPriceAfter = "0.0"
                                                         } // only price empty will continue
                                                         self.refresh = true
-                                                        self.env.currentTravelList.aftertraveling.append(AfterTraveling(afterName: self.newNameAfter, afterPrice: self.newNameAfter))
+                                                        self.env.currentTravelList.aftertraveling.append(AfterTraveling(afterName: self.newNameAfter, afterPrice: self.newPriceAfter))
                                                         self.calculateTheRemainig(prc: self.newPriceAfter)
                                                         print(self.env.currentTravelList.aftertraveling)
                                                         self.newNameAfter = ""
@@ -620,6 +620,7 @@ struct TravelListDetails: View {
                     }
                 }
             }
+            
         }//.navigationBarBackButtonHidden(true)
             .onAppear {  // this on apper to change save button text to update
                 if self.isEdit{

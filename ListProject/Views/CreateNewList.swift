@@ -76,8 +76,8 @@ struct CreateNewList: View {
                                 .frame(width: 340, height: 160, alignment: .center)
                             VStack{
                                 HStack {
-                                    Text("Your list a name: ")
-                                    TextField("Enter your Name", text: self.$addListName)
+                                    Text("Name your list: ")
+                                    TextField("Enter a Name", text: self.$addListName)
                                 }.frame(width: 320, alignment: .leading)
                                 HStack {
                                     Text("Setup your Budget: ")
@@ -127,8 +127,8 @@ struct CreateNewList: View {
                                 .frame(width: 340, height: 160, alignment: .center)
                             VStack{
                                 HStack {
-                                    Text("Your list a name: ")
-                                    TextField("Enter your Name", text: self.$addListName)
+                                    Text("Name your list: ")
+                                    TextField("Enter a Name", text: self.$addListName)
                                 }.frame(width: 320, alignment: .leading)
                                 HStack {
                                     Text("Setup your Budget: ")
@@ -178,8 +178,8 @@ struct CreateNewList: View {
                                         .frame(width: 340, height: 160, alignment: .center)
                                     VStack{
                                         HStack {
-                                            Text("Your list a name: ")
-                                            TextField("Enter your Name", text: self.$addListName)
+                                            Text("Name your list: ")
+                                            TextField("Enter a Name", text: self.$addListName)
                                         }.frame(width: 320, alignment: .leading)
                                         HStack {
                                             Text("Setup your Budget: ")

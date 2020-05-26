@@ -31,7 +31,10 @@ struct MainList: View {
     var body: some View {
         NavigationView{
             ZStack {
-                Color(backgroungColor)
+              //  Color(backgroungColor)
+               Image("bac")
+                .resizable()
+                .scaledToFill()
                     .edgesIgnoringSafeArea(.all)
                 VStack{
                     HStack{
@@ -49,14 +52,19 @@ struct MainList: View {
 //                        }
                         Text("")
                     }
-                    VStack{
-                        List{
+                    ZStack{
+                        Color(.white)
+                          //  .opacity(0.8)
+                    VStack(spacing: 10){
+                        ScrollView(.vertical){
                            
                             VStack{
                         Text(self.env.currentTravelList.lista.type.name())
                             .foregroundColor(Color.black)
                             .bold()
-                            .font(.system(size:24))
+                            .font(.custom("Skia Light", size: 24))
+                            
+                          //  .font(.system(size:24))
                                 
                                 ScrollView(.horizontal){
                                     HStack{
@@ -65,7 +73,9 @@ struct MainList: View {
                         VStack{
                         Image(uiImage: i.picture!)
                             .resizable()
-                            .frame(width: 100, height: 100)
+                            .frame(width: 130, height: 130)
+                            .cornerRadius(10)
+                            .shadow(radius: 10)
                             Text(i.lista.givenName)
                                 .foregroundColor(Color.black)
                                 .bold()
@@ -92,7 +102,9 @@ struct MainList: View {
                             VStack{
                             Image(uiImage: i.picture!)
                                 .resizable()
-                                .frame(width: 100, height: 100)
+                                .frame(width: 130, height: 130)
+                                .cornerRadius(10)
+                                .shadow(radius: 10)
                                 Text(i.lista.givenName)
                                     .foregroundColor(Color.black)
                                     .bold()
@@ -120,7 +132,9 @@ struct MainList: View {
                                VStack{
                                 Image(uiImage: i.picture!)
                                     .resizable()
-                                    .frame(width: 100, height: 100)
+                                    .frame(width: 130, height: 130)
+                                .cornerRadius(10)
+                                .shadow(radius: 10)
                                     Text(i.lista.givenName)
                                         .foregroundColor(Color.black)
                                         .bold()
@@ -138,21 +152,35 @@ struct MainList: View {
                         }
                     }
                      }
-                     }
-                   
+                        
+                    }.padding(.vertical)
+                        .padding(.horizontal, 60)
+                    }
+                        NavigationLink(destination: CreateNewList(isEdit: $isEdit).environmentObject(self.env), isActive:
+                        self.$env.taskDone2){
+                            HStack{
+                            Image(systemName: "plus").imageScale(.large)
+                                .font(.system(size: 20))
+                                .foregroundColor(Color(.white))
+                            .frame(width: 60, height: 60)
+                            .background(Color("blue"))
+                                .clipShape(Circle())
+                            
+                                .padding(.vertical,10)
+                                .shadow(radius: 10)
+                            }
+                        }.isDetailLink(self.env.taskDone)
+                            .onTapGesture {
+                                self.env.taskDone2.toggle()
+                        }
+                        
+                    
                 }
                 .navigationBarTitle(Text("To Do List"))
-                .navigationBarItems(trailing:
-                    NavigationLink(destination: CreateNewList(isEdit: $isEdit).environmentObject(self.env), isActive:
-                    self.$env.taskDone2){
-                        Image(systemName: "plus.circle").imageScale(.large)
-                        .foregroundColor(Color("red"))
-                        .font(.system(size: 25)) }.isDetailLink(self.env.taskDone)
-                        .onTapGesture {
-                            self.env.taskDone2.toggle()
-                    }
-                      
-                )
+                //.navigationBarItems(trailing:
+                    
+                
+              //  )
            
                     // the above navigation is instead of the below , and i remove navigation from the beginning of the page
 //                    Button(action: {
