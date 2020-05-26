@@ -29,7 +29,6 @@ struct TravelList : Hashable, Identifiable{
 
 struct SpendMoney : Hashable, Identifiable{
     var spendName : String
-    var spendPrice : String = ""
     var id = UUID()
 }
 
@@ -162,6 +161,7 @@ struct TravelListDetails: View {
     @State var changeSaveToUpdate = "Save"  // this var for change save button text to update
     @State var changeAlertSaveToUpdate = "Your List is saved successfully" // this var for change alert save text to update
     
+    @State var currencyOutput = ""
     var body: some View {
         
         ZStack {
@@ -182,7 +182,8 @@ struct TravelListDetails: View {
                             .clipShape(Circle())
                             .overlay(Circle().stroke(Color("blue"), lineWidth: 5))
                             .shadow(radius: 10)
-                            .padding(.horizontal)
+                            .padding(.trailing, 30)
+                            .offset(y: -40)
                             .onTapGesture { self.shouldPresentActionScheet = true }
                             .sheet(isPresented: $shouldPresentImagePicker) {
                                 SUImagePickerView(sourceType: self.shouldPresentCamera ? .camera : .photoLibrary, image: self.$image2, isPresented: self.$shouldPresentImagePicker)
@@ -200,29 +201,44 @@ struct TravelListDetails: View {
                     //}
                     VStack{
                         VStack{
-
+                            
                             VStack{
                                 
-                                                      Text(env.currentTravelList.lista.givenName)
-                                .foregroundColor(Color.black).font(.system(size: 40, weight: .bold, design: .rounded)).padding(.vertical,20)
-                            HStack{
-                            VStack(alignment: .leading){
-                            Text("Budget")
-                                .font(.system(size: 30))
-                            Text(env.currentTravelList.lista.budget)
-                              .font(.system(size: 40))
-                                }
-                                Spacer()
-                                VStack{
-                            Text("Remaining")
-                                      .font(.system(size: 30))
-                            Text(self.env.currentTravelList.lista.remaining)
-                                  .font(.system(size: 40))
-                                }
-                            }.padding(.horizontal, 20)
-                            }
-                            .offset(y: 20)
-
+                                Text(env.currentTravelList.lista.givenName)
+                                    .foregroundColor(Color.black).font(.system(size: 40, weight: .bold, design: .rounded)).padding(.vertical,20)
+                                HStack{
+                                    VStack(alignment: .leading){
+                                        Text("Budget")
+                                            .font(.system(size: 30))
+                                        Text(env.currentTravelList.lista.budget)
+                                            .font(.system(size: 40))
+                                    }
+                                    Spacer()
+                                    VStack{
+                                        Text("Remaining")
+                                            .font(.system(size: 30))
+                                        if self.env.currentTravelList.lista.remaining == ""{
+                                            Text(env.currentTravelList.lista.budget)
+                                                .font(.system(size: 40))
+                                                .foregroundColor(Color.gray)
+                                        }
+                                            //                                       else if Double(self.env.currentTravelList.lista.remaining) < 0.0 {
+                                            //                                        Text(self.env.currentTravelList.lista.remaining)
+                                            //                                            Text("Exceeded budget!")
+                                            //                                            .font(.system(size: 40))
+                                            //                                            .foregroundColor(Color("red"))
+                                            //                                        }
+                                            
+                                        else{
+                                            Text(self.env.currentTravelList.lista.remaining)
+                                                .font(.system(size: 40))
+                                                .foregroundColor(Color("red"))
+                                        }
+                                    }
+                                }.padding(.horizontal, 20)
+                            }.offset(y: -100)
+                            
+                            
                             HStack{
                                 Text("Currency From: ")
                                     .offset(x:20)
@@ -230,7 +246,7 @@ struct TravelListDetails: View {
                                 Text("Currency To: ")
                                 Spacer()
                             }
-                                
+                            
                             HStack{
                                 TextField("Enter Currency From..", text: $CurrencyFrom)
                                     .frame(width: 170, height: 30, alignment: .leading)
@@ -240,16 +256,20 @@ struct TravelListDetails: View {
                                     .frame(width: 170, height: 30, alignment: .leading)
                                     .textFieldStyle(RoundedBorderTextFieldStyle())
                                     .offset(x:10)
+                                
                             }
+                            
                             HStack{
-                                Text("Currency in \(CurrencyTo) is: ")
+                               Text(currencyOutput)
                                 Button(action: {
                                     self.Currency()
+                                    self.currencyOutput = "Currency in \(self.CurrencyTo) is: "
                                 }) {
-                                    Text(self.value)
+                                    
                                     Image(systemName: "arrow.right")
                                         .font(.system(size: 25))
                                         .foregroundColor(Color("orange button"))
+                                     Text(self.value)
                                 }
                             }
                             
@@ -277,11 +297,19 @@ struct TravelListDetails: View {
                                             ForEach(env.currentTravelList.spendMoney, id: \.self){ i in
                                                 HStack{
                                                     Text(i.spendName)
-                                                        .modifier(blueColorForAddTitles())
-                                                        .frame(width: 190, height: 30, alignment: .center)
-                                                    Spacer()
+                                                        .foregroundColor(Color.black)
+                                                        .frame(width: 370, height: 30, alignment: .center)
+                                                        //
+                                                  //  Spacer()
                                                     
-                                                }.padding(.vertical,2)
+                                                }.padding(.vertical, 5)
+                                                    .frame(width: 370, height: 40)
+                                                    
+                                                    .background(Color.white)
+                                                    .cornerRadius(5)
+                                                .shadow(radius: 5)
+                                                .padding(.bottom, 10)
+                                               // .offset(x: -20)
                                             }
                                             if refresh{
                                                 Text(newNameSpend)
@@ -291,30 +319,36 @@ struct TravelListDetails: View {
                                     }.padding(.horizontal, 15)
                                     Group{
                                         HStack{
-                                            TextField("Enter Items to Spend", text: self.$newNameSpend)
-                                                .frame(width: 140, height: 30, alignment: .leading)
+                                            TextField("Enter Items", text: self.$newNameSpend)
+                                                .frame(width: 160, height: 30, alignment: .leading)
                                                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                                                .padding(.leading, 20)
                                             
-                                            Image(systemName: "plus")
+                                            Image(systemName: "plus").imageScale(.large)
+                                                .font(.system(size: 10, weight: .bold))
+                                        .foregroundColor(Color(.white))
+                                                .frame(width: 30, height: 30)
+                                                .background(Color("blue"))
+                                                .clipShape(Circle())
+                                                .padding(.vertical,10)
+                                                .shadow(radius: 5)
                                                 .onTapGesture {
-                                                    if (self.newNameSpend == "" && self.newPriceSpend == "")
-                                                    { }  // if both field empty
-                                                    else if (self.newNameSpend == ""){
+                                                    
+                                                    if (self.newNameSpend == ""){
                                                     }  // only name empty
                                                     else{
-                                                        if (self.newPriceSpend == ""){
-                                                            self.newPriceSpend = "0.0"
-                                                        } // only price empty will continue
+                                                        
                                                         self.refresh = true
-                                                        self.env.currentTravelList.spendMoney.append(SpendMoney(spendName: self.newNameSpend, spendPrice: self.newPriceSpend))
-                                                        self.calculateTheRemainig(prc: self.newPriceSpend)
+                                                        self.env.currentTravelList.spendMoney.append(SpendMoney(spendName: self.newNameSpend))
+                                                        
                                                         print(self.env.currentTravelList.spendMoney)
                                                         self.newNameSpend = ""
-                                                        self.newPriceSpend = ""
+                                                        
                                                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                                                         self.refresh = false
                                                     }
                                             }
+                                            Spacer()
                                         }
                                     }
                                 }
@@ -331,7 +365,7 @@ struct TravelListDetails: View {
                                             .resizable()
                                             .frame(width: 20, height: 20, alignment: .center)
                                             .foregroundColor(Color("blue"))
-                                        Text("Before Traveling").modifier(blueColorForAddTitles())
+                                        Text("Pre vacation expenses").modifier(blueColorForAddTitles())
                                         Spacer()
                                     }
                                 }.padding(.horizontal)
@@ -348,8 +382,14 @@ struct TravelListDetails: View {
                                                         Text(i.beforePrice)
                                                             .modifier(blueColorForAddTitles())
                                                             .frame(width: 100, height: 30, alignment: .center)
-                                                            .background(Color("blue button"))
-                                                    }.padding(.vertical,2)
+                                                        
+                                                    }.padding(.vertical,5)
+                                                        .frame(width: 370, height: 40)
+                                                        
+                                                        .background(Color.white)
+                                                        .cornerRadius(5)
+                                                    .shadow(radius: 5)
+ .padding(.bottom, 10)
                                                 }
                                                 if refresh{
                                                     Text(newNameBefore)
@@ -365,7 +405,14 @@ struct TravelListDetails: View {
                                         TextField("Enter price .. ", text: self.$newPriceBefore)
                                             .frame(width: 140, height: 30, alignment: .leading)
                                             .textFieldStyle(RoundedBorderTextFieldStyle())
-                                        Image(systemName: "plus")
+                                         Image(systemName: "plus").imageScale(.large)
+                                                                                       .font(.system(size: 10, weight: .bold))
+                                                                               .foregroundColor(Color(.white))
+                                                                                       .frame(width: 30, height: 30)
+                                                                                       .background(Color("blue"))
+                                                                                       .clipShape(Circle())
+                                                                                       .padding(.vertical,10)
+                                                                                       .shadow(radius: 5)
                                             .onTapGesture {
                                                 if (self.newNameBefore == "" && self.newPriceBefore == "")
                                                 { }  // if both field empty
@@ -398,8 +445,8 @@ struct TravelListDetails: View {
                                         Image(systemName:whenClickAfter.textNameClick())
                                             .resizable()
                                             .frame(width: 20, height: 20, alignment: .center)
-                                            .foregroundColor(Color.black)
-                                        Text("After Traveling.. ").modifier(blueColorForAddTitles())
+                                            .foregroundColor(Color("blue"))
+                                        Text("On vacation expenses ").modifier(blueColorForAddTitles())
                                         Spacer()
                                     }
                                 }.padding(.horizontal)
@@ -416,8 +463,14 @@ struct TravelListDetails: View {
                                                         Text(i.afterPrice)
                                                             .modifier(blueColorForAddTitles())
                                                             .frame(width: 100, height: 30, alignment: .center)
-                                                            .background(Color("blue button"))
-                                                    }.padding(.vertical,2)
+                                                           
+                                                    }.padding(.vertical,5)
+                                                        .frame(width: 370, height: 40)
+                                                        
+                                                        .background(Color.white)
+                                                        .cornerRadius(5)
+                                                    .shadow(radius: 5)
+ .padding(.bottom, 10)
                                                 }
                                                 if refresh{
                                                     Text(newNameAfter)
@@ -432,7 +485,14 @@ struct TravelListDetails: View {
                                             TextField("Enter price..", text: self.$newPriceAfter)
                                                 .frame(width: 140, height: 30, alignment: .leading)
                                                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                                            Image(systemName: "plus")
+                                            Image(systemName: "plus").imageScale(.large)
+                                                                                           .font(.system(size: 10, weight: .bold))
+                                                                                   .foregroundColor(Color(.white))
+                                                                                           .frame(width: 30, height: 30)
+                                                                                           .background(Color("blue"))
+                                                                                           .clipShape(Circle())
+                                                                                           .padding(.vertical,10)
+                                                                                           .shadow(radius: 5)
                                                 .onTapGesture {
                                                     if (self.newNameAfter == "" && self.newPriceAfter == "")
                                                     { }  // if both field empty
@@ -462,10 +522,10 @@ struct TravelListDetails: View {
                                             self.isClickOthers.toggle()
                                         }){
                                             Image(systemName:whenClickOther.textNameClick())
-                                                .resizable()
+                                               .resizable()
                                                 .frame(width: 20, height: 20, alignment: .center)
-                                                .foregroundColor(Color.black)
-                                            Text("Others... ").modifier(blueColorForAddTitles())
+                                                .foregroundColor(Color("blue"))
+                                            Text("Other").modifier(blueColorForAddTitles())
                                             Spacer()
                                         }
                                     }.padding(.horizontal)
@@ -482,8 +542,14 @@ struct TravelListDetails: View {
                                                             Text(i.otherPrice)
                                                                 .modifier(blueColorForAddTitles())
                                                                 .frame(width: 100, height: 30, alignment: .center)
-                                                                .background(Color("blue button"))
-                                                        }.padding(.vertical,2)
+                                                               
+                                                        }.padding(.vertical,5)
+                                                            .frame(width: 370, height: 40)
+                                                            
+                                                            .background(Color.white)
+                                                            .cornerRadius(5)
+                                                        .shadow(radius: 5)
+ .padding(.bottom, 10)
                                                     }
                                                     if refresh{
                                                         Text(newNameOthers)
@@ -498,7 +564,14 @@ struct TravelListDetails: View {
                                                 TextField("Enter price", text: self.$newPriceOthers)
                                                     .frame(width: 140, height: 30, alignment: .leading)
                                                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                                                Image(systemName: "plus")
+                                               Image(systemName: "plus").imageScale(.large)
+                                                                                               .font(.system(size: 10, weight: .bold))
+                                                                                       .foregroundColor(Color(.white))
+                                                                                               .frame(width: 30, height: 30)
+                                                                                               .background(Color("blue"))
+                                                                                               .clipShape(Circle())
+                                                                                               .padding(.vertical,10)
+                                                                                               .shadow(radius: 5)
                                                     .onTapGesture {
                                                         if (self.newNameOthers == "" && self.newPriceOthers == "")
                                                         { }  // if both field empty
@@ -532,7 +605,7 @@ struct TravelListDetails: View {
                                                         .resizable()
                                                         .frame(width: 20, height: 20, alignment: .center)
                                                         .foregroundColor(Color("blue"))
-                                                    Text("Search Map: ").modifier(blueColorForAddTitles())
+                                                    Text("Map and weather: ").modifier(blueColorForAddTitles())
                                                     Spacer()
                                                 }
                                             }
@@ -581,11 +654,11 @@ struct TravelListDetails: View {
                                             })
                                             {
                                                 Text(changeSaveToUpdate)
-                                                    .fontWeight(.semibold)
+                                                    .fontWeight(.bold)
                                                     .font(.custom("Georgia Regular", size: 25))
                                                     .padding(.horizontal, 40)
                                                     .padding(.vertical, 8)
-                                                    .foregroundColor(Color("blue"))
+                                                    .foregroundColor(Color(.white))
                                                     .background(Color("orange button"))
                                                     .cornerRadius(20)
                                             }
@@ -608,8 +681,8 @@ struct TravelListDetails: View {
                                                     .font(.custom("Georgia Regular", size: 25))
                                                     .padding(.horizontal, 40)
                                                     .padding(.vertical, 8)
-                                                    .foregroundColor(Color("blue"))
-                                                    .background(Color("blue button"))
+                                                    .foregroundColor(Color(.white))
+                                                    .background(Color("red"))
                                                     .cornerRadius(20)
                                             }
                                         }.padding()
@@ -700,10 +773,10 @@ struct TravelListDetails: View {
 }
 
 
-
+//
 //struct TravelListDetails_Previews: PreviewProvider {
 //    static var previews: some View {
-//        TravelListDetails()
+//        TravelListDetails(, isEdit: isEdit)
 //    }
 //}
 

@@ -18,14 +18,14 @@ struct CityWeatherInfo: View {
                 Text("🌡temperature:")
                     .font(.system(size: 20))
                     .foregroundColor(.secondary)
-                    .shadow(color: .red, radius: 2)
+                    .shadow(radius: 2)
     
          //  }
 //            HStack {
                 Text("💧humidity:")
                 .font(.system(size: 20))
                     .foregroundColor(.secondary)
-                    .shadow(color: .blue, radius: 2)
+                    .shadow(radius: 2)
         
             //}
 //            HStack {
@@ -48,7 +48,7 @@ struct CityWeatherInfo: View {
                 Text("💨wind:")
                   .font(.system(size: 20))
                     .foregroundColor(.secondary)
-                    .shadow(color: .blue, radius: 2)
+                    .shadow(radius: 2)
             }.offset(x:25)
             VStack{
                 

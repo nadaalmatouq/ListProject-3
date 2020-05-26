@@ -90,6 +90,7 @@ struct MainList: View {
                     }
                     }
                                      }
+                            
                       }
                     VStack{
                         Text(self.env.currentCelebrationList.lista.type.name())
@@ -122,6 +123,7 @@ struct MainList: View {
                             }
                     }
                     VStack{
+                        
                         Text(self.env.currentShoppingList.lista.type.name())
                             .foregroundColor(Color.black)
                             .bold()
