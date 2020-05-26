@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "01312EBF246DEAD500A69737"
-               BuildableName = "ListProject.app"
+               BuildableName = "Listity.app"
                BlueprintName = "ListProject"
                ReferencedContainer = "container:ListProject.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "01312EBF246DEAD500A69737"
-            BuildableName = "ListProject.app"
+            BuildableName = "Listity.app"
             BlueprintName = "ListProject"
             ReferencedContainer = "container:ListProject.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "01312EBF246DEAD500A69737"
-            BuildableName = "ListProject.app"
+            BuildableName = "Listity.app"
             BlueprintName = "ListProject"
             ReferencedContainer = "container:ListProject.xcodeproj">
          </BuildableReference>
