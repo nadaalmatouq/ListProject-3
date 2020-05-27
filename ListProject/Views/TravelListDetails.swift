@@ -183,7 +183,7 @@ struct TravelListDetails: View {
                             .overlay(Circle().stroke(Color("blue"), lineWidth: 5))
                             .shadow(radius: 10)
                             .padding(.trailing, 30)
-                            .offset(y: -40)
+                            .offset(y: 30)
                             .onTapGesture { self.shouldPresentActionScheet = true }
                             .sheet(isPresented: $shouldPresentImagePicker) {
                                 SUImagePickerView(sourceType: self.shouldPresentCamera ? .camera : .photoLibrary, image: self.$image2, isPresented: self.$shouldPresentImagePicker)
@@ -236,7 +236,7 @@ struct TravelListDetails: View {
                                         }
                                     }
                                 }.padding(.horizontal, 20)
-                            }.offset(y: -100)
+                            }//.offset(y: -50)
                             
                             
                             HStack{
@@ -266,9 +266,18 @@ struct TravelListDetails: View {
                                     self.currencyOutput = "Currency in \(self.CurrencyTo) is: "
                                 }) {
                                     
-                                    Image(systemName: "arrow.right")
-                                        .font(.system(size: 25))
-                                        .foregroundColor(Color("orange button"))
+                                    Image(systemName: "arrow.right.arrow.left.circle")
+                                        .font(.system(size: 30))
+                                       .foregroundColor(Color(.white))
+                                                               .frame(width: 30, height: 30)
+                                                               .background(Color("blue"))
+                                                                   .clipShape(Circle())
+                                                               
+                                                                   .padding(.vertical,10)
+                                                                   .shadow(radius: 5)
+                                    
+                                    
+                                    
                                      Text(self.value)
                                 }
                             }
@@ -319,7 +328,7 @@ struct TravelListDetails: View {
                                     }.padding(.horizontal, 15)
                                     Group{
                                         HStack{
-                                            TextField("Enter Items", text: self.$newNameSpend)
+                                            TextField("Add an item", text: self.$newNameSpend)
                                                 .frame(width: 160, height: 30, alignment: .leading)
                                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                                 .padding(.leading, 20)
@@ -399,7 +408,7 @@ struct TravelListDetails: View {
                                         }.padding(.horizontal, 15)
                                     }
                                     HStack{
-                                        TextField("Enter item .. ", text: self.$newNameBefore)
+                                        TextField("Add an item .. ", text: self.$newNameBefore)
                                             .frame(width: 140, height: 30, alignment: .leading)
                                             .textFieldStyle(RoundedBorderTextFieldStyle())
                                         TextField("Enter price .. ", text: self.$newPriceBefore)
@@ -479,7 +488,7 @@ struct TravelListDetails: View {
                                             }
                                         }.padding(.horizontal, 15)
                                         HStack{
-                                            TextField("Enter Item..", text: self.$newNameAfter)
+                                            TextField("Add an item..", text: self.$newNameAfter)
                                                 .frame(width: 140, height: 30, alignment: .leading)
                                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                             TextField("Enter price..", text: self.$newPriceAfter)
@@ -558,7 +567,7 @@ struct TravelListDetails: View {
                                                 }
                                             }.padding(.horizontal, 15)
                                             HStack{
-                                                TextField("Enter Others", text: self.$newNameOthers)
+                                                TextField("Add an item", text: self.$newNameOthers)
                                                     .frame(width: 140, height: 30, alignment: .leading)
                                                     .textFieldStyle(RoundedBorderTextFieldStyle())
                                                 TextField("Enter price", text: self.$newPriceOthers)

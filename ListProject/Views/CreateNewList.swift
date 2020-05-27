@@ -62,18 +62,18 @@ struct CreateNewList: View {
                             self.showShoppingOnly.toggle()
                             self.showCelebrationOnly.toggle()
                         }){
-                            Image("travel")
+                            Image("Travellist")
                                 .resizable()
                                 .renderingMode(.original)
-                                .frame(width: 340, height: 160)
+                                .frame(width: 340, height: 170)
                                 .scaledToFill()
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                                .clipShape(RoundedRectangle(cornerRadius: 20)) 
                         }
                         
                         if  self.env.sheetT{
                             ZStack{
                                 RoundedRectangle(cornerRadius: 20)
-                                    .fill(Color(#colorLiteral(red: 0.452400744, green: 0.4931920171, blue: 0.6055110097, alpha: 1))).opacity(0.5)
+                                    .fill(Color("light pink")).opacity(0.5)
                                     .frame(width: 340, height: 160, alignment: .center)
                                 VStack{
                                     HStack {
@@ -124,17 +124,17 @@ struct CreateNewList: View {
                             self.showShoppingOnly.toggle()
                             self.showTravelOnly.toggle()
                         }){
-                            Image("celebration")
+                            Image("Celebration")
                                 .resizable()
                                 .renderingMode(.original)
-                                .frame(width: 340, height: 160)
+                                .frame(width: 340, height: 170)
                                 .scaledToFill()
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
                         }
                         if  self.env.sheetC{
                             ZStack{
                                 RoundedRectangle(cornerRadius: 20)
-                                    .fill(Color(#colorLiteral(red: 0.3434544802, green: 0.512345314, blue: 0.37240538, alpha: 1))).opacity(0.5)
+                                    .fill(Color("light pink")).opacity(0.5)
                                     .frame(width: 340, height: 160, alignment: .center)
                                 VStack{
                                     HStack {
@@ -185,17 +185,17 @@ struct CreateNewList: View {
                             self.showCelebrationOnly.toggle()
                             self.showTravelOnly.toggle()
                         }){
-                            Image("shopping")
+                            Image("sh")
                                 .resizable()
                                 .renderingMode(.original)
-                                .frame(width: 340, height: 160)
+                                .frame(width: 340, height: 170)
                                 .scaledToFill()
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
                         }
                         if  self.env.sheetS{
                             ZStack{
                                 RoundedRectangle(cornerRadius: 20)
-                                    .fill(Color(#colorLiteral(red: 0.7957774997, green: 0.5531992912, blue: 0.6334091425, alpha: 1))).opacity(0.5)
+                                    .fill(Color("light pink")).opacity(0.5)
                                     .frame(width: 340, height: 160, alignment: .center)
                                 VStack{
                                     HStack {

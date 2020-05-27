@@ -71,11 +71,29 @@ struct MainList: View {
                                     
                     ForEach(self.env.alltravelLists, id: \.self){ i in
                         VStack{
+                            
+                            
+                            if (i.picture! == UIImage(systemName: "camera.circle"))
+                            
+                            {
+                                //Image(uiImage: UIImage(imageLiteralResourceName: "travelicon"))
+                                Image("travelicon")
+                                .resizable()
+                                .frame(width: 130, height: 130)
+                                .cornerRadius(10)
+                                .shadow(radius: 10)
+                                
+                                
+                            }
+                            else{
                         Image(uiImage: i.picture!)
                             .resizable()
                             .frame(width: 130, height: 130)
                             .cornerRadius(10)
                             .shadow(radius: 10)
+                        }
+                            
+                            
                             Text(i.lista.givenName)
                                 .foregroundColor(Color.black)
                                 .bold()
@@ -85,6 +103,8 @@ struct MainList: View {
                         self.env.currentTravelList = i
                         self.isEditTravel = true
                         }.padding(.all, 20)
+                        
+                       
                     }.sheet(isPresented: $isEditTravel) {
                         TravelListDetails(isEdit: self.$isEditTravel).environmentObject(self.env)
                     }
@@ -92,6 +112,7 @@ struct MainList: View {
                                      }
                             
                       }
+                            
                     VStack{
                         Text(self.env.currentCelebrationList.lista.type.name())
                             .foregroundColor(Color.black)
@@ -101,6 +122,21 @@ struct MainList: View {
                          HStack{
                         ForEach(self.env.allCelebrationLists, id: \.self){ i in
                             VStack{
+                                
+                                                              if (i.picture! == UIImage(systemName: "camera.circle"))
+                                                                                        
+                                                                                        {
+                                                                                            //Image(uiImage: UIImage(imageLiteralResourceName: "travelicon"))
+                                                                                            Image("Celebrate")
+                                                                                            .resizable()
+                                                                                            .frame(width: 130, height: 130)
+                                                                                            .cornerRadius(10)
+                                                                                            .shadow(radius: 10)
+                                                                                            
+                                                                                            
+                                                                                        }
+                                                              else{
+                                
                             Image(uiImage: i.picture!)
                                 .resizable()
                                 .frame(width: 130, height: 130)
@@ -110,6 +146,7 @@ struct MainList: View {
                                     .foregroundColor(Color.black)
                                     .bold()
                                     .font(.system(size:24))
+                                }
                                 
                             }.onTapGesture {
                             self.isWorkWillEditC = true
@@ -132,6 +169,21 @@ struct MainList: View {
                              HStack{
                         ForEach(self.env.allShoppingLists, id: \.self){ i in
                                VStack{
+                                
+                                if (i.picture! == UIImage(systemName: "camera.circle"))
+                                                          
+                                                          {
+                                                              //Image(uiImage: UIImage(imageLiteralResourceName: "travelicon"))
+                                                              Image("shoppingicon")
+                                                              .resizable()
+                                                              .frame(width: 130, height: 130)
+                                                              .cornerRadius(10)
+                                                              .shadow(radius: 10)
+                                                              
+                                                              
+                                                          }
+                                else{
+                                
                                 Image(uiImage: i.picture!)
                                     .resizable()
                                     .frame(width: 130, height: 130)
@@ -140,7 +192,8 @@ struct MainList: View {
                                     Text(i.lista.givenName)
                                         .foregroundColor(Color.black)
                                         .bold()
-                                        .font(.system(size:24))
+                                        .font(.system(size:24))}
+                                
                                     
                                 }.onTapGesture {
                                 self.isWorkWillEditS = true
@@ -178,7 +231,7 @@ struct MainList: View {
                         
                     
                 }
-                .navigationBarTitle(Text("To Do List"))
+                .navigationBarTitle(Text("My Lists"))
                 //.navigationBarItems(trailing:
                     
                 
